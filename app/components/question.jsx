@@ -7,13 +7,18 @@ export default class Question extends React.Component {
     }
 
     render() {
+
         let options = this.props.options.map(option => {
             return (
-                <li className = 'question-option'>{option}</li>
+                <li
+                    onClick = {() =>  this.props.checkAnswer(option)}
+                    className = 'question-option'>
+                    {option}
+                </li>
             );
         })
         return (
-            <li>
+            <div>
 
                 <p>{this.props.question}</p>
 
@@ -23,7 +28,7 @@ export default class Question extends React.Component {
                     {options}
                 </ul>
 
-            </li>
+            </div>
         )
     }
 }

@@ -1,5 +1,6 @@
 let questions = [
     {
+        id: 1,
         question: 'What fruit is this?',
         resource: {
             type: 'image',
@@ -9,6 +10,7 @@ let questions = [
         answer: 'apple'
     },
     {
+        id: 2,
         question: 'What shape is this?',
         resource: {
             type: 'image',
@@ -18,6 +20,7 @@ let questions = [
         answer: 'square'
     },
     {
+        id: 3,
         question: 'Is this a letter or number?',
         resource: {
             type: 'image',
@@ -27,6 +30,7 @@ let questions = [
         answer: 'number'
     },
     {
+        id: 4,
         question: 'How many letters are in the alphabet?',
         resource: {
             type: 'image',
@@ -36,6 +40,7 @@ let questions = [
         answer: '26'
     },
     {
+        id: 5,
         question: 'What Shape is this?',
         resource: {
             type: 'image',
@@ -46,4 +51,4 @@ let questions = [
     }
 ];
 
-export default questions;
+export { questions };

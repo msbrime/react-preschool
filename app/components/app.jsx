@@ -1,5 +1,6 @@
 import React from 'react';
-import QuestionSet from './question_set.jsx';
+import { QuestionSet } from './question_set.jsx';
+import { questions } from '../data/questions';
 
 export default class App extends React.Component {
 
@@ -8,6 +9,6 @@ export default class App extends React.Component {
     }
 
     render() {
-        return (<QuestionSet />);
+        return (<QuestionSet questions = { questions } />);
     }
 }
