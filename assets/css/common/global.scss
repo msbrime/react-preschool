@@ -1,0 +1,64 @@
+@font-face {
+    font-family: schoolBell;
+    src: url(../fonts/Schoolbell.ttf);
+    font-style : normal;
+    font-weight : 100;
+}
+
+
+body{
+   font-size:5em;
+   color : $text;
+   font-family : schoolBell;
+   background-color: #f9f9f9;
+}
+
+
+.question-set{
+    margin-top:20px;
+}
+
+.question{
+
+    &__heading{
+        font-size : 3.5rem;
+        padding:20px;
+        text-align:center;
+
+    }
+
+    &__image{
+        display:block;
+        height: 300px;
+        width:auto;
+        margin:40px auto;
+    }
+
+    &__option-list{
+
+    }
+
+    &__option-item{
+        width:46%;
+        margin:2%;
+        font-size : $question-text-size;
+        padding: 10px;
+        display:inline-block;
+        float:left;
+
+        border : 5px solid $green;
+        border-radius : 30%/90%;
+        text-align:center;
+        text-transform:lowercase;
+        cursor:pointer;
+        transition: box-shadow 0.5s,background-color 0.5s;
+
+        &:hover{
+            animation:pulse 1s infinite;
+             box-shadow: 0 3px 1px 1px rgba(0,0,0,0.2);
+             background-color:$green;
+
+        }
+    }
+
+}

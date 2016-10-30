@@ -4,7 +4,7 @@ let questions = [
         question: 'What fruit is this?',
         resource: {
             type: 'image',
-            url: 'apple.jpg'
+            url: 'build/images/apple.png'
         },
         options: ['apple', 'peach', 'pear', 'orange'],
         answer: 'apple'
@@ -14,7 +14,7 @@ let questions = [
         question: 'What shape is this?',
         resource: {
             type: 'image',
-            url: 'square.jpg'
+            url: 'build/images/square.png'
         },
         options: ['square', 'triangle', 'circle', 'rectangle'],
         answer: 'square'
@@ -24,7 +24,7 @@ let questions = [
         question: 'Is this a letter or number?',
         resource: {
             type: 'image',
-            url: '2.jpg'
+            url: 'build/images/three.png'
         },
         options: ['letter', 'number'],
         answer: 'number'
@@ -34,7 +34,7 @@ let questions = [
         question: 'How many letters are in the alphabet?',
         resource: {
             type: 'image',
-            url: 'abc.jpg'
+            url: 'build/images/alphabet.png'
         },
         options: ['10', '12', '18', '26'],
         answer: '26'
@@ -44,7 +44,7 @@ let questions = [
         question: 'What Shape is this?',
         resource: {
             type: 'image',
-            url: 'triangle.jpg'
+            url: 'build/images/triangle.png'
         },
         options: ['square', 'triangle', 'rectangle', 'circle'],
         answer: 'triangle'

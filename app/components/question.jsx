@@ -10,21 +10,20 @@ export default class Question extends React.Component {
 
         let options = this.props.options.map(option => {
             return (
-                <li
-                    onClick = {() =>  this.props.checkAnswer(option)}
-                    className = 'question-option'>
+                <li className = 'question__option-item'
+                    onClick = {() =>  this.props.checkAnswer(option)} >
                     {option}
                 </li>
             );
         })
         return (
-            <div>
+            <div className = 'question bounceInUp'>
 
-                <p>{this.props.question}</p>
+                <p className = 'question__heading'>{this.props.question}</p>
 
-                <img src = {this.props.resourceUrl}/>
+                <img className = 'question__image flipInX' src = {this.props.resourceUrl}/>
 
-                <ul className = 'otpions-list'>
+                <ul className = 'question__otpion-list no-bullet clearfix'>
                     {options}
                 </ul>
 
