@@ -1,0 +1,24 @@
+{
+  "name": "education",
+  "description": "react app for learning site challenge",
+  "main": "index.html",
+  "authors": [
+    "Salis Braimah"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "challenge",
+    "react"
+  ],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "foundation-sass": "^5.5.2"
+  }
+}
