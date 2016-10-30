@@ -21627,13 +21627,21 @@
 	    function Question(props) {
 	        _classCallCheck(this, Question);
 	
-	        return _possibleConstructorReturn(this, (Question.__proto__ || Object.getPrototypeOf(Question)).call(this, props));
+	        var _this = _possibleConstructorReturn(this, (Question.__proto__ || Object.getPrototypeOf(Question)).call(this, props));
+	
+	        _this.animations = ['zoomIn', 'flipInY', 'fadeIn', 'bounceIn', 'flipInX', 'lightSpeedIn'];
+	        return _this;
 	    }
 	
 	    _createClass(Question, [{
 	        key: 'render',
 	        value: function render() {
 	            var _this2 = this;
+	
+	            var animation = this.animations[Math.floor(Math.random() * this.animations.length)],
+	                questionStyle = {
+	                animation: animation + ' 1.5s'
+	            };
 	
 	            var options = this.props.options.map(function (option) {
 	                return _react2.default.createElement(
@@ -21653,7 +21661,7 @@
 	                    { className: 'question__heading' },
 	                    this.props.question
 	                ),
-	                _react2.default.createElement('img', { className: 'question__image flipInX', src: this.props.resourceUrl }),
+	                _react2.default.createElement('img', { className: 'question__image', style: questionStyle, src: this.props.resourceUrl }),
 	                _react2.default.createElement(
 	                    'ul',
 	                    { className: 'question__otpion-list no-bullet clearfix' },

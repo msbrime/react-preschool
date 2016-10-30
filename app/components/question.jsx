@@ -4,9 +4,22 @@ export default class Question extends React.Component {
 
     constructor(props) {
         super(props);
+
+        this.animations = [
+            'zoomIn','flipInY',
+            'fadeIn','bounceIn',
+            'flipInX','lightSpeedIn'
+        ];
     }
 
     render() {
+
+        let
+            animation = this.animations[Math.floor(Math.random()*this.animations.length)],
+
+            questionStyle = {
+                animation :  `${animation} 1.5s`
+            };
 
         let options = this.props.options.map(option => {
             return (
@@ -21,7 +34,7 @@ export default class Question extends React.Component {
 
                 <p className = 'question__heading'>{this.props.question}</p>
 
-                <img className = 'question__image flipInX' src = {this.props.resourceUrl}/>
+                <img className = 'question__image' style = {questionStyle} src = {this.props.resourceUrl}/>
 
                 <ul className = 'question__otpion-list no-bullet clearfix'>
                     {options}
