@@ -21447,7 +21447,7 @@
 	
 	var _question_set = __webpack_require__(173);
 	
-	var _questions = __webpack_require__(175);
+	var _questions = __webpack_require__(176);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -21651,6 +21651,10 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _feedback = __webpack_require__(175);
+	
+	var _feedback2 = _interopRequireDefault(_feedback);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -21668,18 +21672,12 @@
 	        var _this = _possibleConstructorReturn(this, (Question.__proto__ || Object.getPrototypeOf(Question)).call(this, props));
 	
 	        _this.animations = ['zoomIn', 'flipInY', 'fadeIn', 'bounceIn', 'flipInX', 'lightSpeedIn'];
-	
-	        _this.narrations = {
-	            wrong: "Oh no! You got this one wrong",
-	            right: "That's Right!"
-	        };
 	        return _this;
 	    }
 	
 	    _createClass(Question, [{
 	        key: 'shouldComponentUpdate',
 	        value: function shouldComponentUpdate(nextProps, nextState) {
-	            console.log(nextProps.shouldAnimate || nextProps.answered);
 	            return nextProps.shouldAnimate || nextProps.answered;
 	        }
 	    }, {
@@ -21717,11 +21715,8 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var _this3 = this;
-	
 	            var options = this.renderOptions(),
-	                imageEnterAnimation = this.props.answered ? {} : this.setEntranceAnimation(),
-	                active = this.props.answered ? "active" : "";
+	                imageEnterAnimation = this.props.answered ? {} : this.setEntranceAnimation();
 	
 	            return _react2.default.createElement(
 	                'div',
@@ -21734,28 +21729,8 @@
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'question__image-holder' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'question__explanation clearfix ' + active },
-	                        _react2.default.createElement(
-	                            'p',
-	                            null,
-	                            this.props.triesLeft > 0 ? this.narrations.right : this.narrations.wrong
-	                        ),
-	                        _react2.default.createElement(
-	                            'p',
-	                            null,
-	                            this.props.question.explanation
-	                        ),
-	                        _react2.default.createElement(
-	                            'button',
-	                            { className: 'question__explanation-close circular right',
-	                                onClick: function onClick() {
-	                                    return _this3.props.nextQuestion();
-	                                } },
-	                            'OK!'
-	                        )
-	                    ),
+	                    _react2.default.createElement(_feedback2.default, { triesLeft: this.props.triesLeft, active: this.props.answered,
+	                        explanation: this.props.question.explanation, next: this.props.nextQuestion }),
 	                    _react2.default.createElement('img', { className: 'question__image', style: imageEnterAnimation, src: this.props.question.resource.url })
 	                ),
 	                _react2.default.createElement(
@@ -21779,6 +21754,91 @@
 
 /***/ },
 /* 175 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Feedback = function (_React$Component) {
+	    _inherits(Feedback, _React$Component);
+	
+	    function Feedback(props) {
+	        _classCallCheck(this, Feedback);
+	
+	        var _this = _possibleConstructorReturn(this, (Feedback.__proto__ || Object.getPrototypeOf(Feedback)).call(this, props));
+	
+	        _this.narrations = {
+	            wrong: "Oh no! You got this one wrong",
+	            right: "That's Right!"
+	        };
+	        return _this;
+	    }
+	
+	    _createClass(Feedback, [{
+	        key: "render",
+	        value: function render() {
+	            var _this2 = this;
+	
+	            var badges = [],
+	                active = this.props.active ? "active" : "";
+	            for (var i = 0; i < this.props.triesLeft; i++) {
+	                badges.push(_react2.default.createElement("span", { className: "badge" }));
+	            }
+	
+	            return _react2.default.createElement(
+	                "div",
+	                { className: 'question__explanation clearfix ' + active },
+	                _react2.default.createElement(
+	                    "p",
+	                    null,
+	                    this.props.triesLeft > 0 ? this.narrations.right : this.narrations.wrong
+	                ),
+	                _react2.default.createElement(
+	                    "p",
+	                    null,
+	                    this.props.explanation
+	                ),
+	                _react2.default.createElement(
+	                    "div",
+	                    { className: "question__score text-center" },
+	                    badges
+	                ),
+	                _react2.default.createElement(
+	                    "button",
+	                    { className: "question__explanation-close circular right",
+	                        onClick: function onClick() {
+	                            return _this2.props.next();
+	                        } },
+	                    "OK!"
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return Feedback;
+	}(_react2.default.Component);
+	
+	exports.default = Feedback;
+
+/***/ },
+/* 176 */
 /***/ function(module, exports) {
 
 	'use strict';

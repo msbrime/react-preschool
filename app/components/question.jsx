@@ -1,4 +1,5 @@
 import React from 'react';
+import Feedback from './feedback.jsx';
 
 export default class Question extends React.Component {
 
@@ -10,15 +11,9 @@ export default class Question extends React.Component {
             'fadeIn','bounceIn',
             'flipInX','lightSpeedIn'
         ];
-
-        this.narrations = {
-            wrong : "Oh no! You got this one wrong",
-            right : "That's Right!"
-        };
     }
 
     shouldComponentUpdate(nextProps,nextState){
-        console.log(nextProps.shouldAnimate || nextProps.answered);
         return nextProps.shouldAnimate || nextProps.answered;
     }
 
@@ -26,7 +21,7 @@ export default class Question extends React.Component {
         let options = this.props.question.options.map(option => {
             return (
                 <li className = 'question__option-item'
-                    onClick = {() =>  this.props.checkAnswer(option)} >
+                    onClick = { () =>  this.props.checkAnswer(option)} >
                     {option}
                 </li>
             );
@@ -50,22 +45,15 @@ export default class Question extends React.Component {
     render() {
         let
             options = this.renderOptions(),
-            imageEnterAnimation = (this.props.answered) ? {} : this.setEntranceAnimation(),
-            active = (this.props.answered) ? "active" : "";
+            imageEnterAnimation = (this.props.answered) ? {} : this.setEntranceAnimation();
 
         return (
             <div className = 'question'>
                 <p className = 'question__heading'>{this.props.question.question}</p>
 
                 <div className = 'question__image-holder'>
-                    <div className = {'question__explanation clearfix ' + active }>
-                        <p>{ (this.props.triesLeft > 0) ? this.narrations.right : this.narrations.wrong }</p>
-                        <p>{this.props.question.explanation}</p>
-                        <button className = 'question__explanation-close circular right'
-                            onClick = {() =>  this.props.nextQuestion()}>
-                            OK!
-                        </button>
-                    </div>
+                    <Feedback triesLeft = {this.props.triesLeft} active = {this.props.answered}
+                        explanation = {this.props.question.explanation} next = {this.props.nextQuestion} />
                     <img className = 'question__image' style = {imageEnterAnimation} src = {this.props.question.resource.url}/>
                 </div>
 

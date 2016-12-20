@@ -60,7 +60,7 @@ button{
             0px 5px 2px 2px rgba(0,0,0,0.1);
         position:absolute;
         width:100%;
-        top:20%;
+        top:0;
         p{
             font-size: 2rem;
         }
@@ -68,6 +68,17 @@ button{
         &.active{
             z-index:200;
             opacity : 1;
+        }
+    }
+
+    &__score{
+
+        .badge{
+            display:inline-block;
+            width : 80px;
+            height: 80px;
+            background-image: url(../images/medal.png);
+            background-size : 100% auto;
         }
     }
 
