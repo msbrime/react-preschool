@@ -21541,7 +21541,8 @@
 	                    unanswered: unanswered
 	                },
 	                tries: current.options.length - 1,
-	                shouldAnimate: true
+	                shouldAnimate: true,
+	                answered: false
 	            };
 	        }
 	    }, {
@@ -21554,28 +21555,44 @@
 	        value: function checkAnswer(answer) {
 	
 	            if (this.isCorrectAnswer(answer)) {
-	
-	                if (this.state.questions.unanswered.length > 0) {
-	
-	                    var newState = this.setQuestion(this.state.questions.unanswered, this.state.questions.current);
-	
-	                    this.setState(newState);
-	                } else {
-	                    this.reset();
-	                }
+	                this.setState({
+	                    shouldAnimate: false,
+	                    answered: true
+	                });
 	            } else {
 	                this.reduceTries();
 	            }
 	        }
 	    }, {
+	        key: 'nextQuestion',
+	        value: function nextQuestion() {
+	            if (this.state.questions.unanswered.length > 0) {
+	
+	                var newState = this.setQuestion(this.state.questions.unanswered, this.state.questions.current);
+	
+	                this.setState(newState);
+	            } else {
+	                this.reset();
+	            }
+	        }
+	    }, {
 	        key: 'reduceTries',
 	        value: function reduceTries() {
+	            if (this.state.answered) return;
 	            var tries = this.state.tries;
 	            tries--;
-	            if (tries == 0) {
-	                this.showAnswer();
+	            if (tries <= 0) {
+	                this.setState({
+	                    tries: tries,
+	                    shouldAnimate: false,
+	                    answered: true
+	                });
 	            } else {
-	                this.setState({ tries: tries, shouldAnimate: false });
+	                this.setState({
+	                    tries: tries,
+	                    shouldAnimate: false,
+	                    answered: false
+	                });
 	            }
 	        }
 	    }, {
@@ -21603,10 +21620,13 @@
 	                'div',
 	                { className: 'question-set' },
 	                _react2.default.createElement(_question2.default, {
-	                    checkAnswer: this.checkAnswer.bind(this),
 	                    key: this.state.questions.current.id,
 	                    question: this.state.questions.current,
-	                    shouldAnimate: this.state.shouldAnimate
+	                    shouldAnimate: this.state.shouldAnimate,
+	                    answered: this.state.answered,
+	                    triesLeft: this.state.tries,
+	                    checkAnswer: this.checkAnswer.bind(this),
+	                    nextQuestion: this.nextQuestion.bind(this)
 	                })
 	            );
 	        }
@@ -21648,13 +21668,19 @@
 	        var _this = _possibleConstructorReturn(this, (Question.__proto__ || Object.getPrototypeOf(Question)).call(this, props));
 	
 	        _this.animations = ['zoomIn', 'flipInY', 'fadeIn', 'bounceIn', 'flipInX', 'lightSpeedIn'];
+	
+	        _this.narrations = {
+	            wrong: "Oh no! You got this one wrong",
+	            right: "That's Right!"
+	        };
 	        return _this;
 	    }
 	
 	    _createClass(Question, [{
 	        key: 'shouldComponentUpdate',
 	        value: function shouldComponentUpdate(nextProps, nextState) {
-	            return nextProps.shouldAnimate;
+	            console.log(nextProps.shouldAnimate || nextProps.answered);
+	            return nextProps.shouldAnimate || nextProps.answered;
 	        }
 	    }, {
 	        key: 'renderOptions',
@@ -21691,8 +21717,11 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
+	            var _this3 = this;
+	
 	            var options = this.renderOptions(),
-	                imageEnterAnimation = this.setEntranceAnimation();
+	                imageEnterAnimation = this.props.answered ? {} : this.setEntranceAnimation(),
+	                active = this.props.answered ? "active" : "";
 	
 	            return _react2.default.createElement(
 	                'div',
@@ -21707,7 +21736,12 @@
 	                    { className: 'question__image-holder' },
 	                    _react2.default.createElement(
 	                        'div',
-	                        { className: 'question__explanation clearfix' },
+	                        { className: 'question__explanation clearfix ' + active },
+	                        _react2.default.createElement(
+	                            'p',
+	                            null,
+	                            this.props.triesLeft > 0 ? this.narrations.right : this.narrations.wrong
+	                        ),
 	                        _react2.default.createElement(
 	                            'p',
 	                            null,
@@ -21715,7 +21749,10 @@
 	                        ),
 	                        _react2.default.createElement(
 	                            'button',
-	                            { className: 'question__explanation-close circular right' },
+	                            { className: 'question__explanation-close circular right',
+	                                onClick: function onClick() {
+	                                    return _this3.props.nextQuestion();
+	                                } },
 	                            'OK!'
 	                        )
 	                    ),

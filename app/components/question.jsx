@@ -10,10 +10,16 @@ export default class Question extends React.Component {
             'fadeIn','bounceIn',
             'flipInX','lightSpeedIn'
         ];
+
+        this.narrations = {
+            wrong : "Oh no! You got this one wrong",
+            right : "That's Right!"
+        };
     }
 
     shouldComponentUpdate(nextProps,nextState){
-        return nextProps.shouldAnimate;
+        console.log(nextProps.shouldAnimate || nextProps.answered);
+        return nextProps.shouldAnimate || nextProps.answered;
     }
 
     renderOptions(){
@@ -44,16 +50,21 @@ export default class Question extends React.Component {
     render() {
         let
             options = this.renderOptions(),
-            imageEnterAnimation = this.setEntranceAnimation();
+            imageEnterAnimation = (this.props.answered) ? {} : this.setEntranceAnimation(),
+            active = (this.props.answered) ? "active" : "";
 
         return (
             <div className = 'question'>
                 <p className = 'question__heading'>{this.props.question.question}</p>
 
                 <div className = 'question__image-holder'>
-                    <div className = 'question__explanation clearfix'>
+                    <div className = {'question__explanation clearfix ' + active }>
+                        <p>{ (this.props.triesLeft > 0) ? this.narrations.right : this.narrations.wrong }</p>
                         <p>{this.props.question.explanation}</p>
-                        <button className = 'question__explanation-close circular right'>OK!</button>
+                        <button className = 'question__explanation-close circular right'
+                            onClick = {() =>  this.props.nextQuestion()}>
+                            OK!
+                        </button>
                     </div>
                     <img className = 'question__image' style = {imageEnterAnimation} src = {this.props.question.resource.url}/>
                 </div>

@@ -32,7 +32,8 @@ export class QuestionSet extends React.Component {
                 unanswered : unanswered
             },
             tries : current.options.length - 1,
-            shouldAnimate:true
+            shouldAnimate:true,
+            answered:false
         };
 
     }
@@ -44,19 +45,10 @@ export class QuestionSet extends React.Component {
     checkAnswer(answer){
 
         if(this.isCorrectAnswer(answer)){
-
-            if(this.state.questions.unanswered.length > 0){
-
-                let newState = this.setQuestion(
-                    this.state.questions.unanswered,
-                    this.state.questions.current
-                );
-
-                this.setState(newState);
-            }
-            else{
-                this.reset();
-            }
+            this.setState({
+                shouldAnimate:false,
+                answered:true
+            });
         }
         else{
             this.reduceTries();
@@ -64,14 +56,38 @@ export class QuestionSet extends React.Component {
 
     }
 
-    reduceTries(){
-        var tries = this.state.tries;
-        tries--;
-        if(tries == 0){
-            this.showAnswer();
+    nextQuestion(){
+        if(this.state.questions.unanswered.length > 0){
+
+            let newState = this.setQuestion(
+                this.state.questions.unanswered,
+                this.state.questions.current
+            );
+
+            this.setState(newState);
         }
         else{
-            this.setState({tries:tries,shouldAnimate:false});
+            this.reset();
+        }
+    }
+
+    reduceTries(){
+        if(this.state.answered) return;
+        var tries = this.state.tries;
+        tries--;
+        if(tries <= 0){
+            this.setState({
+                tries:tries,
+                shouldAnimate:false,
+                answered:true
+            });
+        }
+        else{
+            this.setState({
+                tries:tries,
+                shouldAnimate:false,
+                answered:false
+            });
         }
     }
 
@@ -94,10 +110,13 @@ export class QuestionSet extends React.Component {
         return (
             <div className = 'question-set'>
                 <Question
-                    checkAnswer = {this.checkAnswer.bind(this)}
                     key = {this.state.questions.current.id}
                     question = {this.state.questions.current}
                     shouldAnimate = {this.state.shouldAnimate}
+                    answered = {this.state.answered}
+                    triesLeft = {this.state.tries}
+                    checkAnswer = {this.checkAnswer.bind(this)}
+                    nextQuestion = {this.nextQuestion.bind(this)}
                 />
             </div>
         );
