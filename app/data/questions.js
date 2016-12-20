@@ -7,7 +7,8 @@ let questions = [
             url: 'build/images/apple.png'
         },
         options: ['apple', 'peach', 'pear', 'orange'],
-        answer: 'apple'
+        answer: 'apple',
+        explanation: 'This is an apple'
     },
     {
         id: 2,
@@ -17,7 +18,8 @@ let questions = [
             url: 'build/images/square.png'
         },
         options: ['square', 'triangle', 'circle', 'rectangle'],
-        answer: 'square'
+        answer: 'square',
+        explanation: 'A square is a shape with four sides of equal length'
     },
     {
         id: 3,
@@ -27,7 +29,8 @@ let questions = [
             url: 'build/images/three.png'
         },
         options: ['letter', 'number'],
-        answer: 'number'
+        answer: 'number',
+        explanation: 'This is the number 3'
     },
     {
         id: 4,
@@ -37,7 +40,8 @@ let questions = [
             url: 'build/images/alphabet.png'
         },
         options: ['10', '12', '18', '26'],
-        answer: '26'
+        answer: '26',
+        explanation: 'There are 26 letters in the english alphabet'
     },
     {
         id: 5,
@@ -47,7 +51,8 @@ let questions = [
             url: 'build/images/triangle.png'
         },
         options: ['square', 'triangle', 'rectangle', 'circle'],
-        answer: 'triangle'
+        answer: 'triangle',
+        explanation: 'A triangle is a shape that has 3 sides'
     }
 ];
 

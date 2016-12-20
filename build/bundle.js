@@ -21539,7 +21539,9 @@
 	                    answered: answered,
 	                    current: current,
 	                    unanswered: unanswered
-	                }
+	                },
+	                tries: current.options.length - 1,
+	                shouldAnimate: true
 	            };
 	        }
 	    }, {
@@ -21559,9 +21561,27 @@
 	
 	                    this.setState(newState);
 	                } else {
-	                    this.onReset();
+	                    this.reset();
 	                }
+	            } else {
+	                this.reduceTries();
 	            }
+	        }
+	    }, {
+	        key: 'reduceTries',
+	        value: function reduceTries() {
+	            var tries = this.state.tries;
+	            tries--;
+	            if (tries == 0) {
+	                this.showAnswer();
+	            } else {
+	                this.setState({ tries: tries, shouldAnimate: false });
+	            }
+	        }
+	    }, {
+	        key: 'showAnswer',
+	        value: function showAnswer() {
+	            alert(this.state.questions.current.explanation);
 	        }
 	    }, {
 	        key: 'isCorrectAnswer',
@@ -21569,26 +21589,24 @@
 	            return this.state.questions.current.answer === answer;
 	        }
 	    }, {
-	        key: 'onReset',
-	        value: function onReset() {
+	        key: 'reset',
+	        value: function reset() {
 	            var newState = this.setQuestion(this.props.questions);
-	            console.log(newState);
 	            newState.questions.answered = [];
 	            this.setState(newState);
 	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	
+	            console.log(this.state);
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'question-set' },
 	                _react2.default.createElement(_question2.default, {
 	                    checkAnswer: this.checkAnswer.bind(this),
 	                    key: this.state.questions.current.id,
-	                    question: this.state.questions.current.question,
-	                    options: this.state.questions.current.options,
-	                    resourceUrl: this.state.questions.current.resource.url
+	                    question: this.state.questions.current,
+	                    shouldAnimate: this.state.shouldAnimate
 	                })
 	            );
 	        }
@@ -21634,16 +21652,16 @@
 	    }
 	
 	    _createClass(Question, [{
-	        key: 'render',
-	        value: function render() {
+	        key: 'shouldComponentUpdate',
+	        value: function shouldComponentUpdate(nextProps, nextState) {
+	            return nextProps.shouldAnimate;
+	        }
+	    }, {
+	        key: 'renderOptions',
+	        value: function renderOptions() {
 	            var _this2 = this;
 	
-	            var animation = this.animations[Math.floor(Math.random() * this.animations.length)],
-	                questionStyle = {
-	                animation: animation + ' 1.5s'
-	            };
-	
-	            var options = this.props.options.map(function (option) {
+	            var options = this.props.question.options.map(function (option) {
 	                return _react2.default.createElement(
 	                    'li',
 	                    { className: 'question__option-item',
@@ -21653,21 +21671,67 @@
 	                    option
 	                );
 	            });
+	
+	            return options;
+	        }
+	    }, {
+	        key: 'setEntranceAnimation',
+	        value: function setEntranceAnimation() {
+	            var animation = this.animations[Math.floor(Math.random() * this.animations.length)];
+	            return {
+	                animation: animation + ' 1.5s'
+	            };
+	        }
+	    }, {
+	        key: 'speak',
+	        value: function speak(text) {
+	            var textToSpeech = new SpeechSynthesisUtterance(text);
+	            speechSynthesis.speak(textToSpeech);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var options = this.renderOptions(),
+	                imageEnterAnimation = this.setEntranceAnimation();
+	
 	            return _react2.default.createElement(
 	                'div',
-	                { className: 'question bounceInUp' },
+	                { className: 'question' },
 	                _react2.default.createElement(
 	                    'p',
 	                    { className: 'question__heading' },
-	                    this.props.question
+	                    this.props.question.question
 	                ),
-	                _react2.default.createElement('img', { className: 'question__image', style: questionStyle, src: this.props.resourceUrl }),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'question__image-holder' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'question__explanation clearfix' },
+	                        _react2.default.createElement(
+	                            'p',
+	                            null,
+	                            this.props.question.explanation
+	                        ),
+	                        _react2.default.createElement(
+	                            'button',
+	                            { className: 'question__explanation-close circular right' },
+	                            'OK!'
+	                        )
+	                    ),
+	                    _react2.default.createElement('img', { className: 'question__image', style: imageEnterAnimation, src: this.props.question.resource.url })
+	                ),
 	                _react2.default.createElement(
 	                    'ul',
 	                    { className: 'question__otpion-list no-bullet clearfix' },
 	                    options
 	                )
 	            );
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            this.speak(this.props.question.question);
 	        }
 	    }]);
 	
@@ -21693,7 +21757,8 @@
 	        url: 'build/images/apple.png'
 	    },
 	    options: ['apple', 'peach', 'pear', 'orange'],
-	    answer: 'apple'
+	    answer: 'apple',
+	    explanation: 'This is an apple'
 	}, {
 	    id: 2,
 	    question: 'What shape is this?',
@@ -21702,7 +21767,8 @@
 	        url: 'build/images/square.png'
 	    },
 	    options: ['square', 'triangle', 'circle', 'rectangle'],
-	    answer: 'square'
+	    answer: 'square',
+	    explanation: 'A square is a shape with four sides of equal length'
 	}, {
 	    id: 3,
 	    question: 'Is this a letter or number?',
@@ -21711,7 +21777,8 @@
 	        url: 'build/images/three.png'
 	    },
 	    options: ['letter', 'number'],
-	    answer: 'number'
+	    answer: 'number',
+	    explanation: 'This is the number 3'
 	}, {
 	    id: 4,
 	    question: 'How many letters are in the alphabet?',
@@ -21720,7 +21787,8 @@
 	        url: 'build/images/alphabet.png'
 	    },
 	    options: ['10', '12', '18', '26'],
-	    answer: '26'
+	    answer: '26',
+	    explanation: 'There are 26 letters in the english alphabet'
 	}, {
 	    id: 5,
 	    question: 'What Shape is this?',
@@ -21729,7 +21797,8 @@
 	        url: 'build/images/triangle.png'
 	    },
 	    options: ['square', 'triangle', 'rectangle', 'circle'],
-	    answer: 'triangle'
+	    answer: 'triangle',
+	    explanation: 'A triangle is a shape that has 3 sides'
 	}];
 	
 	exports.questions = questions;
