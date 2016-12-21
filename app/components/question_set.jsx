@@ -106,7 +106,6 @@ export class QuestionSet extends React.Component {
     }
 
     render() {
-        console.log(this.state);
         return (
             <div className = 'question-set'>
                 <Question

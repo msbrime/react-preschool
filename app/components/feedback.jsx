@@ -22,7 +22,7 @@ export default class Feedback extends React.Component {
 
         for(let i = 1; i <= this.props.triesLeft; i++){
             let animationDelay = {
-                'animation-delay' :  i * this.badgeDelay + 's'
+                animationDelay :  i * this.badgeDelay + 's'
             }
 
             badges.push(

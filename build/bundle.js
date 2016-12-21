@@ -21615,7 +21615,6 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            console.log(this.state);
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'question-set' },
@@ -21803,7 +21802,7 @@
 	
 	            for (var i = 1; i <= this.props.triesLeft; i++) {
 	                var animationDelay = {
-	                    'animation-delay': i * this.badgeDelay + 's'
+	                    animationDelay: i * this.badgeDelay + 's'
 	                };
 	
 	                badges.push(_react2.default.createElement("span", { className: "badge animated bounceIn", style: animationDelay }));
