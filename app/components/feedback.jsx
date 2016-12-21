@@ -9,15 +9,25 @@ export default class Feedback extends React.Component {
             wrong : "Oh no! You got this one wrong",
             right : "That's Right!"
         };
+
+        this.badgeDelay = 0.5;
     }
+
+
 
     render(){
 
         let badges = [],
         active = (this.props.active) ? "active" : "";
 
-        for(let i = 0; i < this.props.triesLeft; i++){
-            badges.push(<span className="badge"></span>);
+        for(let i = 1; i <= this.props.triesLeft; i++){
+            let animationDelay = {
+                'animation-delay' :  i * this.badgeDelay + 's'
+            }
+
+            badges.push(
+                <span className="badge animated bounceIn" style = {animationDelay}></span>
+            );
         }
 
         return(
@@ -25,7 +35,7 @@ export default class Feedback extends React.Component {
                 <p>{ (this.props.triesLeft > 0) ? this.narrations.right : this.narrations.wrong }</p>
                 <p>{this.props.explanation}</p>
                 <div className="question__score text-center">
-                    {badges}
+                    {this.props.active ? badges : false}
                 </div>
                 <button className = 'question__explanation-close circular right'
                     onClick = {() =>  this.props.next()}>

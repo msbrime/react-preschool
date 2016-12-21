@@ -21788,6 +21788,8 @@
 	            wrong: "Oh no! You got this one wrong",
 	            right: "That's Right!"
 	        };
+	
+	        _this.badgeDelay = 0.5;
 	        return _this;
 	    }
 	
@@ -21798,8 +21800,13 @@
 	
 	            var badges = [],
 	                active = this.props.active ? "active" : "";
-	            for (var i = 0; i < this.props.triesLeft; i++) {
-	                badges.push(_react2.default.createElement("span", { className: "badge" }));
+	
+	            for (var i = 1; i <= this.props.triesLeft; i++) {
+	                var animationDelay = {
+	                    'animation-delay': i * this.badgeDelay + 's'
+	                };
+	
+	                badges.push(_react2.default.createElement("span", { className: "badge animated bounceIn", style: animationDelay }));
 	            }
 	
 	            return _react2.default.createElement(
@@ -21818,7 +21825,7 @@
 	                _react2.default.createElement(
 	                    "div",
 	                    { className: "question__score text-center" },
-	                    badges
+	                    this.props.active ? badges : false
 	                ),
 	                _react2.default.createElement(
 	                    "button",
