@@ -6,10 +6,15 @@
 }
 
 body{
-   font-size:5em;
+
+  font-size:2em;
    color : $text;
    font-family : schoolBell;
    background-color: #f9f9f9;
+
+    @media #{$medium}{
+         font-size:5em;
+    }
 }
 
 button{
@@ -18,18 +23,28 @@ button{
     color: $text;
     box-shadow: 0px 1px 1px 1px rgba(0,0,0,0.2);
     font-family:inherit;
-    font-size:1.5rem;
+    font-size:1.2rem;
 
     &.circular{
-        padding:10px;
-        width: 80px;
-        height:80px;
+        padding:5px;
+        width: 50px;
+        height:50px;
         border-radius:100%;
         outline:none;
+
+        @media #{$medium}{
+            padding:10px;
+            width: 80px;
+            height:80px;
+        }
     }
 
     &:hover,&:focus{
         background-color:#f6903d;
+    }
+
+    @media #{$medium}{
+        font-size:1.5rem;
     }
 }
 
@@ -40,9 +55,14 @@ button{
 .question{
 
     &__heading{
-        font-size : 3.5rem;
+        font-size : 2.5rem;
         padding:20px;
         text-align:center;
+
+        @media #{$medium}{
+            font-size : 3.5rem;
+        }
+
     }
 
     &__image-holder{
@@ -75,10 +95,15 @@ button{
 
         .badge{
             display:inline-block;
-            width : 80px;
-            height: 80px;
+            width : 50px;
+            height: 50px;
             background-image: url(../images/medal.png);
             background-size : 100% auto;
+
+            @media #{$medium}{
+                width : 80px;
+                height: 80px;
+            }
         }
     }
 
@@ -94,12 +119,12 @@ button{
     }
 
     &__option-item{
-        width:46%;
-        margin:2%;
+        width:90%;
+        max-width:300px;
+        margin:0 auto 15px;
         font-size : $question-text-size;
         padding: 10px;
-        display:inline-block;
-        float:left;
+        display:block;
 
         border : 5px solid $green;
         border-radius : 30%/90%;
@@ -109,9 +134,23 @@ button{
         transition: box-shadow 0.5s,background-color 0.5s;
 
         &:hover{
-            animation:pulse 1s infinite;
              box-shadow: 0 3px 1px 1px rgba(0,0,0,0.2);
              background-color:$green;
+        }
+
+        @media #{$medium}{
+            width:46%;
+            margin:2%;
+            max-width:none;
+            padding: 10px;
+            display:inline-block;
+            float:left;
+
+            &:hover{
+                animation:pulse 1s infinite;
+                box-shadow: 0 3px 1px 1px rgba(0,0,0,0.2);
+                background-color:$green;
+            }
         }
     }
 
