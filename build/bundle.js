@@ -21447,7 +21447,11 @@
 	
 	var _question_set = __webpack_require__(173);
 	
-	var _questions = __webpack_require__(176);
+	var _welcome = __webpack_require__(176);
+	
+	var _score_card = __webpack_require__(177);
+	
+	var _questions = __webpack_require__(179);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -21463,13 +21467,63 @@
 	    function App(props) {
 	        _classCallCheck(this, App);
 	
-	        return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+	        var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+	
+	        var maxScore = _this.getMaxScore(_questions.questions);
+	        _this.state = {
+	            score: 0,
+	            maxScore: maxScore,
+	            playing: 0
+	        };
+	        return _this;
 	    }
 	
 	    _createClass(App, [{
+	        key: 'play',
+	        value: function play() {
+	            this.setState({ playing: 1 });
+	        }
+	    }, {
+	        key: 'showScore',
+	        value: function showScore() {
+	            this.setState({ playing: 2 });
+	        }
+	    }, {
+	        key: 'setScore',
+	        value: function setScore(score) {
+	            var newScore = score + this.state.score;
+	            this.setState({ score: newScore });
+	        }
+	    }, {
+	        key: 'getMaxScore',
+	        value: function getMaxScore(questions) {
+	
+	            return questions.reduce(function (acc, question) {
+	                console.log(question);
+	                return acc + (question.options.length - 1);
+	            }, 0);
+	        }
+	    }, {
+	        key: 'reset',
+	        value: function reset() {
+	            this.setState({
+	                score: 0,
+	                playing: 1
+	            });
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
-	            return _react2.default.createElement(_question_set.QuestionSet, { questions: _questions.questions });
+	
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(_welcome.Welcome, { play: this.play.bind(this), visible: this.state.playing == 0 }),
+	                _react2.default.createElement(_question_set.QuestionSet, { showScore: this.showScore.bind(this), setScore: this.setScore.bind(this),
+	                    questions: _questions.questions, visible: this.state.playing == 1 }),
+	                _react2.default.createElement(_score_card.ScoreCard, { reset: this.reset.bind(this), score: this.state.score,
+	                    maxScore: this.state.maxScore, visible: this.state.playing == 2 })
+	            );
 	        }
 	    }]);
 	
@@ -21555,6 +21609,7 @@
 	        value: function checkAnswer(answer) {
 	
 	            if (this.isCorrectAnswer(answer)) {
+	                this.props.setScore(this.state.tries);
 	                this.setState({
 	                    shouldAnimate: false,
 	                    answered: true
@@ -21572,7 +21627,7 @@
 	
 	                this.setState(newState);
 	            } else {
-	                this.reset();
+	                this.props.showScore();
 	            }
 	        }
 	    }, {
@@ -21613,21 +21668,34 @@
 	            this.setState(newState);
 	        }
 	    }, {
+	        key: 'componentDidUpdate',
+	        value: function componentDidUpdate(prevProps, prevState) {
+	            if (!this.props.visible) {
+	                this.reset();
+	            }
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'question-set' },
-	                _react2.default.createElement(_question2.default, {
-	                    key: this.state.questions.current.id,
-	                    question: this.state.questions.current,
-	                    shouldAnimate: this.state.shouldAnimate,
-	                    answered: this.state.answered,
-	                    triesLeft: this.state.tries,
-	                    checkAnswer: this.checkAnswer.bind(this),
-	                    nextQuestion: this.nextQuestion.bind(this)
-	                })
-	            );
+	
+	            if (this.props.visible) {
+	
+	                return _react2.default.createElement(
+	                    'div',
+	                    { className: 'question-set' },
+	                    _react2.default.createElement(_question2.default, {
+	                        key: this.state.questions.current.id,
+	                        question: this.state.questions.current,
+	                        shouldAnimate: this.state.shouldAnimate,
+	                        answered: this.state.answered,
+	                        triesLeft: this.state.tries,
+	                        checkAnswer: this.checkAnswer.bind(this),
+	                        nextQuestion: this.nextQuestion.bind(this)
+	                    })
+	                );
+	            }
+	
+	            return null;
 	        }
 	    }]);
 	
@@ -21845,6 +21913,205 @@
 
 /***/ },
 /* 176 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.Welcome = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Welcome = exports.Welcome = function (_React$Component) {
+	    _inherits(Welcome, _React$Component);
+	
+	    function Welcome() {
+	        _classCallCheck(this, Welcome);
+	
+	        return _possibleConstructorReturn(this, (Welcome.__proto__ || Object.getPrototypeOf(Welcome)).apply(this, arguments));
+	    }
+	
+	    _createClass(Welcome, [{
+	        key: "render",
+	        value: function render() {
+	
+	            if (this.props.visible) {
+	                return _react2.default.createElement(
+	                    "div",
+	                    { className: "welcome" },
+	                    _react2.default.createElement(
+	                        "p",
+	                        { className: "welcome-message" },
+	                        "Welcome to React Pre-School"
+	                    ),
+	                    _react2.default.createElement(
+	                        "button",
+	                        { onClick: this.props.play },
+	                        "play!"
+	                    )
+	                );
+	            }
+	
+	            return null;
+	        }
+	    }]);
+	
+	    return Welcome;
+	}(_react2.default.Component);
+
+/***/ },
+/* 177 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.ScoreCard = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _score = __webpack_require__(178);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var ScoreCard = exports.ScoreCard = function (_React$Component) {
+	    _inherits(ScoreCard, _React$Component);
+	
+	    function ScoreCard() {
+	        _classCallCheck(this, ScoreCard);
+	
+	        return _possibleConstructorReturn(this, (ScoreCard.__proto__ || Object.getPrototypeOf(ScoreCard)).apply(this, arguments));
+	    }
+	
+	    _createClass(ScoreCard, [{
+	        key: 'render',
+	        value: function render() {
+	
+	            if (this.props.visible) {
+	                return _react2.default.createElement(
+	                    'div',
+	                    { className: 'welcome' },
+	                    _react2.default.createElement(
+	                        'p',
+	                        { className: 'welcome-message' },
+	                        'Your Score Was ',
+	                        this.props.score,
+	                        ' out of ',
+	                        this.props.maxScore
+	                    ),
+	                    _react2.default.createElement(_score.Score, { score: this.props.score, maxScore: this.props.maxScore }),
+	                    _react2.default.createElement(
+	                        'button',
+	                        { onClick: this.props.reset },
+	                        'Play Again!'
+	                    )
+	                );
+	            }
+	
+	            return null;
+	        }
+	    }]);
+	
+	    return ScoreCard;
+	}(_react2.default.Component);
+
+/***/ },
+/* 178 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.Score = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Score = exports.Score = function (_React$Component) {
+	    _inherits(Score, _React$Component);
+	
+	    function Score() {
+	        _classCallCheck(this, Score);
+	
+	        return _possibleConstructorReturn(this, (Score.__proto__ || Object.getPrototypeOf(Score)).apply(this, arguments));
+	    }
+	
+	    _createClass(Score, [{
+	        key: 'render',
+	        value: function render() {
+	            var badges = this.getBadges(this.props.score, this.props.maxScore);
+	
+	            return _react2.default.createElement(
+	                'ul',
+	                { className: 'score inline-list' },
+	                badges
+	            );
+	        }
+	    }, {
+	        key: 'getBadges',
+	        value: function getBadges(score, maxScore) {
+	
+	            var badges = [];
+	
+	            for (var i = 0; i < maxScore; i++) {
+	                var appendClasses = 'badge';
+	
+	                if (score < 1) {
+	                    appendClasses += " badge--empty";
+	                }
+	
+	                badges.push(_react2.default.createElement('li', { className: appendClasses }));
+	                score--;
+	            }
+	
+	            return badges;
+	        }
+	    }]);
+	
+	    return Score;
+	}(_react2.default.Component);
+
+/***/ },
+/* 179 */
 /***/ function(module, exports) {
 
 	'use strict';

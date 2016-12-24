@@ -45,6 +45,7 @@ export class QuestionSet extends React.Component {
     checkAnswer(answer){
 
         if(this.isCorrectAnswer(answer)){
+            this.props.setScore(this.state.tries);
             this.setState({
                 shouldAnimate:false,
                 answered:true
@@ -67,7 +68,7 @@ export class QuestionSet extends React.Component {
             this.setState(newState);
         }
         else{
-            this.reset();
+            this.props.showScore();
         }
     }
 
@@ -105,19 +106,32 @@ export class QuestionSet extends React.Component {
             this.setState(newState);
     }
 
+    componentDidUpdate(prevProps, prevState) {
+      if(!this.props.visible){
+          this.reset();
+      }
+   }
+
     render() {
-        return (
-            <div className = 'question-set'>
-                <Question
-                    key = {this.state.questions.current.id}
-                    question = {this.state.questions.current}
-                    shouldAnimate = {this.state.shouldAnimate}
-                    answered = {this.state.answered}
-                    triesLeft = {this.state.tries}
-                    checkAnswer = {this.checkAnswer.bind(this)}
-                    nextQuestion = {this.nextQuestion.bind(this)}
-                />
-            </div>
-        );
+
+        if(this.props.visible){
+
+            return (
+                <div className = 'question-set'>
+                    <Question
+                        key = {this.state.questions.current.id}
+                        question = {this.state.questions.current}
+                        shouldAnimate = {this.state.shouldAnimate}
+                        answered = {this.state.answered}
+                        triesLeft = {this.state.tries}
+                        checkAnswer = {this.checkAnswer.bind(this)}
+                        nextQuestion = {this.nextQuestion.bind(this)}
+                    />
+                </div>
+            );
+
+        }
+
+        return null;
     }
 }
