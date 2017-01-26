@@ -21486,6 +21486,7 @@
 	    }, {
 	        key: 'showScore',
 	        value: function showScore() {
+	            alert('now for your score');
 	            this.setState({ playing: 2 });
 	        }
 	    }, {
