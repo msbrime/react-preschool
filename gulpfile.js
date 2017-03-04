@@ -24,10 +24,16 @@ var
         output : io.dest
     }
 
+function logError(error){
+    console.log(error);
+    this.emit('end');
+}
+
 gulp.task("sass", function () {
         console.log(cssPaths.input);
     return gulp.src(cssPaths.input)
         .pipe(sass({ outputStyle: 'compressed' }))
+        .on('error',logError)
         .pipe(autoprefixer())
         .pipe(gulp.dest(cssPaths.output))
         .pipe(browserSync.stream());
@@ -36,6 +42,7 @@ gulp.task("sass", function () {
 gulp.task('bundle',function () {
     return gulp.src(jsPaths.input)
         .pipe(webpack(require('./webpack.config.js')))
+        .on('error',logError)
         .pipe(gulp.dest(jsPaths.output));
 });
 

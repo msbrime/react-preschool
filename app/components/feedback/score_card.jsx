@@ -1,11 +1,10 @@
 import React from 'react';
 import { Score } from './score.jsx';
 
-export class ScoreCard extends React.Component{
+export default class ScoreCard extends React.Component{
 
         render(){
 
-            if(this.props.visible){
                 return(
                     <div className="welcome">
                         <p className="welcome-message">
@@ -16,8 +15,6 @@ export class ScoreCard extends React.Component{
                         <button onClick = {this.props.reset}>Play Again!</button>
                     </div>
                 );
-            }
-
-            return null;
         }
+
 }

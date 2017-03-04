@@ -1,23 +1,21 @@
 import React from 'react';
+import { Link } from 'react-router';
 
-export class Welcome extends React.Component{
-
+export default class Welcome extends React.Component{
 
     render(){
 
-        if(this.props.visible){
-            return(
-                <div className="welcome">
-                    <p className="welcome-message">
-                        Welcome to React Pre-School
-                    </p>
+        return(
+            <div className="welcome">
+                <p className="welcome-message">
+                    Welcome to React Pre-School
+                </p>
 
-                    <button onClick = {this.props.play}>play!</button>
-                </div>
-            );
-        }
-
-        return null;
+                <Link to='/quiz'>
+                    <button>play!</button>
+                </Link>
+            </div>
+        );
     }
 
 }

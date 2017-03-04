@@ -1,8 +1,7 @@
 import React from 'react';
-import  Question from './question.jsx';
+import Question from './question.jsx';
 
-
-export class QuestionSet extends React.Component {
+export default class QuestionSet extends React.Component {
 
     constructor(props) {
         super(props);
@@ -114,7 +113,6 @@ export class QuestionSet extends React.Component {
 
     render() {
 
-        if(this.props.visible){
 
             return (
                 <div className = 'question-set'>
@@ -130,8 +128,5 @@ export class QuestionSet extends React.Component {
                 </div>
             );
 
-        }
-
-        return null;
     }
 }

@@ -12,7 +12,7 @@ var config = {
                 test: /\.jsx?/,
                 include: path.resolve(__dirname + "/app/"),
                 loader: 'babel-loader',
-                query: {
+                options: {
                     'presets': ['es2015', 'react']
                 }
             }
