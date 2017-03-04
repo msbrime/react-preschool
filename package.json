@@ -5,8 +5,9 @@
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "serve": "webpack-dev-server",
-    "build": "webpack"
+    "serve": "gulp serve",
+    "build": "gulp build",
+    "start": "gulp watch"
   },
   "keywords": [
     "challenge",
@@ -19,8 +20,7 @@
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.1",
     "gulp-sass": "^2.3.2",
-    "path": "^0.12.7",
-    "webpack": "^1.13.3"
+    "path": "^0.12.7"
   },
   "devDependencies": {
     "babel-core": "^6.18.0",
@@ -29,6 +29,7 @@
     "babel-preset-react": "^6.16.0",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
+    "webpack": "^2.2.1",
     "webpack-dev-server": "^1.16.2"
   }
 }

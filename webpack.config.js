@@ -1,36 +1,22 @@
 var
-    webpack = require("webpack"),
-    path = require('path');
-
-
-var
-    BUILD_DIR = path.resolve(__dirname + '/build'),
-    APP_DIR = path.resolve(__dirname + '/app');
-
+    path = require('path'),
+    webpack = require('webpack');
 
 var config = {
-    entry: APP_DIR + '/index.jsx',
     output: {
-        path: BUILD_DIR,
         filename: 'bundle.js',
-        publicPath: BUILD_DIR,
     },
     module: {
         loaders: [
             {
                 test: /\.jsx?/,
-                include: APP_DIR,
-                loader: 'babel',
+                include: path.resolve(__dirname + "/app/"),
+                loader: 'babel-loader',
                 query: {
                     'presets': ['es2015', 'react']
                 }
             }
         ]
-    },
-    devServer: {
-        inline: true,
-        contentBase: "./",
-        port: 8080
     },
     devtool: 'source-map'
     // plugins: [

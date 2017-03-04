@@ -21,7 +21,6 @@ export default class App extends React.Component {
     }
 
     showScore(){
-        alert('now for your score');
         this.setState({playing:2});
     }
 

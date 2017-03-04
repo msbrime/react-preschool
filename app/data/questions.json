@@ -1,7 +1,7 @@
 [
     {
         "id": 1,
-        "question": "Whatfruitisthis?",
+        "question": "What fruit is this?",
         "resource": {
             "type": "image",
             "url": "build/images/apple.png"
