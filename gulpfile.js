@@ -19,7 +19,7 @@ var
     },
 
     jsPaths = {
-        input : io.app + '/components/app.jsx',
+        input : io.app + '/index.jsx',
         watch : [ io.app + '/**/*.js' , io.app + '/**/*.jsx'],
         output : io.dest
     }
