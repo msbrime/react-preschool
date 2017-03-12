@@ -1,132 +1,109 @@
 import React from 'react';
 import Question from './question.jsx';
+import { REDUCE_TRIES , SET_QUESTION , UPDATE_SCORE , RESET, SHOW_FEEDBACK,HIDE_FEEDBACK } from '../../actions/actions';
+import store from '../../store';
 
 export default class QuestionSet extends React.Component {
 
     constructor(props) {
         super(props);
-
-        this.state = this.setQuestion(this.props.questions);
-    }
-
-    setQuestion(questionArray,answeredQuestion){
-
-        let
-            answered = (this.state) ? this.state.questions.answered : [],
-            currentIndex = this.getRandomIndex(questionArray),
-            current = questionArray[currentIndex],
-            unanswered = questionArray.filter((question,index) => {
-                 return index !== currentIndex;
-                }
-            );
-
-       if(answeredQuestion){
-           answered.push(answeredQuestion);
-       }
-
-        return {
-            questions : {
-                answered : answered,
-                current : current,
-                unanswered : unanswered
-            },
-            tries : current.options.length - 1,
-            shouldAnimate:true,
-            answered:false
-        };
+        this.state = store.getState().questions;
 
     }
-
-    getRandomIndex(elementArray){
-        return Math.floor(Math.random()*elementArray.length);
+    
+    componentDidMount(){
+        this.unsubscribe = store.subscribe(() => {
+            this.setState(store.getState().questions); 
+        });
+    }
+    
+    componentWillUnmount(){
+          this.unsubscribe();
     }
 
     checkAnswer(answer){
 
         if(this.isCorrectAnswer(answer)){
-            this.props.setScore(this.state.tries);
-            this.setState({
-                shouldAnimate:false,
-                answered:true
-            });
+           this.showFeedback();
         }
         else{
             this.reduceTries();
         }
-
     }
-
+    
+    updateScore(){
+    store.dispatch({
+            type: UPDATE_SCORE,
+            payload:{
+                increment: store.getState().questions.tries
+        }}
+     );         
+    }
+    
+    showFeedback(){
+        
+        store.dispatch({
+            type:SHOW_FEEDBACK
+        });
+        
+    }
+    
+    hideFeedback(){
+        store.dispatch({
+            type:HIDE_FEEDBACK
+        });
+    }
+    
     nextQuestion(){
-        if(this.state.questions.unanswered.length > 0){
-
-            let newState = this.setQuestion(
-                this.state.questions.unanswered,
-                this.state.questions.current
+        
+        if(store.getState().questions.remaining > 0){
+            this.hideFeedback();
+            this.updateScore();
+            store.dispatch({
+                    type: SET_QUESTION
+                }
             );
-
-            this.setState(newState);
         }
         else{
-            this.props.showScore();
+            this.reset();
         }
     }
 
     reduceTries(){
-        if(this.state.answered) return;
-        var tries = this.state.tries;
-        tries--;
-        if(tries <= 0){
-            this.setState({
-                tries:tries,
-                shouldAnimate:false,
-                answered:true
-            });
+        if( store.getState().questions.tries > 0){
+            store.dispatch({type:REDUCE_TRIES})
         }
         else{
-            this.setState({
-                tries:tries,
-                shouldAnimate:false,
-                answered:false
-            });
+            this.showFeedback();
         }
+
     }
 
     showAnswer(){
-        alert(this.state.questions.current.explanation);
+        alert(store.getState().questions.current.explanation);
     }
 
     isCorrectAnswer(answer){
-        return this.state.questions.current.answer === answer;
+        return store.getState().questions.current.answer === answer;
     }
 
     reset(){
-            let newState = this.setQuestion(this.props.questions);
-            newState.questions.answered = [];
-            this.setState(newState);
+        store.dispatch({type: RESET});
     }
 
-    componentDidUpdate(prevProps, prevState) {
-      if(!this.props.visible){
-          this.reset();
-      }
-   }
-
     render() {
-
-
+        console.log(store.getState());
             return (
                 <div className = 'question-set'>
                     <Question
-                        key = {this.state.questions.current.id}
-                        question = {this.state.questions.current}
+                        question = {this.state.current}
                         shouldAnimate = {this.state.shouldAnimate}
-                        answered = {this.state.answered}
+                        answered = {store.getState().feedback}
                         triesLeft = {this.state.tries}
                         checkAnswer = {this.checkAnswer.bind(this)}
                         nextQuestion = {this.nextQuestion.bind(this)}
                     />
                 </div>
             );
-
     }
 }

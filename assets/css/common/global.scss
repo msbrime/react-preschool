@@ -53,7 +53,7 @@ button{
     text-align:center;
 
     &-message{
-        font-size:3.5rem;
+        font-size: $question-text-size + 1;
     }
 
     button{
@@ -97,12 +97,12 @@ button{
 .question{
 
     &__heading{
-        font-size : 2.5rem;
+        font-size : $question-text-size;
         padding:20px;
         text-align:center;
 
         @media #{$medium}{
-            font-size : 3.5rem;
+            font-size : $question-text-size + 1;
         }
 
     }

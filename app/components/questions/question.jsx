@@ -1,51 +1,41 @@
 import React from 'react';
+import Option from './option.jsx'
 import Feedback from '../feedback/feedback.jsx';
+import { animations,getRandomIndex } from '../../util';
 
 export default class Question extends React.Component {
 
     constructor(props) {
         super(props);
-
-        this.animations = [
-            'zoomIn','flipInY',
-            'fadeIn','bounceIn',
-            'flipInX','lightSpeedIn'
-        ];
     }
 
     shouldComponentUpdate(nextProps,nextState){
-        return nextProps.shouldAnimate || nextProps.answered;
+        return true;
+        // return nextProps.shouldAnimate || nextProps.answered;
     }
 
     renderOptions(){
-        let options = this.props.question.options.map(option => {
+        return this.props.question.options.map(option => {
             return (
-                <li className = 'question__option-item'
-                    onClick = { () =>  this.props.checkAnswer(option)} >
-                    {option}
-                </li>
+                <Option option = {option} clickHandler = { this.props.checkAnswer } />
             );
         });
-
-        return options;
     }
 
     setEntranceAnimation(){
-        let animation = this.animations[Math.floor(Math.random()*this.animations.length)];
+        let animation = animations[getRandomIndex(animations)];
         return {
             animation : `${animation} 1.5s`
         };
     }
 
-    speak(text){
-        let textToSpeech = new SpeechSynthesisUtterance(text);
-        speechSynthesis.speak(textToSpeech);
-    }
+    // speak(text){
+    //     let textToSpeech = new SpeechSynthesisUtterance(text);
+    //     speechSynthesis.speak(textToSpeech);
+    // }
 
     render() {
-        let
-            options = this.renderOptions(),
-            imageEnterAnimation = (this.props.answered) ? {} : this.setEntranceAnimation();
+        let imageEnterAnimation = (this.props.answered) ? {} : this.setEntranceAnimation();
 
         return (
             <div className = 'question'>
@@ -58,14 +48,11 @@ export default class Question extends React.Component {
                 </div>
 
                 <ul className = 'question__otpion-list no-bullet clearfix'>
-                    {options}
+                    {this.renderOptions()}
                 </ul>
             </div>
         )
     }
 
-    componentDidMount(){
-        this.speak(this.props.question.question);
-    }
 
 }

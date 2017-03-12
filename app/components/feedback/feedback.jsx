@@ -4,7 +4,7 @@ export default class Feedback extends React.Component {
 
     constructor(props){
         super(props);
-
+      
         this.narrations = {
             wrong : "Oh no! You got this one wrong",
             right : "That's Right!"
@@ -12,8 +12,6 @@ export default class Feedback extends React.Component {
 
         this.badgeDelay = 0.5;
     }
-
-
 
     render(){
 
@@ -44,7 +42,4 @@ export default class Feedback extends React.Component {
             </div>
         )
     }
-
-
-
 }
