@@ -1,6 +1,6 @@
 import { questions as questionSet } from '../data/questions';
 import { getRandomIndex } from '../util.js';
-import { REDUCE_TRIES, SET_QUESTION, RESET } from '../actions/actions';
+import { REDUCE_TRIES, SET_QUESTION, RESET, SET_ANSWERED } from '../actions/actions';
 
 /**
  * 
@@ -14,6 +14,11 @@ function randomQuestion(questions) {
         unanswered = questions.filter((question, index) => {
             return index !== currentIndex;
         });
+        
+    current.triesLeft = triesAllowed(current);
+    current.animate = true;
+    current.answered = false;
+    current.attempts = [];
 
     return { current: current, questions: unanswered };
 }
@@ -45,11 +50,10 @@ function setInitialQuestion(questionSet) {
 function setQuestion(questionSet, answeredQuestions) {
 
     let { current, questions} = randomQuestion(questionSet),
-        tries = triesAllowed(current),
         answered = answeredQuestions,
         remaining = questions.length,
-        state = { current, questions, tries, answered, remaining };
-
+        state = { current, questions, answered, remaining };
+   
     return state;
 }
 
@@ -61,13 +65,25 @@ let initialState = setInitialQuestion(questionSet);
 
 export default (state = initialState, action) => {
     switch (action.type) {
+        case SET_ANSWERED:
+            return Object.assign(state, { current : Object.assign(state.current,{answered:true,animate:false}) });
         case SET_QUESTION:
             let newState = setQuestion(state.questions, [...state.answered, state.current]);
             return newState;
         case REDUCE_TRIES:
-            return Object.assign(state, { tries: state.tries - 1 });
+            let newCurrentQuestionState = {
+                triesLeft : state.current.triesLeft - 1,
+                attempts : [...state.current.attempts,action.payload.attempt],
+                animate:false
+            }
+            return Object.assign(
+                state, 
+                { 
+                    current : Object.assign(state.current,newCurrentQuestionState) 
+                }
+            );
         case RESET:
-            return setInitialQuestion([...state.questions, ...state.answered, state.current]);
+            return setInitialQuestion(questionSet);
         default:
             return state;
     }

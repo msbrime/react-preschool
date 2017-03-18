@@ -4,3 +4,4 @@ export const REDUCE_TRIES = 'REDUCE_TRIES';
 export const RESET = 'RESET';
 export const SHOW_FEEDBACK = 'SHOW_FEEDBACK';
 export const HIDE_FEEDBACK = 'HIDE_FEEDBACK';
+export const SET_ANSWERED = 'SET_ANSWERED';
