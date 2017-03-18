@@ -7,20 +7,20 @@ import { REDUCE_TRIES, SET_QUESTION, RESET, SET_ANSWERED } from '../actions/acti
  * @param {type} questions
  * @returns {randomQuestion.questionsAnonym$3}
  */
-function randomQuestion(questions) {
+function randomQuestion(questions,answered) {
     let
-        currentIndex = getRandomIndex(questions),
-        current = questions[currentIndex],
-        unanswered = questions.filter((question, index) => {
-            return index !== currentIndex;
-        });
+        unanswered = questions.filter( question => {
+           return (answered.indexOf(question.id) < 0 ); 
+        }),
+        currentIndex = getRandomIndex(unanswered),
+        current = unanswered[currentIndex];
         
     current.triesLeft = triesAllowed(current);
     current.animate = true;
     current.answered = false;
     current.attempts = [];
 
-    return { current: current, questions: unanswered };
+    return current;
 }
 
 /**
@@ -35,23 +35,15 @@ function triesAllowed(question) {
 /**
  * 
  * @param {type} questionSet
- * @returns {setQuestion.state}
- */
-function setInitialQuestion(questionSet) {
-    return setQuestion(questionSet, []);
-}
-
-/**
- * 
- * @param {type} questionSet
  * @param {type} answeredQuestions
  * @returns {setQuestion.state}
  */
 function setQuestion(questionSet, answeredQuestions) {
 
-    let { current, questions} = randomQuestion(questionSet),
+    let current  = randomQuestion(questionSet,answeredQuestions),
+        questions = questionSet,
         answered = answeredQuestions,
-        remaining = questions.length,
+        remaining = questions.length - ( answeredQuestions.length + 1),
         state = { current, questions, answered, remaining };
    
     return state;
@@ -61,14 +53,24 @@ function setQuestion(questionSet, answeredQuestions) {
  * 
  * @type setQuestion.state
  */
-let initialState = setInitialQuestion(questionSet);
+let initialState = setQuestion(questionSet,[]);
 
 export default (state = initialState, action) => {
     switch (action.type) {
         case SET_ANSWERED:
-            return Object.assign(state, { current : Object.assign(state.current,{answered:true,animate:false}) });
+            return Object.assign(
+                state, 
+                { 
+                    current : Object.assign(
+                        state.current,
+                        {answered:true,animate:false} ) 
+                }
+            );
         case SET_QUESTION:
-            let newState = setQuestion(state.questions, [...state.answered, state.current]);
+            let newState = setQuestion(
+                state.questions, 
+                [...state.answered, state.current.id]
+            );
             return newState;
         case REDUCE_TRIES:
             let newCurrentQuestionState = {
@@ -79,11 +81,14 @@ export default (state = initialState, action) => {
             return Object.assign(
                 state, 
                 { 
-                    current : Object.assign(state.current,newCurrentQuestionState) 
+                    current : Object.assign(
+                        state.current,
+                        newCurrentQuestionState
+                    ) 
                 }
             );
         case RESET:
-            return setInitialQuestion(questionSet);
+            return setQuestion(state.questions,[])
         default:
             return state;
     }

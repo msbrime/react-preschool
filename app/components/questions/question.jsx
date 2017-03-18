@@ -1,23 +1,20 @@
 import React from 'react';
 import Option from './option.jsx';
-import Feedback from '../feedback/feedback.jsx';
 import { animations, getRandomIndex, contains } from '../../util';
 
 export default class Question extends React.Component {
-
-    constructor(props) {
-        super(props);
-    }
-
+    
+    /**
+     * 
+     */
     renderOptions() {
         return this.props.question.options.map(option => {
             let 
                 clickHandler = undefined,
                 disabled = true;
-            if (!contains(this.props.question.attempts, option) && 
-                !this.props.question.answered && 
-                !this.props.showFeedback ) {
-                clickHandler = this.props.checkAnswer;
+            
+            if (this.optionShouldBeEnabled(option)) {
+                clickHandler = this.props.optionClickHandler;
                 disabled = false;
             }
             
@@ -30,21 +27,33 @@ export default class Question extends React.Component {
         
         });
     }
-
-    setEntranceAnimation() {
-        let animation = animations[getRandomIndex(animations)];
-        return {
-            animation: `${animation} 1.5s`
-        };
+    
+    /**
+     * 
+     */
+    optionShouldBeEnabled(option){
+       return ( !contains(this.props.question.attempts, option) && 
+                !this.props.question.answered );  
+    }
+    
+    /**
+     * 
+     */
+    setImageEnterAnimation(shouldAnimate) {
+        if(shouldAnimate){
+            let animation = animations[getRandomIndex(animations)];
+            return { animation: `${animation} 1.5s` };
+        }
+        return {};
     }
 
     render() {
         let 
-            imageEnterAnimation = (this.props.question.animate) ? 
-                this.setEntranceAnimation() : 
-                {};
+            imageEnterAnimation = this.setImageEnterAnimation(
+                this.props.question.animate
+            ); 
 
-        return (
+        return(
                 <div className = 'question'>
                     
                     <p className = 'question__heading'>
@@ -52,12 +61,6 @@ export default class Question extends React.Component {
                     </p>
                 
                     <div className = 'question__image-holder'>
-                        
-                        <Feedback triesLeft = { this.props.question.triesLeft } 
-                            active = { this.props.showFeedback }
-                            explanation = { this.props.question.explanation } 
-                            next = { this.props.nextQuestion } 
-                        />
                         
                         <img className = 'question__image' 
                              style = { imageEnterAnimation } 

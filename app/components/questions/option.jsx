@@ -6,7 +6,7 @@ let Option = ({option,clickHandler,disabled}) => {
     
     return (
         <li className = { `${disabledClass} question__option-item` }
-            onClick = {() => { clickHandler(option) } } >
+            onClick = { () => { clickHandler(option) } } >
             {option}
         </li>
     );

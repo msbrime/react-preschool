@@ -1,42 +1,52 @@
 import React from 'react';
+import { narrations } from '../../util';
 
 export default class Feedback extends React.Component {
 
     constructor(props){
         super(props);
-      
-        this.narrations = {
-            wrong : "Oh no! You got this one wrong",
-            right : "That's Right!"
-        };
-
         this.badgeDelay = 0.5;
+    }
+    
+    /**
+     * 
+     */
+    renderBadges(){
+        let badges = [];
+        
+        for(let i = 1; i <= this.props.badges; i++){
+            let animationDelay = {
+                animationDelay :  `${ i * this.badgeDelay }s`
+            }
+
+            badges.push(
+                <span className="badge animated bounceIn" 
+                      style = { animationDelay } >
+                </span>
+            );
+        }
+        
+        return badges;
     }
 
     render(){
 
-        let badges = [],
-        active = (this.props.active) ? "active" : "";
-
-        for(let i = 1; i <= this.props.triesLeft; i++){
-            let animationDelay = {
-                animationDelay :  i * this.badgeDelay + 's'
-            }
-
-            badges.push(
-                <span className="badge animated bounceIn" style = {animationDelay}></span>
-            );
-        }
-
+        let badges = this.renderBadges();
         return(
-            <div className = {'question__explanation clearfix ' + active }>
-                <p>{ (this.props.triesLeft > 0) ? this.narrations.right : this.narrations.wrong }</p>
-                <p>{this.props.explanation}</p>
+            <div className = 'feedback clearfix animated fadeIn'>
+                <p>{ (this.props.badges > 0) ? 
+                      narrations.right : 
+                      narrations.wrong }
+                </p>
+                
+                <p>{this.props.text}</p>
+                
                 <div className="question__score text-center">
-                    {this.props.active ? badges : false}
+                    { badges }
                 </div>
+                
                 <button className = 'question__explanation-close circular right'
-                    onClick = {() =>  this.props.next()}>
+                    onClick = { this.props.action }>
                     OK!
                 </button>
             </div>
