@@ -1,9 +1,9 @@
 import React from 'react';
 
-export class Score extends React.Component{
+export default class Score extends React.Component{
     
     /**
-     * 
+     *
      * @returns {Score.render.badges|String}
      */
     render(){
@@ -11,10 +11,10 @@ export class Score extends React.Component{
 
         return(
             <ul className = 'score inline-list'>
-                {badges}
+                { badges }
             </ul>
         );
-    }
+    } 
     
     /**
      * 
@@ -34,5 +34,5 @@ export class Score extends React.Component{
 
         return badges;
     }
-    
+
 }

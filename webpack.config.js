@@ -3,6 +3,14 @@ var
     webpack = require('webpack');
 
 var config = {
+    resolve : {
+        modules : ["./app","node_modules"],
+        alias : {
+            presenters : path.resolve(__dirname,"app/components/presenters"),
+            containers : path.resolve(__dirname,"app/components/containers"),
+            pages : path.resolve(__dirname,"app/components/pages")
+        }
+    },
     output: {
         filename: 'bundle.js',
     },

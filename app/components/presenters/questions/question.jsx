@@ -1,6 +1,6 @@
 import React from 'react';
 import Option from './option.jsx';
-import { animations, getRandomIndex, contains } from '../../util';
+import { animations, getRandomIndex, contains } from 'util.js';
 
 export default class Question extends React.Component {
     
@@ -8,9 +8,9 @@ export default class Question extends React.Component {
      * 
      */
     renderOptions() {
-        return this.props.question.options.map(option => {
+        return this.props.question.options.map( (option,index) => {
             let 
-                clickHandler = undefined,
+                clickHandler = () => {},
                 disabled = true;
             
             if (this.optionShouldBeEnabled(option)) {
@@ -19,7 +19,7 @@ export default class Question extends React.Component {
             }
             
             return (
-                <Option option = {option} 
+                <Option key = {index} option = {option} 
                         clickHandler = {clickHandler} 
                         disabled = {disabled} 
                 />
@@ -34,7 +34,7 @@ export default class Question extends React.Component {
     optionShouldBeEnabled(option){
        return ( !contains(this.props.question.attempts, option) && 
                 !this.props.question.answered );  
-    }
+    }    
     
     /**
      * 

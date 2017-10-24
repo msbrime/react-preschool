@@ -1,5 +1,5 @@
 import React from 'react';
-import { narrations } from '../../util';
+import { narrations } from 'util.js';
 
 export default class Feedback extends React.Component {
 

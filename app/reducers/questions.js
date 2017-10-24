@@ -1,6 +1,12 @@
-import { questions as questionSet } from '../data/questions';
-import { getRandomIndex } from '../util.js';
-import { REDUCE_TRIES, SET_QUESTION, RESET, SET_ANSWERED } from '../actions/actions';
+import { getRandomIndex } from 'util.js';
+import { 
+    REDUCE_TRIES, 
+    NEXT_QUESTION, 
+    RESET, 
+    MARK_AS_ANSWERED,
+    SEED_QUESTIONS
+} from 'actions/actions';
+
 
 /**
  * 
@@ -53,32 +59,38 @@ function setQuestion(questionSet, answeredQuestions) {
  * 
  * @type setQuestion.state
  */
-let initialState = setQuestion(questionSet,[]);
+//let initialState = setQuestion(questionSet,[]);
+
+let initialState = null;
 
 export default (state = initialState, action) => {
     switch (action.type) {
-        case SET_ANSWERED:
+        case MARK_AS_ANSWERED:
             return Object.assign(
-                state, 
+                {} ,
+                state , 
                 { 
                     current : Object.assign(
-                        state.current,
-                        {answered:true,animate:false} ) 
+                        {} ,
+                        state.current ,
+                        { answered:true, animate:false } 
+                    ) 
                 }
             );
-        case SET_QUESTION:
+        case NEXT_QUESTION:
             let newState = setQuestion(
                 state.questions, 
                 [...state.answered, state.current.id]
             );
             return newState;
         case REDUCE_TRIES:
-            let newCurrentQuestionState = {
+            var newCurrentQuestionState = {
                 triesLeft : state.current.triesLeft - 1,
                 attempts : [...state.current.attempts,action.payload.attempt],
                 animate:false
-            }
+            };
             return Object.assign(
+                {} ,
                 state, 
                 { 
                     current : Object.assign(
@@ -89,6 +101,8 @@ export default (state = initialState, action) => {
             );
         case RESET:
             return setQuestion(state.questions,[])
+        case SEED_QUESTIONS:
+            return setQuestion(action.payload.questions,[])
         default:
             return state;
     }

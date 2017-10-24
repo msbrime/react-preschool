@@ -1,7 +1,6 @@
 import React from 'react';
-import QuestionSet from '../containers/question_set.jsx';
-import { questions } from '../data/questions.js';
-import store from '../store';
+import QuestionSet from 'containers/question_set.jsx';
+
 
 export default class Quiz extends React.Component {
 

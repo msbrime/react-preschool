@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router';
-import store from "../store";
 
 export default class Welcome extends React.Component{
 
