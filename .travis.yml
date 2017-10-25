@@ -11,7 +11,7 @@ script: gulp build
 
 before_deploy:
     - rm .gitignore
-     - 'echo -e "node_modules/\nbower_components/" > .gitignore'
+    - echo -e "node_modules/\nbower_components/" > .gitignore
 
 deploy:
   email: $GH_MAIL
