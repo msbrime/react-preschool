@@ -9,7 +9,13 @@ before_script:
 
 script: gulp build
 
+before_deploy:
+    - rm .gitignore
+     - 'echo -e "node_modules/\nbower_components/" > .gitignore'
+
 deploy:
+  email: $GH_MAIL
+  name: $GH_NAME
   provider: pages
   skip_cleanup: true
   github_token: $PAT

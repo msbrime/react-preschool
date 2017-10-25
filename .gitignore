@@ -4,5 +4,4 @@ build/
 .DS_Store
 .vscode/
 vendor/
-build/
 nbproject/
