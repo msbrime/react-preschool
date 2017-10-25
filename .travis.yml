@@ -20,7 +20,7 @@ deploy:
   skip_cleanup: true
   github_token: $PAT
   on:
-    branch: develop
+    branch: master
 
 branches:
     only:
