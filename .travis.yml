@@ -3,5 +3,13 @@ node_js :
     - "node"
 before_script:
     - npm install -g gulp
+    - npm install -g bower
+    - bower install
 script: gulp build
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $PAT
+  on:
+    branch: gh-pages
     
