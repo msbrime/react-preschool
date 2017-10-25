@@ -43,7 +43,9 @@ gulp.task('bundle',function () {
         .pipe(gulp.dest(jsPaths.output));
 });
 
-gulp.task('watch', ['sass','bundle'], function () {
+gulp.task('build',['sass','bundle']);
+
+gulp.task('watch', ['build'], function () {
     gulp.watch(cssPaths.watch, ['sass']);
     gulp.watch(jsPaths.watch,['bundle']).on('change',browserSync.reload)
     browserSync.init({
