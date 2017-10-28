@@ -1,8 +1,17 @@
-var
+const
     path = require('path'),
-    webpack = require('webpack');
+    webpack = require('webpack'),
+    UglifyJSPlugin = require('uglifyjs-webpack-plugin'),
+    
+    uglifyOptions = {
+        mangle: true,
+        output : {
+            comments : false,
+            beautify : false
+        }
+    };
 
-var config = {
+const config = {
     resolve : {
         modules : ["./app","node_modules"],
         alias : {
@@ -12,7 +21,7 @@ var config = {
         }
     },
     output: {
-        filename: 'bundle.js',
+        filename: '[name].js',
     },
     module: {
         loaders: [
@@ -26,10 +35,19 @@ var config = {
             }
         ]
     },
-    devtool: 'source-map'
-    // plugins: [
-    //     new webpack.optimize.UglifyJsPlugin({ minimize: true })
-    // ]
+     plugins: [
+         new UglifyJSPlugin({uglifyOptions:uglifyOptions}),
+           new webpack.optimize.CommonsChunkPlugin({
+            name: "vendor",
+            minChunks: function(module){
+              return module.context && module.context.indexOf("node_modules") !== -1;
+            }
+          }),
+          new webpack.optimize.CommonsChunkPlugin({
+            name: "manifest",
+            minChunks: Infinity
+          })
+     ]
 };
 
 module.exports = config;

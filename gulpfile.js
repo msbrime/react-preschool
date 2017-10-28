@@ -9,6 +9,7 @@ var
     path = require('path'),
     newer = require('gulp-newer'),
     imagemin = require('gulp-imagemin'),
+    cleanCss= require('gulp-clean-css'),
 
     io = {
         assets: path.resolve(__dirname + "/assets/"),
@@ -44,6 +45,7 @@ gulp.task("sass", function () {
         .pipe(plumber())
         .pipe(sass(sassConfig))
         .pipe(autoprefixer())
+        .pipe(cleanCss({level:{1:{ specialComments:false }}}))
         .pipe(gulp.dest(cssPaths.output))
         .pipe(browserSync.stream());
 });
