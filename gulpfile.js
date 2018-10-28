@@ -37,7 +37,11 @@ var
         
     sassConfig = { 
         outputStyle: 'compressed',
-        includePaths: ["./node_modules","./bower_components"]
+        includePaths: [
+            "./node_modules/foundation-sites",
+            "./node_modules/animate.css",
+            "./node_modules/normalize-scss"
+        ]
     };
 
 gulp.task("sass", function () {
