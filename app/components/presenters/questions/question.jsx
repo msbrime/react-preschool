@@ -69,7 +69,7 @@ export default class Question extends React.Component {
                         
                     </div>
                 
-                    <ul className = 'question__otpion-list no-bullet clearfix'>
+                    <ul className = 'question__option-list no-bullet clearfix'>
                         {this.renderOptions()}
                     </ul>
                 

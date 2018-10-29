@@ -11,11 +11,27 @@ body{
    color : $text;
    font-family: 'Mali', cursive;
    background-color: #f9f9f9;
+   margin: 0;
 
    @include breakpoint(medium) {
          font-size:5em;
     }
 }
+
+ul{
+    padding: 0;
+    list-style: none;
+}
+
+.app-container{
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.text-center{
+    text-align: center;
+}
+
 
 button{
     border:2px solid #f6903d;
@@ -24,6 +40,7 @@ button{
     box-shadow: 0px 1px 1px 1px rgba(0,0,0,0.2);
     font-family:inherit;
     font-size:1.2rem;
+    height: 60px;
 
     &.circular{
         padding:5px;
@@ -51,14 +68,19 @@ button{
 .welcome{
     margin-top:50px;
     text-align:center;
+    height: 100vh;
 
     &-message{
         font-size: $question-text-size + 1;
     }
 
     button{
-        border-radius:20px;
-    }
+        border-radius:10px;
+        -webkit-border-radius:10px;
+        -moz-border-radius:10px;
+        -ms-border-radius:10px;
+        -o-border-radius:10px;
+}
 
     @include breakpoint(medium) {
         margin-top:100px;
@@ -67,12 +89,11 @@ button{
 
 .score{
 
-    margin : 10px auto 20px;
-    width: 250px;
-
-    @include breakpoint(medium) {
-        margin : 10px auto;
-    }
+    width: 400px;
+    display: grid;
+    grid-template: 70px / repeat(auto-fit,50px);
+    grid-auto-rows: 70px;
+    margin: 0 auto;
 
     .badge{
         margin-bottom : 15px;
@@ -92,24 +113,33 @@ button{
 
 .feedback{
     background-color: #e1f5c4;
-    border-radius : 10px;
-    padding : 20px;
-    box-shadow : 0px 0px 1px 1px rgba(0,0,0,0.05) ,
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.05) ,        
         0px 5px 2px 2px rgba(0,0,0,0.1);
     position:absolute;
     z-index:200;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width:100%;
+    min-width: 500px;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
     
     p{
         font-size: 2rem;
     }
+
+    @include breakpoint(small only){
+        min-width: 300px;
+        max-width: 350px;
+    }
 }
 
 .question-set{
-    margin-top:20px;
+    margin-top:20px; 
 }
 
 .question{
@@ -153,23 +183,43 @@ button{
     }
 
     &__option-list{
+        display: grid;
+        grid-template: 70px / 47.5% 47.5%;
+        grid-row-gap: 15px;
+        grid-auto-rows: 70px;
+        grid-column-gap: 2.5%;
 
+        @include breakpoint(small only) {
+            grid-template: 70px / repeat(auto-fill, 100%);
+        }
     }
 
     &__option-item{
         width:90%;
         max-width:300px;
-        margin:0 auto 15px;
-        font-size : $question-text-size;
-        padding: 10px;
+        font-size: $question-text-size;
+        display: flex;
+        align-content: center;
+        justify-content: center;
         display:block;
-
-        border : 5px solid $green;
-        border-radius : 30%/90%;
+        border: 5px solid $green;
+        border-radius: 10px;
         text-align:center;
         text-transform:lowercase;
         cursor:pointer;
         transition: box-shadow 0.5s,background-color 0.5s;
+        justify-self: end;
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        -ms-border-radius: 10px;
+        -o-border-radius: 10px;
+        &:nth-child(2n){
+            justify-self: start;
+
+            @include breakpoint(small only) {
+                justify-self: center;
+            }
+        }
 
         &:hover{
              box-shadow: 0 3px 1px 1px rgba(0,0,0,0.2);
@@ -178,9 +228,7 @@ button{
 
         @include breakpoint(medium only) {
             width:46%;
-            margin:2%;
             max-width:none;
-            padding: 10px;
             display:inline-block;
             float:left;
 
@@ -190,6 +238,11 @@ button{
                 background-color:$green;
             }
         }
+
+        @include breakpoint(small only) {
+            justify-self: center;
+        }
+
     }
     
     &__option-item--disabled{
@@ -199,5 +252,4 @@ button{
         background-color: transparent !important;
         box-shadow: none !important;
     }
-
 }
