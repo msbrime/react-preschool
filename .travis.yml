@@ -4,14 +4,12 @@ node_js :
 
 before_script:
     - npm install -g gulp
-    - npm install -g bower
-    - bower install
 
 script: gulp build
 
 before_deploy:
     - rm .gitignore
-    - echo -e "node_modules/\nbower_components/" > .gitignore
+    - echo -e "node_modules/" > .gitignore
 
 deploy:
   email: $GH_MAIL
