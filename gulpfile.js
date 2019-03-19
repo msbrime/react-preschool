@@ -68,12 +68,14 @@ task('bundle',function () {
         .pipe(dest(jsPaths.output))
 });
 
-task('bundle:watch',series('bundle',function () {
+task('bundle:watch',series('bundle',function (done) {
     browserSync.reload();
+    done();
 }));
 
-task('images:watch',series('images',function () {
+task('images:watch',series('images',function (done) {
     browserSync.reload();
+    done();
 }));
 
 task('serve',function(done){

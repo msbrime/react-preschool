@@ -1,9 +1,10 @@
 language: node_js
 node_js : 
-    - "node"
+  - "node"
 
-before_script:
+install:
     - npm install -g gulp
+    - npm install
 
 script: gulp build
 

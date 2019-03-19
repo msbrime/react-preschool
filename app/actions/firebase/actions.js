@@ -1,10 +1,12 @@
-import {initializeApp} from 'firebase';
+import firebase from 'firebase/app';
+import "firebase/firebase-database";
+import "firebase/firebase-auth";
 import config from './config';
 import { seedQuestions,setMaxScore } from 'actions/creators';
 import { getMaxScore } from 'util.js';
 
 const 
-    fb = initializeApp(config),
+    fb = firebase.initializeApp(config),
     questionsRef = fb.database().ref('questions');
 
 export function fetchQuestions(){
