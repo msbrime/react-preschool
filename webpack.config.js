@@ -20,11 +20,8 @@ const
         FIREBASE_MESSAGE_SENDER_ID: JSON.stringify(process.env.FIREBASE_MESSAGE_SENDER_ID)
     };
 
-if(process.env.NODE_ENV === "production"){
-    definePluginValues["process.env.NODE_ENV"] = "production"
-}
-
 const config = {
+    mode: process.env.NODE_ENV || "development",
     resolve : {
         modules : ["./app","node_modules"],
         alias : {
@@ -33,33 +30,36 @@ const config = {
             pages : path.resolve(__dirname,"app/components/pages")
         }
     },
+    optimization: {
+        splitChunks: {
+            cacheGroups: {
+                commons: {
+                  test: /[\\/]node_modules[\\/]/,
+                  name: 'vendor',
+                  chunks: 'all'
+                }
+            }
+        }
+    },
     output: {
         filename: '[name].js',
     },
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.jsx?/,
                 include: path.resolve(__dirname + "/app/"),
-                loader: 'babel-loader',
-                options: {
-                    'presets': ['es2015', 'react']
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        'presets': ['@babel/preset-react','@babel/preset-env']
+                    }
                 }
             }
         ]
     },
     plugins: [
         new webpack.DefinePlugin(definePluginValues),
-        new webpack.optimize.CommonsChunkPlugin({
-            name: "vendor",
-            minChunks: function(module){
-              return module.context && module.context.indexOf("node_modules") !== -1;
-            }
-        }),
-        new webpack.optimize.CommonsChunkPlugin({
-            name: "manifest",
-            minChunks: Infinity
-        }),
         new UglifyJSPlugin({uglifyOptions:uglifyOptions})    
     ]
 };
