@@ -9,7 +9,20 @@ const
             comments : false,
             beautify : false
         }
+    },
+
+    definePluginValues = {
+        FIREBASE_API_KEY: JSON.stringify(process.env.FIREBASE_API_KEY),
+        FIREBASE_AUTH_DOMAIN: JSON.stringify(process.env.FIREBASE_AUTH_DOMAIN),
+        FIREBASE_DATABASE_URL: JSON.stringify(process.env.FIREBASE_DATABASE_URL),
+        FIREBASE_PROJECT_ID: JSON.stringify(process.env.FIREBASE_PROJECT_ID),
+        FIREBASE_STORAGE_BUCKET: JSON.stringify(process.env.FIREBASE_STORAGE_BUCKET),
+        FIREBASE_MESSAGE_SENDER_ID: JSON.stringify(process.env.FIREBASE_MESSAGE_SENDER_ID)
     };
+
+if(process.env.NODE_ENV === "production"){
+    definePluginValues["process.env.NODE_ENV"] = "production"
+}
 
 const config = {
     resolve : {
@@ -36,7 +49,7 @@ const config = {
         ]
     },
     plugins: [
-        new UglifyJSPlugin({uglifyOptions:uglifyOptions}),
+        new webpack.DefinePlugin(definePluginValues),
         new webpack.optimize.CommonsChunkPlugin({
             name: "vendor",
             minChunks: function(module){
@@ -47,14 +60,7 @@ const config = {
             name: "manifest",
             minChunks: Infinity
         }),
-        new webpack.DefinePlugin({
-            FIREBASE_API_KEY: JSON.stringify(process.env.FIREBASE_API_KEY),
-            FIREBASE_AUTH_DOMAIN: JSON.stringify(process.env.FIREBASE_AUTH_DOMAIN),
-            FIREBASE_DATABASE_URL: JSON.stringify(process.env.FIREBASE_DATABASE_URL),
-            FIREBASE_PROJECT_ID: JSON.stringify(process.env.FIREBASE_PROJECT_ID),
-            FIREBASE_STORAGE_BUCKET: JSON.stringify(process.env.FIREBASE_STORAGE_BUCKET),
-            FIREBASE_MESSAGE_SENDER_ID: JSON.stringify(process.env.FIREBASE_MESSAGE_SENDER_ID)
-        })
+        new UglifyJSPlugin({uglifyOptions:uglifyOptions})    
     ]
 };
 

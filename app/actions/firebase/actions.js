@@ -15,9 +15,7 @@ export function fetchQuestions(){
                 let maxScore = getMaxScore(snapshot.val());
                 dispatch(seedQuestions(snapshot.val()));
                 dispatch(setMaxScore(maxScore));
-                //dispatch(listenForUpdates());  
             });
-         
     };
 }
 
