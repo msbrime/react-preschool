@@ -1,5 +1,5 @@
 var
-    gulp = require('gulp'),
+    { task, series, parallel, src, dest, watch } = require('gulp'),
     sass = require('gulp-sass'),
     autoprefixer = require('gulp-autoprefixer'),
     webpackStream = require('webpack-stream'),
@@ -44,50 +44,51 @@ var
         ]
     };
 
-gulp.task("sass", function () {
-    return gulp.src(cssPaths.input)
+task("sass", function () {
+    return src(cssPaths.input)
         .pipe(plumber())
         .pipe(sass(sassConfig))
         .pipe(autoprefixer())
         .pipe(cleanCss({level:{1:{ specialComments:false }}}))
-        .pipe(gulp.dest(cssPaths.output))
+        .pipe(dest(cssPaths.output))
         .pipe(browserSync.stream());
 });
 
-gulp.task("images",function(){
-    return gulp.src(imagePaths.input)
+task("images",function(){
+    return src(imagePaths.input)
         .pipe(newer(imagePaths.output))
         .pipe(imagemin())
-        .pipe(gulp.dest(imagePaths.output));
+        .pipe(dest(imagePaths.output));
 });
 
-gulp.task('bundle',function () {
-    return gulp.src(jsPaths.input)
+task('bundle',function () {
+    return src(jsPaths.input)
         .pipe(plumber())
         .pipe(webpackStream(require('./webpack.config.js'),webpack))
-        .pipe(gulp.dest(jsPaths.output))
+        .pipe(dest(jsPaths.output))
 });
 
-gulp.task('bundle:watch',['bundle'],function () {
+task('bundle:watch',series('bundle',function () {
     browserSync.reload();
-});
+}));
 
-gulp.task('images:watch',['images'],function () {
+task('images:watch',series('images',function () {
     browserSync.reload();
-});
+}));
 
-gulp.task('serve',function(){
+task('serve',function(done){
     browserSync.init({
         server:{
             baseDir:'./'
         }
     });
+    done();
 });
 
-gulp.task('build',['sass','images','bundle']);
+task('build',parallel('sass','images','bundle'));
 
-gulp.task('watch', ['build','serve'], function () {
-    gulp.watch(cssPaths.watch, ['sass']);
-    gulp.watch(imagePaths.watch, ['images:watch']);
-    gulp.watch(jsPaths.watch,['bundle:watch']);
-});
+task('watch', series('build','serve', function () {
+    watch(cssPaths.watch, series('sass'));
+    watch(imagePaths.watch, series('images:watch'));
+    watch(jsPaths.watch,series('bundle:watch'));
+}));
