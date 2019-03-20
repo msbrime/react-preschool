@@ -21,10 +21,10 @@ export function nextQuestion() {
     };
 }
 
-export function reduceTries(guessedAnswer) {
+export function reduceTries(optionId) {
     return {
         type: ACTIONS.REDUCE_TRIES,
-        payload: {attempt: guessedAnswer}
+        payload: { attempt: optionId}
     };
 }
 

@@ -5,12 +5,12 @@ import { fetchQuestions } from 'actions/firebase/actions';
 import { 
     incrementScore,
     markAsAnswered,
-    reset,
     nextQuestion,
     reduceTries
 } from 'actions/creators';
 import Feedback from 'presenters/feedback/feedback.jsx';
 import Question from 'presenters/questions/question.jsx';
+import Options from 'presenters/questions/options.jsx';
 
 
 class QuestionSet extends React.Component {
@@ -24,28 +24,14 @@ class QuestionSet extends React.Component {
     /**
      * 
      */
-    checkAnswer(answer){
-        if(this.isCorrectAnswer(answer)){
-           this.incrementScore(this.props.questions.current.triesLeft);
-           this.setAsAnswered();
+    checkAnswer(optionId){
+        if(this.isCorrectAnswer(optionId)){
+           this.props.incrementScore(this.props.activeQuestion.triesLeft);
+           this.props.markAsAnswered();
         }
         else{
-            this.reduceTries(answer);
+            this.props.reduceTries(optionId);
         }
-    }
-    
-    /**
-     * 
-     */
-    incrementScore(increment){
-        this.props.dispatch(incrementScore(increment));         
-    }
-    
-    /**
-     * 
-     */
-    setAsAnswered(){
-        this.props.dispatch(markAsAnswered());        
     }
     
     /**
@@ -53,69 +39,76 @@ class QuestionSet extends React.Component {
      */
     nextQuestion(){
         if(this.props.questions.remaining > 0){
-            this.props.dispatch(nextQuestion());
+            this.props.nextQuestion();
         }
         else{
             this.props.router.push("/score");
         }
     }
-    
-    /**
-     * 
-     */
-    reduceTries(attempt){
-        this.props.dispatch(reduceTries(attempt)); 
-    }
 
     /**
      * 
      */
-    isCorrectAnswer(answer){
-        return this.props.questions.current.answer === answer;
+    isCorrectAnswer(optionId){
+        return (
+            this.props.activeQuestion.answer === 
+            this.props.options[optionId].value
+        );
     }
-    
     
     /**
      * 
      */
     showFeedback(){
         return ( 
-            this.props.questions.current.triesLeft == 0 || 
-            this.props.questions.current.answered 
+            this.props.activeQuestion.triesLeft == 0 || 
+            this.props.activeQuestion.answered 
         );
     }
      
     render() {
-
         if(!!this.props.questions){
-        return (
-            <div className = 'question-set'>
-                <Question
-                    question = { this.props.questions.current }
-                    optionClickHandler = { this.checkAnswer.bind(this) }
-                />
-                { this.showFeedback() ?
-                <Feedback badges = { this.props.questions.current.triesLeft } 
-                    active = { this.showFeedback() }
-                    text = { this.props.questions.current.explanation } 
-                    action = { this.nextQuestion.bind(this) } 
-                />
-                : ''}
-            </div>
-        );
+            return (
+                <div className = 'question-set'>
+                    <Question
+                        question = { this.props.activeQuestion }
+                        optionClickHandler = { this.checkAnswer.bind(this) }>
+                        <Options 
+                            options={this.props.questions.current.options} 
+                            clickHandler={this.checkAnswer.bind(this)} />
+                    </Question>
+                    <Feedback
+                        active = { this.showFeedback() }
+                        score = {this.props.activeQuestion.triesLeft}
+                        text = { this.props.questions.current.explanation } 
+                        action = { this.nextQuestion.bind(this) } />
+                </div>
+            );
         }
         
-            return (<p>Loading...</p>);
+        return (<p>Loading...</p>);
     }
 }
 
-let mapStateToProps = 
-    state => ({ questions : state.questions });
+let mapStateToProps = state => {
+    if(state.questions){
+        return { 
+            questions : state.questions,
+            activeQuestion : state.questions.current,
+            options : state.questions.current.options
+        };
+    }
+    
+    return {};
+}
     
 let mapDispatchToProps = 
     dispatch => ({ 
         fetchQuestions : () => { dispatch(fetchQuestions()) } ,
-        dispatch : dispatch
+        incrementScore : increment => { dispatch(incrementScore(increment)) },
+        markAsAnswered : () => { dispatch(markAsAnswered()) },
+        reduceTries : optionId => { dispatch(reduceTries(optionId)) },
+        nextQuestion : () => { dispatch(nextQuestion()) }
     });
 
 

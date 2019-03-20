@@ -19,14 +19,26 @@ function randomQuestion(questions,answered) {
            return (answered.indexOf(question.id) < 0 ); 
         }),
         currentIndex = getRandomIndex(unanswered),
-        current = unanswered[currentIndex];
+        current = {...unanswered[currentIndex]};
         
     current.triesLeft = triesAllowed(current);
     current.animate = true;
     current.answered = false;
-    current.attempts = [];
+    current.options = normalizeOptions(current.options)
 
     return current;
+}
+
+
+function normalizeOptions(options){
+    let normalizedOptions = {};
+    options.forEach( (option,index) => {
+        normalizedOptions[`option${index}`] = {
+            value: option,
+            attempted: false
+        }
+    });
+    return normalizedOptions;
 }
 
 /**
@@ -60,6 +72,13 @@ function setQuestion(questionSet, answeredQuestions) {
  * @type setQuestion.state
  */
 //let initialState = setQuestion(questionSet,[]);
+/**
+ * {
+ *  questions:{
+ *  current: 
+ * }
+ * }
+ */
 
 let initialState = null;
 
@@ -84,21 +103,23 @@ export default (state = initialState, action) => {
             );
             return newState;
         case REDUCE_TRIES:
-            var newCurrentQuestionState = {
-                triesLeft : state.current.triesLeft - 1,
-                attempts : [...state.current.attempts,action.payload.attempt],
-                animate:false
-            };
-            return Object.assign(
-                {} ,
-                state, 
-                { 
-                    current : Object.assign(
-                        state.current,
-                        newCurrentQuestionState
-                    ) 
-                }
-            );
+            let 
+                attemptedOptionState = {
+                    value : state.current.options[action.payload.attempt].value,
+                    attempted : true
+                },
+                newOptions = {
+                    ...state.current.options,
+                    [action.payload.attempt]: attemptedOptionState},
+                newCurrentQuestionState = {
+                    triesLeft : state.current.triesLeft - 1,
+                    animate:false,
+                    options: newOptions
+                };
+            return {
+                ...state, 
+                current : {...state.current,...newCurrentQuestionState} 
+            }
         case RESET:
             return setQuestion(state.questions,[])
         case SEED_QUESTIONS:

@@ -8,17 +8,10 @@ import { syncHistoryWithStore } from 'react-router-redux';
 
 let history = syncHistoryWithStore(hashHistory,store);
 
-class Root extends React.Component{
-
-    render(){
-        return (
-            <Provider store = {store}>
-                <Router history = {history} routes ={routes} >
-                    </Router>
-            </Provider>                            
-        );
-    }
-
-}
+const Root = () => (
+    <Provider store = {store}>
+        <Router history = {history} routes ={routes}/>
+    </Provider>  
+);
 
 ReactDOM.render(<Root />,document.getElementById("app"));
