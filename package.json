@@ -6,8 +6,8 @@
   "dependencies": {
     "animate.css": "^3.5.2",
     "normalize-scss": "^7.0.1",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1",
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4",
     "react-redux": "^5.0.6",
     "react-router": "^3.0.5",
     "react-router-redux": "^4.0.8",

@@ -2,11 +2,13 @@ import React from 'react';
 
 const option = ({value, clickHandler, disabled}) => {
    
-   let disabledClass = (disabled) ? 'question__option-item--disabled' : '';
+    const [disabledClass, handler] = (disabled) ? 
+    ['question__option-item--disabled',() => {}] : 
+    ['', clickHandler];
     
     return (
         <li className = {`${disabledClass} question__option-item`}
-            onClick ={clickHandler}>
+            onClick ={handler}>
             {value}
         </li>
     );

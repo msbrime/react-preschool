@@ -72,13 +72,7 @@ function setQuestion(questionSet, answeredQuestions) {
  * @type setQuestion.state
  */
 //let initialState = setQuestion(questionSet,[]);
-/**
- * {
- *  questions:{
- *  current: 
- * }
- * }
- */
+
 
 let initialState = null;
 

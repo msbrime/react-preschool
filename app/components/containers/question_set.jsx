@@ -55,6 +55,16 @@ class QuestionSet extends React.Component {
             this.props.options[optionId].value
         );
     }
+
+    transformOptions(options){
+        if(!this.props.activeQuestion.answered) return options
+        
+        let modifiedOptions = {...this.props.options}
+        for(let option in modifiedOptions){
+            modifiedOptions[option].attempted = true
+        }
+        return modifiedOptions;
+    }
     
     /**
      * 
@@ -70,11 +80,9 @@ class QuestionSet extends React.Component {
         if(!!this.props.questions){
             return (
                 <div className = 'question-set'>
-                    <Question
-                        question = { this.props.activeQuestion }
-                        optionClickHandler = { this.checkAnswer.bind(this) }>
+                    <Question question = { this.props.activeQuestion } >
                         <Options 
-                            options={this.props.questions.current.options} 
+                            options={this.transformOptions(this.props.options)} 
                             clickHandler={this.checkAnswer.bind(this)} />
                     </Question>
                     <Feedback
