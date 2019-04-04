@@ -78,18 +78,21 @@ class QuestionSet extends React.Component {
      
     render() {
         if(!!this.props.questions){
+            let [showFeedback, feedbackClass] = this.showFeedback() ?
+                [true, " answered"] : [false, ""]
             return (
-                <div className = 'question-set'>
-                    <Question question = { this.props.activeQuestion } >
-                        <Options 
-                            options={this.transformOptions(this.props.options)} 
-                            clickHandler={this.checkAnswer.bind(this)} />
-                    </Question>
-                    <Feedback
-                        active = { this.showFeedback() }
-                        score = {this.props.activeQuestion.triesLeft}
-                        text = { this.props.questions.current.explanation } 
-                        action = { this.nextQuestion.bind(this) } />
+                <div className = {`question${feedbackClass}`}>
+                    <div className="question__body">
+                        <Question question = { this.props.activeQuestion } />
+                        <Feedback
+                            active = { showFeedback }
+                            score = {this.props.activeQuestion.triesLeft}
+                            text = { this.props.questions.current.explanation } 
+                            action = { this.nextQuestion.bind(this) } />
+                    </div>
+                    <Options 
+                        options={this.transformOptions(this.props.options)} 
+                        clickHandler={this.checkAnswer.bind(this)} />
                 </div>
             );
         }

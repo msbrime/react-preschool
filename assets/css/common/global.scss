@@ -1,255 +1,260 @@
-@font-face {
-    font-family: schoolBell;
-    src: url(../fonts/Schoolbell.ttf);
-    font-style : normal;
-    font-weight : 100;
+
+*{
+    margin: 0;
+    padding:0;
+    box-sizing:border-box;
 }
 
 body{
-
-  font-size:2em;
-   color : $text;
-   font-family: 'Mali', cursive;
-   background-color: #f9f9f9;
-   margin: 0;
-
-   @include breakpoint(medium) {
-         font-size:5em;
-    }
-}
-
-ul{
-    padding: 0;
-    list-style: none;
-}
-
-#app{
-    max-width: 100%;
-    overflow-x: hidden;
-}
-
-.text-center{
-    text-align: center;
-}
-
-
-button{
-    border:2px solid #f6903d;
-    background-color:#e1f5c4;
-    color: $text;
-    box-shadow: 0px 1px 1px 1px rgba(0,0,0,0.2);
-    font-family:inherit;
-    font-size:1.2rem;
-    height: 60px;
-
-    &.circular{
-        padding:5px;
-        width: 50px;
-        height:50px;
-        border-radius:100%;
-        outline:none;
-
-        @include breakpoint(medium) {
-            padding:10px;
-            width: 80px;
-            height:80px;
-        }
-    }
-
-    &:hover,&:focus{
-        background-color:#f6903d;
-    }
-
-    @include breakpoint(medium) {
-        font-size:1.5rem;
-    }
-}
-
-.welcome{
-    margin-top:50px;
-    text-align:center;
-    height: 100vh;
-
-    &-message{
-        font-size: $question-text-size + 1;
-    }
-
-    button{
-        border-radius:10px;
-        -webkit-border-radius:10px;
-        -moz-border-radius:10px;
-        -ms-border-radius:10px;
-        -o-border-radius:10px;
-}
-
-    @include breakpoint(medium) {
-        margin-top:100px;
-    }
-}
-
-.score{
-
-    width: 400px;
-    display: grid;
-    grid-template: 70px / repeat(auto-fit,50px);
-    grid-auto-rows: 70px;
-    margin: 0 auto;
-
-    .badge{
-        margin-bottom : 15px;
-        width:50px;
-        height:50px;
-        margin-left:0;
-        background-image:url('../images/medal.png');
-        background-repeat: no-repeat;
-        background-size: cover;
-
-        &--empty{
-          background-image:url('../images/medal-empty.png');
-        }
-    }
-
-}
-
-.feedback{
-    background-color: #e1f5c4;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.05) ,        
-        0px 5px 2px 2px rgba(0,0,0,0.1);
-    position:fixed;
-    z-index:200;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    min-width: 500px;
-    -webkit-transform: translate(-50%, -50%);
-    -moz-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    -o-transform: translate(-50%, -50%);
-    
-    p{
-        font-size: 2rem;
-    }
-
-    @include breakpoint(small only){
-        min-width: 300px;
-        max-width: 350px;
-    }
-}
-
-.question-set{
-    margin-top:20px; 
+    min-height: 100vh;
+    background: linear-gradient(65deg,rgba($secondary-color-dark, 0.4),#e5f9ff,rgba($secondary-color-dark, 0.4)),
+        linear-gradient(165deg,rgba($primary-color, 1),#e5f9ff,rgba($primary-color, 1));
+    background-repeat: no-repeat;
 }
 
 .question{
+    $question: &;
 
-    &__heading{
-        font-size : $question-text-size;
-        padding:20px;
-        text-align:center;
+    margin: 0 auto;
+    font-family: 'Kodchasan','Istok Web', sans-serif;
+    font-size: 1.25em;
+    color:$primary-text;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    padding: 20px;
+    max-width: 1000px;
 
-        @include breakpoint(medium) {
-            font-size : $question-text-size + 1;
+    &__button--next{
+        font-family: inherit;
+        border: none;
+        position: absolute;
+        bottom: 20px;
+        left: calc(50% - 50px);
+        padding: 10px 35px;
+        background: $primary-color;
+        line-height: 1;
+        border-radius: 3px;
+        font-size: inherit;
+        color: $white;
+        outline: none;
+        cursor: pointer;
+        box-shadow: 0 0 3px rgba(0,0,0,.5);
+
+        &:active{
+            box-shadow: 0 0 1px rgba(0,0,0,.5);
         }
-
-    }
-
-    &__image-holder{
-        position : relative;
     }
 
     &__score{
+        list-style: none;
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
 
-        .badge{
-            display:inline-block;
-            width : 50px;
-            height: 50px;
-            background-image: url(../images/medal.png);
-            background-size : 100% auto;
+        .rating{
+            padding: 0 10px;
+        }
+    }
 
-            @include breakpoint(medium) {
-                width : 80px;
-                height: 80px;
+    &__body,
+    &__options{
+        flex-basis: calc(50% - 10px);
+        max-width: 500px;
+
+        @media #{$small-screen}{
+            flex-basis: 100%;
+        }
+    }
+
+    &__body{
+        $root : &;
+        max-width: 500px;
+        position: relative;
+        transform-style: preserve-3d;
+        perspective: 1500px;
+        overflow: visible;
+
+        #{$question}.answered &{
+            &__face--front{
+                transform: rotateY(-180deg);
+            }
+    
+            &__face--back{
+                transform: rotateY(0deg);
+            }
+        }
+
+        &__face{
+            transition: transform .5s;
+            transform-origin: center center;
+            backface-visibility: hidden;
+            border-radius: 5px;
+            *border: 1px solid #ccc;
+            box-shadow: 0px 0px 5px rgba(0,0,0,.25);
+            width: 100%;
+            
+
+            &--front{
+                transform: rotateY(0deg);
+            }
+
+            &--back{
+                position: absolute;
+                top: 0;
+                left: 0;
+                transform: rotateY(180deg);
+                background-color: $white;
+                height: 100%;
+                padding: 20px;
+                color: $primary-text;
             }
         }
     }
 
     &__image{
-        display:block;
-        height: 300px;
-        width:auto;
-        margin:40px auto;
+      background-image: url("pic.png");
+      background-color: $white;
+      background-size: 50% 50%;
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 100%;
+      border-top-left-radius: inherit;
+      border-top-right-radius: inherit;
+
+      &::after{
+          display: block;
+          padding-bottom: 100%;
+          content: "";
+      }
     }
 
-    &__option-list{
-        display: grid;
-        grid-template: 70px / 47.5% 47.5%;
-        grid-row-gap: 15px;
-        grid-auto-rows: 70px;
-        grid-column-gap: 2.5%;
+    &__wording{
+        position: relative;
+        padding: 15px;
+        color: $white;
+        background-color: $primary-color;
+        border-bottom-left-radius: inherit;
+        border-bottom-right-radius: inherit;
 
-        @include breakpoint(small only) {
-            grid-template: 70px / repeat(auto-fill, 100%);
+        &::before{
+            position: absolute;
+            top: -25px;
+            left: 0;
+            display: block;
+            content: "";
+            height: 30px;
+            width: 100%;
+            background: url(../images/wave.svg)  no-repeat;
+            background-size: cover;
+            background-position-x: 30%;
+            transform: rotateX(180deg);
         }
     }
 
-    &__option-item{
-        width:90%;
-        max-width:300px;
-        font-size: $question-text-size;
-        display: flex;
-        align-content: center;
-        justify-content: center;
-        display:block;
-        border: 5px solid $green;
-        border-radius: 10px;
-        text-align:center;
-        text-transform:lowercase;
-        cursor:pointer;
-        transition: box-shadow 0.5s,background-color 0.5s;
-        justify-self: end;
-        -webkit-border-radius: 10px;
-        -moz-border-radius: 10px;
-        -ms-border-radius: 10px;
-        -o-border-radius: 10px;
-        &:nth-child(2n){
-            justify-self: start;
+    &__narration{
+        padding-bottom: 20px;
+    }
 
-            @include breakpoint(small only) {
-                justify-self: center;
+    &__options{
+        align-self: flex-start;
+        list-style: none;
+        display:flex;
+        flex-flow: row wrap;
+        justify-content: space-between;
+
+        #{$question}.answered &{
+            display: none;
+        }
+    }
+
+    &__option{
+        $root : &;
+        
+        -webkit-user-select:none;
+        flex-basis: 100%;
+        text-align: center;
+        position: relative;
+        padding: 15px;
+        border-radius: 5px;
+        box-shadow: 0 0 3px rgba(0,0,0,.5), 0px 0px 5px rgba(0,0,0,0) inset;
+        margin-top: 20px;
+        *background-image: linear-gradient(7deg, #fff, #dcdcdc 50%,#fff);
+        background-color: $white;
+        background-size: 20%;
+        background-repeat: no-repeat;
+        transition: transform 100ms, background-color .5s;
+
+        &:first-of-type{
+            margin-top: 0;
+
+            @media #{$small-screen}{
+                margin-top: 20px;
             }
         }
 
-        &:hover{
-             box-shadow: 0 3px 1px 1px rgba(0,0,0,0.2);
-             background-color:$green;
+        &--incorrect{
+            text-decoration: line-through;
+            background-color: rgba(red,.5);
+            color:#751f1f;
         }
 
-        @include breakpoint(medium only) {
-            width:46%;
-            max-width:none;
-            display:inline-block;
-            float:left;
+        &:hover:not(#{$root}--incorrect){
+            transform: scale(1.015);
+            cursor: pointer;
+        }
 
-            &:hover{
-                animation:pulse 1s infinite;
-                box-shadow: 0 3px 1px 1px rgba(0,0,0,0.2);
-                background-color:$green;
+        &:active:not(#{$root}--incorrect){
+            box-shadow: 0 0 3px rgba(0,0,0,0), 
+                0px 0px 5px rgba(0,0,0,.75) inset;
+            transform: scale(1);
+            background-clip: padding-box;     
+        }
+
+        &__icon{
+            position: absolute;
+            left: 15px;
+            fill: #a02121;
+
+            svg{
+                width:25px; 
+                height:25px;
             }
         }
+    }
+}
 
-        @include breakpoint(small only) {
-            justify-self: center;
+.rating{
+
+    i svg{
+        width: 40px;
+        height: 40px;
+        stroke:darken($gold,10%);
+        fill: transparent
+    }
+
+    &--filled{
+        i svg path,i svg{
+            fill:$gold;
         }
+    }
+}
 
-    }
-    
-    &__option-item--disabled{
-        animation:none !important;
-        color: #c1b9b9;
-        cursor:default;
-        background-color: transparent !important;
-        box-shadow: none !important;
-    }
+.spin-in{
+    transform: scale(0) rotate(360deg);
+    transform-origin: center;
+    animation : spin-in .5s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes spin-in{
+   90%{
+       transform: scale(1) rotate(0deg);
+   }
+   95%{
+    transform: scale(1.1) rotate(0deg);
+   }
+   100%{
+    transform: scale(1) rotate(0deg);
+   }
 }

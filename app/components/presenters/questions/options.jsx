@@ -16,7 +16,7 @@ const renderOptions = (options, clickHandler) => {
 }
 
 const options = props => (      
-    <ul className = 'question__option-list no-bullet clearfix'>
+    <ul className="question__options">
         { renderOptions(props.options, props.clickHandler) }
     </ul>
 )

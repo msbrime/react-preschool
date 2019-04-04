@@ -13,7 +13,7 @@ const renderBadges = (score,maxScore) => {
 }
 
 const score = props => (
-    <ul className = 'score inline-list'>
+    <ul className="question__score">
         { renderBadges(props.score, props.maxScore) }
     </ul>
 );

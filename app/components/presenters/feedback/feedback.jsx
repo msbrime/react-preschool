@@ -5,11 +5,11 @@ import Badge from 'presenters/feedback/badge.jsx';
 const renderBadges = badgeCount => {
     let 
         badges = [],
-        delayMultiplier = 0.5;
+        delayMultiplier = 0.3;
     
     for(let i = 1; i <= badgeCount; i++){
         let animationDelay = {
-            animationDelay :  `${ i * delayMultiplier }s`
+            animationDelay :  `${ (i * delayMultiplier) }s`
         }
         badges.push(<Badge animationDelay={animationDelay} key={i}/>);
     }
@@ -19,19 +19,23 @@ const renderBadges = badgeCount => {
 
 const feedback = props => {
     if(!props.active){
-        return null
+        return(
+            <div className="question__body__face question__body__face--back" />
+        );
     }
 
     return (
-        <div className = 'feedback clearfix animated fadeIn'>
-            <p>{ (props.score > 0) ? narrations.right : narrations.wrong }</p>
-            <p>{props.text}</p> 
-            <div className="question__score text-center">
+        <div className="question__body__face question__body__face--back">
+        <p className="question__narration">
+            { (props.score > 0) ? narrations.right : narrations.wrong }
+        </p>
+        <p>{props.text}</p>
+            <ul className="question__score">
                 { renderBadges(props.score) }
-            </div>   
-            <button className = 'question__explanation-close circular right'
+            </ul>   
+            <button className = 'question__button--next'
                 onClick = { props.action }>
-                OK!
+                next
             </button>
         </div>
     );
