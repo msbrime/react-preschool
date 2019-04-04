@@ -6,13 +6,15 @@ export default class Welcome extends React.Component{
     render(){
         return(
             <div className="welcome">
-                <p className="welcome-message">
-                    Welcome to React Pre-School
-                    </p>
+                <div className="welcome__inner">
+                    <p className="welcome__message">
+                        Welcome to React Pre-School
+                        </p>
 
-                <Link to='/quiz'>
-                    <button>play!</button>
-                </Link>
+                    <Link to='/quiz'>
+                        <button className="button">Play!</button>
+                    </Link>
+                </div>
             </div>
         );
     }

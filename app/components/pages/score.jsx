@@ -13,14 +13,15 @@ class Score extends React.Component{
     
     render(){
         return(
-            <div className="welcome">
-                
-                <p className="welcome-message">
-                    Your Score Was {this.props.score} out of {this.props.maxScore}
-                </p>
-                <ScoreView score = { this.props.score } 
-                       maxScore = { this.props.maxScore } ></ScoreView> 
-                <button onClick = {this.reset.bind(this)}>Play Again!</button>
+            <div className="score">
+                <div className="score__inner">
+                    <p className="score__message">
+                        Your Score Was {this.props.score} out of {this.props.maxScore}
+                    </p>
+                    <ScoreView score = { this.props.score } 
+                        maxScore = { this.props.maxScore } ></ScoreView> 
+                    <button className="button" onClick = {this.reset.bind(this)}>Play Again!</button>
+                </div>
             </div>
         );
     }

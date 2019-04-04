@@ -12,38 +12,36 @@ body{
     background-repeat: no-repeat;
 }
 
+#app{
+    font-family: 'Kodchasan','Istok Web', sans-serif;
+    min-height: inherit;
+    font-size: 1.25em;
+    color:$primary-text;
+}
+
 .question{
     $question: &;
 
     margin: 0 auto;
-    font-family: 'Kodchasan','Istok Web', sans-serif;
-    font-size: 1.25em;
-    color:$primary-text;
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
     padding: 20px;
-    max-width: 1000px;
+    max-width: 800px;
+    min-height: inherit;
+    align-content: center;
+    transition: align-content .2s;
 
-    &__button--next{
-        font-family: inherit;
-        border: none;
+    @media #{$small-screen}{
+        justify-content: center;
+        align-content: flex-start;
+    }
+
+    .button{
         position: absolute;
         bottom: 20px;
         left: calc(50% - 50px);
         padding: 10px 35px;
-        background: $primary-color;
-        line-height: 1;
-        border-radius: 3px;
-        font-size: inherit;
-        color: $white;
-        outline: none;
-        cursor: pointer;
-        box-shadow: 0 0 3px rgba(0,0,0,.5);
-
-        &:active{
-            box-shadow: 0 0 1px rgba(0,0,0,.5);
-        }
     }
 
     &__score{
@@ -60,7 +58,7 @@ body{
     &__body,
     &__options{
         flex-basis: calc(50% - 10px);
-        max-width: 500px;
+        max-width: 400px;
 
         @media #{$small-screen}{
             flex-basis: 100%;
@@ -69,7 +67,7 @@ body{
 
     &__body{
         $root : &;
-        max-width: 500px;
+        max-width: 400px;
         position: relative;
         transform-style: preserve-3d;
         perspective: 1500px;
@@ -90,11 +88,9 @@ body{
             transform-origin: center center;
             backface-visibility: hidden;
             border-radius: 5px;
-            *border: 1px solid #ccc;
             box-shadow: 0px 0px 5px rgba(0,0,0,.25);
             width: 100%;
             
-
             &--front{
                 transform: rotateY(0deg);
             }
@@ -238,6 +234,48 @@ body{
             fill:$gold;
         }
     }
+}
+
+.score, .welcome{
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 600px;
+    display: flex;
+    min-height: inherit;
+
+    &__inner{
+        padding: 20px;
+        background-color: $white;
+        box-shadow: 0 0 3px rgba(0,0,0,.5);
+        border-radius: 5px;
+        align-self: center;
+        justify-self: center;
+        width: 100%;
+        text-align: center;
+    }
+
+    &__message{
+        padding-bottom: 20px;
+        font-size: 1.35em;
+    }
+}
+
+.button{
+    font-family: inherit;
+    border: none;
+    padding: 10px 35px;
+    background: $primary-color;
+    line-height: 1;
+    border-radius: 3px;
+    font-size: inherit;
+    color: $white;
+    outline: none;
+    cursor: pointer;
+    box-shadow: 0 0 3px rgba(0,0,0,.5);
+
+    &:active{
+        box-shadow: 0 0 1px rgba(0,0,0,.5);
+    }    
 }
 
 .spin-in{
