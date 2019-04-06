@@ -1,0 +1,20 @@
+@keyframes spin-in{
+    90%{
+        transform: scale(1) rotate(0deg);
+    }
+    95%{
+     transform: scale(1.1) rotate(0deg);
+    }
+    100%{
+     transform: scale(1) rotate(0deg);
+    }
+}
+ 
+@keyframes move-background{
+    0%{
+        background-position: 150% 0;
+    }
+    100%{
+        background-position:0% 0;
+    }
+}

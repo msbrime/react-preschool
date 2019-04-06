@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { reset } from 'actions/creators';
-import { default as ScoreView } from 'presenters/feedback/score.jsx';
+import ScoreView from 'presenters/feedback/score.jsx';
 
 class Score extends React.Component{
     
@@ -13,9 +13,9 @@ class Score extends React.Component{
     
     render(){
         return(
-            <div className="score">
-                <div className="score__inner">
-                    <p className="score__message">
+            <div className="card score">
+                <div className="card__body">
+                    <p>
                         Your Score Was {this.props.score} out of {this.props.maxScore}
                     </p>
                     <ScoreView score = { this.props.score } 

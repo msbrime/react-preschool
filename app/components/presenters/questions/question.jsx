@@ -3,9 +3,14 @@ import React from 'react';
 const question = ({question}) => {
 
     return(
-        <div className="question__body__face question__body__face--front">
-            <div className="question__image" style={{backgroundImage:`url(${question.resource.url})`}} />
-            <p className="question__wording">{question.question}</p>
+        <div className="card__face card__face--front">
+            <div className="card__media">
+                <img src={question.resource.url} alt=""/>
+            </div>
+            <div className="card__body">
+                <p className="question__wording">{question.question}</p>
+            </div>
+            
         </div>
     );
 }

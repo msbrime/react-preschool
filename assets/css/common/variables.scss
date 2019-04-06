@@ -1,3 +1,4 @@
+/****    COLORS    ****/
 $background-accent:#e5f9ff;
 $background-primary:#d5fbf8;
 $primary-color:#00bfaf;
@@ -6,5 +7,17 @@ $secondary-color-dark:#124050;
 $white:#fff;
 $gold:#f1cb01;
 
-//breakpoints
-$small-screen : "screen and (max-width : 600px)";
+
+/****    TYPOGRAPHY    ****/
+$main-font: "Kodchasan";
+$fallback-font: "Istok Web";
+$system-fallback-font: sans-serif;
+$font-family-declaration: "#{$main-font}", 
+    "#{$fallback-font}", 
+    "#{$system-fallback-font}";
+$base-font-size: 1.15em;
+$large-font-size: 1.35em;
+
+
+/****    BREAKPOINTS    ****/
+$small-screen: "screen and (max-width : 600px)";

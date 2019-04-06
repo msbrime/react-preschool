@@ -1,0 +1,58 @@
+.option-list{
+    
+    list-style: none;
+    display:flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+
+    .question.answered &{
+        display: none;
+    }
+    
+    &__item{
+        $root : &;
+        
+        -webkit-user-select:none;
+        flex-basis: 100%;
+        text-align: center;
+        position: relative;
+        padding: 15px;
+        border-radius: 5px;
+        box-shadow: 0 0 50px rgba(0,0,0,.15);
+        margin-top: 20px;
+        background-color: $white;
+        background-size: 20%;
+        background-repeat: no-repeat;
+        transition: transform 100ms, background-color .5s;
+
+        &.loader{
+            @include loader;
+            padding: 25px;
+        }
+
+        &:first-of-type{
+            margin-top: 0;
+
+            @media #{$small-screen}{
+                margin-top: 20px;
+            }
+        }
+
+        &--incorrect{
+            text-decoration: line-through;
+            background-color: rgba(red,.5);
+            color:#751f1f;
+        }
+
+        &:hover:not(#{$root}--incorrect){
+            transform: scale(1.015);
+            cursor: pointer;
+        }
+
+        &:active:not(#{$root}--incorrect){
+            box-shadow: 0 0 1px rgba(0,0,0,.15);
+            transform: scale(1);
+            background-clip: padding-box;     
+        }
+    }
+}

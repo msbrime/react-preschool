@@ -20,23 +20,25 @@ const renderBadges = badgeCount => {
 const feedback = props => {
     if(!props.active){
         return(
-            <div className="question__body__face question__body__face--back" />
+            <div className="card__face card__face--back" />
         );
     }
 
     return (
-        <div className="question__body__face question__body__face--back">
-        <p className="question__narration">
-            { (props.score > 0) ? narrations.right : narrations.wrong }
-        </p>
-        <p>{props.text}</p>
-            <ul className="question__score">
-                { renderBadges(props.score) }
-            </ul>   
-            <button className = 'button'
-                onClick = { props.action }>
-                next
-            </button>
+        <div className="card__face card__face--back">
+            <div className="card__body">
+                <p className="question__narration">
+                    { (props.score > 0) ? narrations.right : narrations.wrong }
+                </p>
+                <p>{props.text}</p>
+                <ul className="question__score inline-list">
+                    { renderBadges(props.score) }
+                </ul>   
+                <button className = 'button'
+                    onClick = { props.action }>
+                    next
+                </button>        
+            </div>
         </div>
     );
 }

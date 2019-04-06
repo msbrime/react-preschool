@@ -74,7 +74,7 @@ class QuestionSet extends React.Component {
     renderLoader(){
         return (
             <div className = {`question`}>
-                <div className="question__body"> 
+                <div className="card"> 
                 <QuestionLoader />
                 </div> 
                 <OptionsLoader />
@@ -92,7 +92,7 @@ class QuestionSet extends React.Component {
 
         return (
             <div className = {`question${feedbackClass}`}>
-                <div className="question__body">
+                <div className="card card--flippable">
                     <Question question = { this.props.activeQuestion } />
                     <Feedback
                         active = { showFeedback }

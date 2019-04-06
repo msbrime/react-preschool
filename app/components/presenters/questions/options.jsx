@@ -16,7 +16,7 @@ const renderOptions = (options, clickHandler) => {
 }
 
 const options = props => (      
-    <ul className="question__options">
+    <ul className="option-list">
         { renderOptions(props.options, props.clickHandler) }
     </ul>
 )

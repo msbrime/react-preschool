@@ -1,0 +1,65 @@
+.card{
+    $card: &;
+    $border-radius: 5px;
+    $shadow: 0 0 50px rgba(0,0,0,.15);
+    $padding: 20px;
+
+    border-radius: $border-radius;
+    box-shadow: $shadow;
+
+    &--flippable{
+        position: relative;
+        transform-style: preserve-3d;
+        perspective: 1500px;
+        overflow: visible;
+        box-shadow: none;
+    }
+
+    &__face{
+        background-color: $white;
+        border-radius: $border-radius;
+        transition: transform .5s;
+        transform-origin: center center;
+        backface-visibility: hidden;
+        box-shadow: $shadow;
+        width: 100%;
+        
+        &--front{
+            transform: rotateY(0deg);
+        }
+
+        &--back{
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: rotateY(180deg);
+            height: 100%;
+        }
+    }
+
+    &__body{
+        padding: $padding;
+        position: relative;
+        border-radius: inherit;
+        background-color: $white;
+        width: 100%;
+    }
+
+    &__media{
+        border-radius: inherit;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-content: center;
+
+        &>*{
+            align-self: center;
+        }
+
+        &::after{
+            display: block;
+            padding-bottom: 100%;
+            content: "";
+        }
+    }
+}

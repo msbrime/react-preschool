@@ -1,6 +1,6 @@
 import React from 'react';
 
-const option = () => <li className = "question__option loader" />
+const option = () => <li className = "option-list__item loader" />
 
 const renderOptions = () => {
     return [1,2,3,4].map(option)
@@ -8,7 +8,7 @@ const renderOptions = () => {
 
 const optionsLoader = () => {
     return (
-        <ul className="question__options">
+        <ul className="option-list">
             {renderOptions()}
         </ul>
     );

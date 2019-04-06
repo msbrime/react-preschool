@@ -1,0 +1,97 @@
+.question{
+    $question: &;
+
+    margin: 0 auto;
+    display: flex;
+    flex-flow: row wrap;
+    align-content: center;
+    justify-content: space-between;
+    padding: 20px;
+    max-width: 800px;
+    min-height: inherit;
+
+    @media #{$small-screen}{
+        align-content: flex-start;
+        justify-content: center;
+    }
+
+    &.answered{
+        .card__face--front{
+            transform: rotateY(-180deg);
+        }
+
+        .card__face--back{
+            transform: rotateY(0deg);
+        }
+    }
+
+    .card,
+    .option-list{
+        align-self: center;
+        flex-basis: calc(50% - 10px);
+        max-width: 400px;
+
+        @media #{$small-screen}{
+            align-self: flex-start;
+            flex-basis: 100%;
+        }
+    }
+
+    .card__media{
+        img{
+            width: 50%;
+            height: auto;
+        }   
+        
+        &.loader{
+            @include loader;
+        }
+    }
+
+    .card__face--front .card__body,
+    .card__body.loader{
+        background-color: $primary-color;
+        
+        &::before{
+            position: absolute;
+            top: -25px;
+            left: 0;
+            display: block;
+            content: "";
+            height: 30px;
+            width: 100%;
+            background: url(../images/wave.svg)  no-repeat;
+            background-size: cover;
+            background-position-x: 30%;
+            transform: rotateX(180deg);
+        } 
+        
+        svg{
+            border-radius: inherit;
+        }
+    }
+
+    .card__face--back .card__body{
+        height: 100%;
+    }
+
+    .button{
+        position: absolute;
+        bottom: 20px;
+        left: calc(50% - 50px);
+        padding: 10px 35px;
+    }
+
+    &__score{
+        margin-top: 20px;
+        justify-content: center;
+    }
+
+    &__wording{
+        color: $white;
+    }
+
+    &__narration{
+        padding-bottom: 20px;
+    }
+}

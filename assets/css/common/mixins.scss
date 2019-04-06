@@ -1,0 +1,12 @@
+@mixin loader{
+    background: linear-gradient(90deg, $white 33.33%, #ececec 66.66%, $white);
+    background-size: 300% 100%;
+    animation: move-background 1.5s infinite;
+}
+
+@mixin spin-in{
+    transform: scale(0) rotate(360deg);
+    transform-origin: center;
+    animation : spin-in .5s;
+    animation-fill-mode: forwards;
+}
