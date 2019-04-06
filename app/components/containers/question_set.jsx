@@ -11,6 +11,8 @@ import {
 import Feedback from 'presenters/feedback/feedback.jsx';
 import Question from 'presenters/questions/question.jsx';
 import Options from 'presenters/questions/options.jsx';
+import QuestionLoader from 'presenters/loaders/question_loader.jsx';
+import OptionsLoader from 'presenters/loaders/options_loader.jsx';
 
 
 class QuestionSet extends React.Component {
@@ -21,9 +23,7 @@ class QuestionSet extends React.Component {
         }
     }
        
-    /**
-     * 
-     */
+
     checkAnswer(optionId){
         if(this.isCorrectAnswer(optionId)){
            this.props.incrementScore(this.props.activeQuestion.triesLeft);
@@ -34,9 +34,7 @@ class QuestionSet extends React.Component {
         }
     }
     
-    /**
-     * 
-     */
+
     nextQuestion(){
         if(this.props.questions.remaining > 0){
             this.props.nextQuestion();
@@ -46,15 +44,14 @@ class QuestionSet extends React.Component {
         }
     }
 
-    /**
-     * 
-     */
+
     isCorrectAnswer(optionId){
         return (
             this.props.activeQuestion.answer === 
             this.props.options[optionId].value
         );
     }
+
 
     transformOptions(options){
         if(!this.props.activeQuestion.answered) return options
@@ -66,38 +63,48 @@ class QuestionSet extends React.Component {
         return modifiedOptions;
     }
     
-    /**
-     * 
-     */
-    showFeedback(){
+
+    shouldDisplayFeedback(){
         return ( 
             this.props.activeQuestion.triesLeft == 0 || 
             this.props.activeQuestion.answered 
         );
     }
+
+    renderLoader(){
+        return (
+            <div className = {`question`}>
+                <div className="question__body"> 
+                <QuestionLoader />
+                </div> 
+                <OptionsLoader />
+            </div>
+        );   
+    }
      
     render() {
-        if(!!this.props.questions){
-            let [showFeedback, feedbackClass] = this.showFeedback() ?
-                [true, " answered"] : [false, ""]
-            return (
-                <div className = {`question${feedbackClass}`}>
-                    <div className="question__body">
-                        <Question question = { this.props.activeQuestion } />
-                        <Feedback
-                            active = { showFeedback }
-                            score = {this.props.activeQuestion.triesLeft}
-                            text = { this.props.questions.current.explanation } 
-                            action = { this.nextQuestion.bind(this) } />
-                    </div>
-                    <Options 
-                        options={this.transformOptions(this.props.options)} 
-                        clickHandler={this.checkAnswer.bind(this)} />
-                </div>
-            );
+        if(!this.props.questions){ 
+            return this.renderLoader();
         }
-        
-        return (<p>Loading...</p>);
+
+        let [showFeedback, feedbackClass] = this.shouldDisplayFeedback() ?
+            [true, " answered"] : [false, ""];
+
+        return (
+            <div className = {`question${feedbackClass}`}>
+                <div className="question__body">
+                    <Question question = { this.props.activeQuestion } />
+                    <Feedback
+                        active = { showFeedback }
+                        score = {this.props.activeQuestion.triesLeft}
+                        text = { this.props.questions.current.explanation } 
+                        action = { this.nextQuestion.bind(this) } />
+                </div>
+                <Options 
+                    options={this.transformOptions(this.props.options)} 
+                    clickHandler={this.checkAnswer.bind(this)} />
+            </div>
+        );
     }
 }
 

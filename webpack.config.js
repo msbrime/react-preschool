@@ -27,7 +27,8 @@ const config = {
         alias : {
             presenters : path.resolve(__dirname,"app/components/presenters"),
             containers : path.resolve(__dirname,"app/components/containers"),
-            pages : path.resolve(__dirname,"app/components/pages")
+            pages : path.resolve(__dirname,"app/components/pages"),
+            loaders : path.resolve(__dirname,"app/components/loaders")
         }
     },
     optimization: {

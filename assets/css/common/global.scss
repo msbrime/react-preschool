@@ -1,3 +1,8 @@
+@mixin loader{
+    background: linear-gradient(90deg, #f5f5f5 33.33%, #ececec 66.66%,#f5f5f5 );
+    background-size: 300% 100%;
+    animation: move-background 2s infinite;
+}
 
 *{
     margin: 0;
@@ -89,6 +94,10 @@ body{
             border-radius: 5px;
             box-shadow: 0 0 50px rgba(0,0,0,.15);
             width: 100%;
+
+            &.loader{
+                @include loader;
+            }
             
             &--front{
                 transform: rotateY(0deg);
@@ -117,6 +126,10 @@ body{
       border-top-left-radius: inherit;
       border-top-right-radius: inherit;
 
+      &.loader{
+        background:transparent;
+      }
+
       &::after{
           display: block;
           padding-bottom: 100%;
@@ -144,6 +157,10 @@ body{
             background-size: cover;
             background-position-x: 30%;
             transform: rotateX(180deg);
+        }
+
+        &.loader svg{
+            border-radius: 5px;
         }
     }
 
@@ -174,11 +191,15 @@ body{
         border-radius: 5px;
         box-shadow: 0 0 50px rgba(0,0,0,.15);
         margin-top: 20px;
-        *background-image: linear-gradient(7deg, #fff, #dcdcdc 50%,#fff);
         background-color: $white;
         background-size: 20%;
         background-repeat: no-repeat;
         transition: transform 100ms, background-color .5s;
+
+        &.loader{
+            @include loader;
+            padding: 25px;
+        }
 
         &:first-of-type{
             margin-top: 0;
@@ -293,4 +314,13 @@ body{
    100%{
     transform: scale(1) rotate(0deg);
    }
+}
+
+@keyframes move-background{
+    0%{
+        background-position: 150% 0;
+    }
+    100%{
+        background-position:0% 0;
+    }
 }
