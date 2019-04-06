@@ -8,9 +8,7 @@ const renderBadges = badgeCount => {
         delayMultiplier = 0.3;
     
     for(let i = 1; i <= badgeCount; i++){
-        let animationDelay = {
-            animationDelay :  `${ (i * delayMultiplier) }s`
-        }
+        let animationDelay = `${ (i * delayMultiplier) }s`;
         badges.push(<Badge animationDelay={animationDelay} key={i}/>);
     }
     

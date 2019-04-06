@@ -1,11 +1,18 @@
 import React from 'react';
+import Badge from 'presenters/feedback/badge.jsx';
 
 const renderBadges = (score,maxScore) => {
     let badges =[];
 
     for(let i = 0 ; i < maxScore ; i++){
-        let appendClasses = (score < 1) ? "badge badge--empty" : 'badge';
-        badges.push(<li className = {appendClasses} key={i}/>);
+        let isFilled = (score > 0);
+        badges.push(
+            <Badge 
+                animationDelay={0} 
+                isFilled={isFilled}
+                shouldAnimate={false}
+                key={i}/>
+        );
         score--;
     }
 
@@ -13,7 +20,7 @@ const renderBadges = (score,maxScore) => {
 }
 
 const score = props => (
-    <ul className="question__score">
+    <ul className="inline-list">
         { renderBadges(props.score, props.maxScore) }
     </ul>
 );

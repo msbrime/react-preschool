@@ -6,7 +6,9 @@
 
 body{
     min-height: 100vh;
-    background: linear-gradient(165deg,$background-primary,$background-accent,$background-primary);
+    background: linear-gradient(
+        165deg,$background-primary,
+        $background-accent,$background-primary);
     background-repeat: no-repeat;
 }
 
@@ -18,7 +20,7 @@ body{
 }
 
 .star{
-    @include spin-in;
+    @include spin-in(&);
     padding: 0 10px;
 
     i svg{
@@ -57,6 +59,11 @@ body{
     }
 }
 
+.score .inline-list{
+    padding-bottom: 25px;
+    justify-content: center;
+}
+
 .button{
     font-family: inherit;
     border: none;
@@ -78,4 +85,5 @@ body{
 .inline-list{
     list-style: none;
     display: flex;
+    flex-flow: row wrap;
 }

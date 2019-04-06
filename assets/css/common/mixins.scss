@@ -4,9 +4,21 @@
     animation: move-background 1.5s infinite;
 }
 
-@mixin spin-in{
+@mixin spin-in-declaration{
     transform: scale(0) rotate(360deg);
     transform-origin: center;
     animation : spin-in .5s;
     animation-fill-mode: forwards;
+}
+
+@mixin spin-in($context:root){
+    @if $context == root{
+        @include spin-in-declaration;
+    } @else{
+        @at-root{
+            #{$context}.spin-in{
+                @include spin-in-declaration;
+            }
+        }
+    }
 }
