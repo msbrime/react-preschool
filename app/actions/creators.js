@@ -34,11 +34,12 @@ export function reset() {
     };
 }
 
-export function seedQuestions(questions) {
+export function seedQuestions(questions,ids) {
     return {
         type: ACTIONS.SEED_QUESTIONS,
         payload: {
-            questions: questions
+            questions: questions,
+            ids : ids
         }
     }
 }

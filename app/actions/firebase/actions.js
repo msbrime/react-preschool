@@ -1,21 +1,15 @@
-import firebase from 'firebase/app';
-import "firebase/firebase-database";
-import config from './config';
 import { seedQuestions,setMaxScore } from 'actions/creators';
-import { getMaxScore } from 'util.js';
-
-const 
-    fb = firebase.initializeApp(config),
-    questionsRef = fb.database().ref('questions');
+import {load as loadQuestions} from 'services/questions';
 
 export function fetchQuestions(){
-    return function(dispatch){
-            questionsRef.once('value',snapshot => {
-                let maxScore = getMaxScore(snapshot.val());
-                dispatch(seedQuestions(snapshot.val()));
-                dispatch(setMaxScore(maxScore));
-            });
-    };
+    return dispatch => {
+        loadQuestions( questionData => {
+            console.log(questionData);
+            let {questions,ids,maxScore} = questionData;
+            dispatch(seedQuestions(questions,ids));
+            dispatch(setMaxScore(maxScore));   
+        });
+    }
 }
 
 function listenForUpdates(){

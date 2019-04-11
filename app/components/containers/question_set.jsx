@@ -17,58 +17,83 @@ import OptionsLoader from 'presenters/loaders/options_loader.jsx';
 
 class QuestionSet extends React.Component {
 
+    constructor(props){
+        super(props);
+        this.state = {
+            answered: false,
+            attempts: []
+        }
+    }
+
     componentDidMount(){
-       if(!!!this.props.questions){
-            this.props.fetchQuestions();
+       if(!this.props.question){
+            this.props.load();
         }
     }
        
 
     checkAnswer(optionId){
         if(this.isCorrectAnswer(optionId)){
-           this.props.incrementScore(this.props.activeQuestion.triesLeft);
-           this.props.markAsAnswered();
+           this.props.incrementScore(
+               this.props.question.options.length - this.state.attempts.length - 1
+           );
+           this.setState({answered:true})
         }
         else{
-            this.props.reduceTries(optionId);
+            this.setState(prevState => {
+                prevState.attempts.push[this.props.question.options[optionId]];
+                return {attempts : [... prevState.attempts]}
+            })
         }
     }
+
+    /*
+    QuestionManager(question, options, answer){
+        this.question = question
+        this.options = options
+        this.answer = answer
+    }
+    */
     
 
     nextQuestion(){
-        if(this.props.questions.remaining > 0){
+        if(this.props.remaining > 0){
             this.props.nextQuestion();
+            this.setState({answered:false})
         }
         else{
             this.props.router.push("/score");
         }
     }
 
-
     isCorrectAnswer(optionId){
         return (
-            this.props.activeQuestion.answer === 
-            this.props.options[optionId].value
+            this.props.question.answer === 
+            this.props.question.options[optionId]
         );
     }
 
-
     transformOptions(options){
-        if(!this.props.activeQuestion.answered) return options
-        
-        let modifiedOptions = {...this.props.options}
-        for(let option in modifiedOptions){
-            modifiedOptions[option].attempted = true
-        }
-        return modifiedOptions;
+        let transformedOptions = {};
+        options.forEach( (option,index) => {
+            transformedOptions[index] = {
+                value: option,
+                attempted: this.optionAttempted(option)
+            }
+        });
+
+        return transformedOptions;
+    }
+
+    optionAttempted(optionValue){
+        return (
+            this.state.attempts.indexOf(optionValue) > -1
+        );
     }
     
 
     shouldDisplayFeedback(){
-        return ( 
-            this.props.activeQuestion.triesLeft == 0 || 
-            this.props.activeQuestion.answered 
-        );
+        return this.state.answered;
     }
 
     renderLoader(){
@@ -83,9 +108,10 @@ class QuestionSet extends React.Component {
     }
      
     render() {
-        if(!this.props.questions){ 
+        if(!this.props.question){ 
             return this.renderLoader();
         }
+        console.log(this.props.question)
 
         let [showFeedback, feedbackClass] = this.shouldDisplayFeedback() ?
             [true, " answered"] : [false, ""];
@@ -93,15 +119,15 @@ class QuestionSet extends React.Component {
         return (
             <div className = {`question${feedbackClass}`}>
                 <div className="card card--flippable">
-                    <Question question = { this.props.activeQuestion } />
+                    <Question question = { this.props.question } />
                     <Feedback
                         active = { showFeedback }
-                        score = {this.props.activeQuestion.triesLeft}
-                        text = { this.props.questions.current.explanation } 
+                        score = {3}
+                        text = { this.props.question.explanation } 
                         action = { this.nextQuestion.bind(this) } />
                 </div>
                 <Options 
-                    options={this.transformOptions(this.props.options)} 
+                    options={this.transformOptions(this.props.question.options)} 
                     clickHandler={this.checkAnswer.bind(this)} />
             </div>
         );
@@ -111,9 +137,8 @@ class QuestionSet extends React.Component {
 let mapStateToProps = state => {
     if(state.questions){
         return { 
-            questions : state.questions,
-            activeQuestion : state.questions.current,
-            options : state.questions.current.options
+            question: state.questions.questions[state.questions.current],
+            remaining: state.questions.unselected.length
         };
     }
     
@@ -122,10 +147,10 @@ let mapStateToProps = state => {
     
 let mapDispatchToProps = 
     dispatch => ({ 
-        fetchQuestions : () => { dispatch(fetchQuestions()) } ,
+        load : () => { dispatch(fetchQuestions()) } ,
         incrementScore : increment => { dispatch(incrementScore(increment)) },
-        markAsAnswered : () => { dispatch(markAsAnswered()) },
-        reduceTries : optionId => { dispatch(reduceTries(optionId)) },
+        // markAsAnswered : () => { dispatch(markAsAnswered()) },
+        // reduceTries : optionId => { dispatch(reduceTries(optionId)) },
         nextQuestion : () => { dispatch(nextQuestion()) }
     });
 
