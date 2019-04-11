@@ -4,7 +4,6 @@ import {load as loadQuestions} from 'services/questions';
 export function fetchQuestions(){
     return dispatch => {
         loadQuestions( questionData => {
-            console.log(questionData);
             let {questions,ids,maxScore} = questionData;
             dispatch(seedQuestions(questions,ids));
             dispatch(setMaxScore(maxScore));   

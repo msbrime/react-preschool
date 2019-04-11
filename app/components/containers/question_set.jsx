@@ -17,12 +17,16 @@ import OptionsLoader from 'presenters/loaders/options_loader.jsx';
 
 class QuestionSet extends React.Component {
 
-    constructor(props){
-        super(props);
-        this.state = {
+    get initialState(){
+        return {
             answered: false,
             attempts: []
         }
+    }
+
+    constructor(props){
+        super(props);
+        this.state = this.initialState;
     }
 
     componentDidMount(){
@@ -30,36 +34,34 @@ class QuestionSet extends React.Component {
             this.props.load();
         }
     }
+
+    computeScore(){
+        return (this.props.question.options.length - this.state.attempts.length) - 1;
+    }
        
 
     checkAnswer(optionId){
         if(this.isCorrectAnswer(optionId)){
-           this.props.incrementScore(
-               this.props.question.options.length - this.state.attempts.length - 1
-           );
+           this.props.incrementScore(this.computeScore());
            this.setState({answered:true})
         }
         else{
-            this.setState(prevState => {
-                prevState.attempts.push[this.props.question.options[optionId]];
-                return {attempts : [... prevState.attempts]}
-            })
+            let 
+                attempts = [...this.state.attempts],
+                answered = this.state.answered;
+            attempts.push(this.props.question.options[optionId]);
+            if(attempts.length === (this.props.question.options.length - 1))
+                answered = true
+            
+            this.setState({attempts,answered});
         }
     }
-
-    /*
-    QuestionManager(question, options, answer){
-        this.question = question
-        this.options = options
-        this.answer = answer
-    }
-    */
     
 
     nextQuestion(){
         if(this.props.remaining > 0){
             this.props.nextQuestion();
-            this.setState({answered:false})
+            this.setState({...this.initialState})
         }
         else{
             this.props.router.push("/score");
@@ -90,11 +92,6 @@ class QuestionSet extends React.Component {
             this.state.attempts.indexOf(optionValue) > -1
         );
     }
-    
-
-    shouldDisplayFeedback(){
-        return this.state.answered;
-    }
 
     renderLoader(){
         return (
@@ -111,9 +108,8 @@ class QuestionSet extends React.Component {
         if(!this.props.question){ 
             return this.renderLoader();
         }
-        console.log(this.props.question)
-
-        let [showFeedback, feedbackClass] = this.shouldDisplayFeedback() ?
+        
+        let [showFeedback, feedbackClass] = this.state.answered ?
             [true, " answered"] : [false, ""];
 
         return (
@@ -122,7 +118,7 @@ class QuestionSet extends React.Component {
                     <Question question = { this.props.question } />
                     <Feedback
                         active = { showFeedback }
-                        score = {3}
+                        score = {this.computeScore()}
                         text = { this.props.question.explanation } 
                         action = { this.nextQuestion.bind(this) } />
                 </div>
@@ -135,7 +131,7 @@ class QuestionSet extends React.Component {
 }
 
 let mapStateToProps = state => {
-    if(state.questions){
+    if(state.questions.questions){
         return { 
             question: state.questions.questions[state.questions.current],
             remaining: state.questions.unselected.length
@@ -148,10 +144,8 @@ let mapStateToProps = state => {
 let mapDispatchToProps = 
     dispatch => ({ 
         load : () => { dispatch(fetchQuestions()) } ,
-        incrementScore : increment => { dispatch(incrementScore(increment)) },
-        // markAsAnswered : () => { dispatch(markAsAnswered()) },
-        // reduceTries : optionId => { dispatch(reduceTries(optionId)) },
-        nextQuestion : () => { dispatch(nextQuestion()) }
+        incrementScore : increment => {dispatch(incrementScore(increment))},
+        nextQuestion : () => {dispatch(nextQuestion()) }
     });
 
 
