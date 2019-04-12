@@ -1,4 +1,5 @@
 import * as ACTIONS from 'actions/actions';
+import {load as loadQuestions} from 'services/questions';
 
 export function incrementScore(increment) {
     return {
@@ -52,3 +53,13 @@ export function setMaxScore(maxScore) {
         }        
     };
 } 
+
+export function fetchQuestions(){
+    return dispatch => {
+        loadQuestions( questionData => {
+            let {questions,ids,maxScore} = questionData;
+            dispatch(seedQuestions(questions,ids));
+            dispatch(setMaxScore(maxScore));   
+        });
+    }
+}

@@ -1,13 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { fetchQuestions } from 'actions/firebase/actions';
-import { 
-    incrementScore,
-    markAsAnswered,
-    nextQuestion,
-    reduceTries
-} from 'actions/creators';
+import { incrementScore, nextQuestion, fetchQuestions } from 'actions/creators';
 import Feedback from 'presenters/feedback/feedback.jsx';
 import Question from 'presenters/questions/question.jsx';
 import Options from 'presenters/questions/options.jsx';
@@ -39,7 +33,6 @@ class QuestionSet extends React.Component {
         return (this.props.question.options.length - this.state.attempts.length) - 1;
     }
        
-
     checkAnswer(optionId){
         if(this.isCorrectAnswer(optionId)){
            this.props.incrementScore(this.computeScore());
@@ -57,7 +50,6 @@ class QuestionSet extends React.Component {
         }
     }
     
-
     nextQuestion(){
         if(this.props.remaining > 0){
             this.props.nextQuestion();
@@ -131,14 +123,12 @@ class QuestionSet extends React.Component {
 }
 
 let mapStateToProps = state => {
-    if(state.questions.questions){
-        return { 
-            question: state.questions.questions[state.questions.current],
-            remaining: state.questions.unselected.length
-        };
-    }
-    
-    return {};
+    if(!state.questions.questions) return {};
+
+    return { 
+        question: state.questions.questions[state.questions.current],
+        remaining: state.questions.unselected.length
+    };
 }
     
 let mapDispatchToProps = 
