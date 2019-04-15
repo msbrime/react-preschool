@@ -5,8 +5,8 @@ import { incrementScore, nextQuestion, fetchQuestions } from 'actions/creators';
 import Feedback from 'presenters/feedback/feedback.jsx';
 import Question from 'presenters/questions/question.jsx';
 import Options from 'presenters/questions/options.jsx';
-import QuestionLoader from 'presenters/loaders/question_loader.jsx';
-import OptionsLoader from 'presenters/loaders/options_loader.jsx';
+import QuestionLoader from 'presenters/loaders/question-loader.jsx';
+import OptionsLoader from 'presenters/loaders/options-loader.jsx';
 
 
 class QuestionSet extends React.Component {

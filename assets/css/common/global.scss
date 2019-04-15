@@ -37,7 +37,7 @@ body{
     }
 }
 
-.score, .welcome{
+.score, .welcome, .form{
     padding: 20px;
     margin: 0 auto;
     max-width: 600px;
@@ -62,6 +62,65 @@ body{
 .score .inline-list{
     padding-bottom: 25px;
     justify-content: center;
+}
+
+.form{
+    max-width: 800px;
+
+    form{
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-between;
+    }
+
+    .form-segment{
+        display: flex;
+        flex-flow: column wrap;
+        flex-basis: calc(50% - 10px);
+        
+        &:not(:last-of-type){
+            margin-bottom:20px;
+        }
+
+        &--full{
+            flex-basis: 100%;
+        }
+    }
+
+    .input-group{
+        margin-bottom: 20px;
+
+        &__input{
+            border: 1px dashed #ccc;
+            border-left: none;
+        }
+    }
+
+    .add-option{
+        width: auto;
+        align-self: flex-end;
+        margin-bottom: 20px;
+    }
+
+    .button{
+        align-self: flex-end;
+    }
+
+    .preview{
+        flex-grow: 1;
+        border: 1px dashed #ccc;
+        border-radius: 5px;
+        padding: 20px;
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-origin:padding-box;
+
+        img{
+            width: 0%;
+            height: 0%;
+        }
+    }
 }
 
 .button{

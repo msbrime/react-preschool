@@ -1,0 +1,44 @@
+.input,textarea{
+    width: 100%;
+    border-radius: 5px;
+    display: block;
+    border: 1px solid $grey;
+    padding: 10px;
+    font-size: $base-font-size;
+    color: $secondary-color-dark;
+    outline: none;
+}
+
+textarea{
+    resize: none;
+    height: 150px;
+    border: 1px dashed $grey;
+}
+
+.input-group{
+    $radius : 5px;
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-flow: row nowrap;
+
+    &__input{
+        border: none;
+        border-radius: 0px $radius $radius 0px;
+        border:1px solid $grey;
+        border-left: none;
+    }
+
+    &__addon{
+        display: inline-block;
+        text-align: center;
+        order:-1;
+        vertical-align: middle;
+        padding: 0 10px;
+        background-color: $primary-color;
+        border: 1px solid $grey;
+        border-radius: $radius 0 0 $radius;
+        line-height: 2;
+        color: $white;
+    }
+}

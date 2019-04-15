@@ -1,10 +1,6 @@
 import React from 'react';
-import QuestionSet from 'containers/question_set.jsx';
+import QuestionSet from 'containers/question-set.jsx';
 
+const quiz = () => <QuestionSet />
 
-export default class Quiz extends React.Component {
-
-  render(){
-        return (<QuestionSet />);
-    }
-}
+export default quiz;

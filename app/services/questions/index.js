@@ -6,7 +6,7 @@ export function load(callback){
     let questionsRef = firebase().database().ref(nodeReference);
     questionsRef.once('value',snapshot => {
         let 
-            normalizedData = normalize(snapshot.val()),
+            normalizedData = snapshot.val(),
             maxScore = computeMaxScore(snapshot.val());
 
         callback({
@@ -16,6 +16,16 @@ export function load(callback){
         });
     });
 }
+
+export function create(question){
+    let 
+        questionsRef = firebase().database().ref(nodeReference),
+        newQuestionRef = questionsRef.push();
+    
+    question.id = newQuestionRef.key;
+    return newQuestionRef.set(question);
+}
+
 
 function normalize(questions){
     let normalized = {};
@@ -28,7 +38,11 @@ function normalize(questions){
 }
 
 function computeMaxScore(questions){
-    return questions.reduce((acc, question) => {
-        return acc + (question.options.length - 1);
-    }, 0);
+    let score = 0;
+
+    for(let question in questions){
+        score += (questions[question].options.length - 1)
+    }
+    
+    return score;
 }

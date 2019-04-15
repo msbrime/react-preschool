@@ -55,4 +55,11 @@
             background-clip: padding-box;     
         }
     }
+
+    &--input{
+        .input{
+            outline: none;
+            text-align: center;
+        }
+    }
 }
