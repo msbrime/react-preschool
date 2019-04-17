@@ -21,6 +21,13 @@
     "babel-loader": "^8.0.0-beta.0",
     "browser-sync": "^2.18.8",
     "env-cmd": "^8.0.2",
+    "eslint": "^5.16.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.1.1",
+    "eslint-plugin-react": "^7.12.4",
+    "eslint-plugin-standard": "^4.0.0",
     "firebase": "^5.9.0",
     "foundation-sites": "^6.5.0-rc.4",
     "gulp": "^4.0.0",
@@ -37,7 +44,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev-server": "env-cmd .env gulp watch"
+    "dev-server": "env-cmd .env gulp watch",
+    "lint" : "npx eslint 'app/**/*.js' 'app/**/*.jsx' --fix"
   },
   "repository": {
     "type": "git",

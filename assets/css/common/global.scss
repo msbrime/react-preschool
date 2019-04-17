@@ -85,6 +85,25 @@ body{
         &--full{
             flex-basis: 100%;
         }
+
+        label{
+            padding: 3px;
+            font-size:.8rem;
+            font-family:'Istok Web',sans-serif;
+            font-variant: small-caps;
+            text-align: left;
+        }
+
+        &.resource-segment{
+            position: relative;
+
+            &--with-preview{
+                .preview{
+                    z-index: 2;
+                    opacity: 1;
+                }
+            }
+        }
     }
 
     .input-group{
@@ -96,25 +115,54 @@ body{
         }
     }
 
-    .add-option{
-        width: auto;
+    .button{
         align-self: flex-end;
-        margin-bottom: 20px;
+        font-size: $regular-font-size;
     }
 
-    .button{
+    .add-option{
+        width: auto;
         align-self: flex-end;
     }
 
     .preview{
+        position: absolute;
+        right: 0;
+        top: -190px;
+        width: 250px;
+        height: 200px;
         flex-grow: 1;
         border: 1px dashed #ccc;
+        background-color: $white;
+        box-shadow: 0 0 50px rgba(0,0,0,.15);
         border-radius: 5px;
-        padding: 20px;
+        padding: 10px;
+        align-self: center;
         background-size: contain;
         background-position: center;
         background-repeat: no-repeat;
-        background-origin:padding-box;
+        background-origin:content-box;
+        z-index: -1;
+        opacity: 0;
+        transition: opacity .25s;
+        
+        &:after{
+            width:12px;
+            height: 12px;
+            transform: rotate(45deg);
+            content:"";
+            display: block;
+            box-shadow: 0 0 50px rgba(0,0,0,.15);
+            border-radius: 0 0 3px 0;
+            border: 1px dashed #ccc;
+            border-top: none;
+            border-left: none;
+            position: absolute;
+            bottom: -7px;
+            background-color: $white;
+            right: 30px;
+
+        }
 
         img{
             width: 0%;

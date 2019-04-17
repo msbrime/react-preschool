@@ -1,18 +1,17 @@
-import firebase from 'firebase/app';
-import "firebase/firebase-database";
-import config from './config';
+import firebase from 'firebase/app'
+import 'firebase/firebase-database'
+import config from './config'
 
-let fbInstance;
+let fbInstance
 
-function initializeFb(){
-    return firebase.initializeApp(config);
+function initializeFb () {
+  return firebase.initializeApp(config)
 }
 
-export default function firebaseInstance(){
-    if(!fbInstance){
-        fbInstance = initializeFb();
-    }
+export default function firebaseInstance () {
+  if (!fbInstance) {
+    fbInstance = initializeFb()
+  }
 
-    return fbInstance;
+  return fbInstance
 }
-

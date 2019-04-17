@@ -7,6 +7,7 @@
     font-size: $base-font-size;
     color: $secondary-color-dark;
     outline: none;
+    font-size: $regular-font-size;
 }
 
 textarea{
@@ -16,17 +17,24 @@ textarea{
 }
 
 .input-group{
+    $input-group: &;
     $radius : 5px;
     width: 100%;
     position: relative;
     display: flex;
     flex-flow: row nowrap;
+    font-size: $regular-font-size;
 
     &__input{
         border: none;
         border-radius: 0px $radius $radius 0px;
         border:1px solid $grey;
         border-left: none;
+
+        #{$input-group}--multi &{
+            border-right: none;
+            border-radius: 0;
+        }
     }
 
     &__addon{
@@ -37,8 +45,15 @@ textarea{
         padding: 0 10px;
         background-color: $primary-color;
         border: 1px solid $grey;
+        border-right: none;
         border-radius: $radius 0 0 $radius;
         line-height: 2;
         color: $white;
+
+        &--right{
+            justify-self: flex-end;
+            order: 100;
+            border-radius: 0 5px 5px 0;
+        }
     }
 }

@@ -1,17 +1,17 @@
-import React from 'react';
+import React from 'react'
 
 const option = key => <li className = "option-list__item loader" key={key}/>
 
 const renderOptions = () => {
-    return [1,2,3,4].map(option)
+  return [1, 2, 3, 4].map(option)
 }
 
 const optionsLoader = () => {
-    return (
-        <ul className="option-list">
-            {renderOptions()}
-        </ul>
-    );
+  return (
+    <ul className="option-list">
+      {renderOptions()}
+    </ul>
+  )
 }
 
-export default optionsLoader;
+export default optionsLoader

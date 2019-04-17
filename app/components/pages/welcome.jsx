@@ -1,18 +1,18 @@
-import React from 'react';
-import { Link } from 'react-router';
+import React from 'react'
+import { Link } from 'react-router'
 
 const welcome = () => {
-    return(
-        <div className="card welcome">
-            <div className="card__body">
-                <p>Welcome to React Pre-School</p>
+  return (
+    <div className="card welcome">
+      <div className="card__body">
+        <p>Welcome to React Pre-School</p>
 
-                <Link to='/quiz'>
-                    <button className="button">Play!</button>
-                </Link>
-            </div>
-        </div>
-    );
+        <Link to='/quiz'>
+          <button className="button">Play!</button>
+        </Link>
+      </div>
+    </div>
+  )
 }
 
-export default welcome;
+export default welcome

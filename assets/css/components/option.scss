@@ -56,10 +56,34 @@
         }
     }
 
+    &__item-action{
+      position: absolute;
+      background-color: $primary-color;  
+      right: 0px;
+      width: 15px;
+      height: 15px;
+      border-radius: 0 5px 0px 5px;
+      font-size: .85rem;
+      line-height: 1;
+      text-align: center;
+      color: $white;
+      top: 0px;
+      cursor: pointer; 
+    }
+
     &--input{
+        li{
+            text-align: left;
+            flex-basis: calc(50% - 10px);
+        }
+
         .input{
             outline: none;
             text-align: center;
+        }
+
+        label>span{
+            font-size: .55rem;
         }
     }
 }

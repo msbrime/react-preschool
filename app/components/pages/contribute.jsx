@@ -1,6 +1,6 @@
-import React from 'react';
-import AddQuestion from 'containers/add-question.jsx';
+import React from 'react'
+import AddQuestion from 'containers/add-question.jsx'
 
-const contribute = () => <AddQuestion /> 
+const contribute = () => <AddQuestion />
 
-export default contribute;
+export default contribute
