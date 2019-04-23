@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router'
+import { withRouter } from 'react-router-dom'
 import { incrementScore, nextQuestion, fetchQuestions } from 'actions/creators'
 import Feedback from 'presenters/feedback/feedback.jsx'
 import Question from 'presenters/questions/question.jsx'
@@ -51,7 +51,7 @@ class QuestionSet extends React.Component {
       this.props.nextQuestion()
       this.setState({ ...this.initialState })
     } else {
-      this.props.router.push('/score')
+      this.props.history.push('/score')
     }
   }
 

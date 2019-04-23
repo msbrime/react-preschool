@@ -6,7 +6,7 @@ import ScoreView from 'presenters/feedback/score.jsx'
 
 class Score extends React.Component {
   reset () {
-    this.props.router.push('/quiz')
+    this.props.history.push('/quiz')
     this.props.resetScore()
   }
 
@@ -15,7 +15,7 @@ class Score extends React.Component {
       <div className="card score">
         <div className="card__body">
           <p>
-                        Your Score Was {this.props.score} out of {this.props.maxScore}
+            Your Score Was {this.props.score} out of {this.props.maxScore}
           </p>
           <ScoreView score = { this.props.score }
             maxScore = { this.props.maxScore } ></ScoreView>
