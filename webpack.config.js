@@ -25,11 +25,13 @@ const config = {
   resolve: {
     modules: ['./app', 'node_modules'],
     alias: {
+      app: path.resolve(__dirname, 'app'),
       presenters: path.resolve(__dirname, 'app/components/presenters'),
       containers: path.resolve(__dirname, 'app/components/containers'),
       pages: path.resolve(__dirname, 'app/components/pages'),
       loaders: path.resolve(__dirname, 'app/components/loaders'),
-      services: path.resolve(__dirname, 'app/services')
+      services: path.resolve(__dirname, 'app/services'),
+      context: path.resolve(__dirname, 'app/context')
     }
   },
   optimization: {
@@ -54,7 +56,8 @@ const config = {
         use: {
           loader: 'babel-loader',
           options: {
-            'presets': ['@babel/preset-react', '@babel/preset-env']
+            'presets': ['@babel/preset-react', '@babel/preset-env'],
+            'plugins': ['@babel/plugin-proposal-class-properties']
           }
         }
       }

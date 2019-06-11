@@ -6,6 +6,12 @@ import Quiz from 'pages/quiz.jsx'
 import Score from 'pages/score.jsx'
 import Contribute from 'pages/contribute.jsx'
 
+
+function PrivateRoute(component) => {
+    
+}
+
+
 export default (
   <Switch>
     <Route path="/welcome" component = {Welcome} />
@@ -14,3 +20,5 @@ export default (
     <Route path="/contribute" component = {Contribute} />
   </Switch>
 )
+
+
