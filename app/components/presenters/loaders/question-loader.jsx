@@ -13,7 +13,7 @@ const questionLoader = () => {
                     M50,55 a7.5 7.5 0 0 0 0 15 h95 a7.5 7.5 0 0 0 0 -15 h-95z
                     M185,55 a7.5 7.5 0 0 0 0 15 h300 a7.5 7.5 0 0 0 0 -15 h-300z
                     M525,55 a7.5 7.5 0 0 0 0 15 h260 a7.5 7.5 0 0 0 0 -15 h-260z"
-            stroke="transparent" fill="#63d7ce" />
+            stroke="transparent" fill="#007A70" />
           </svg>
         </div>
         </>

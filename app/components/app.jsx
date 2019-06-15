@@ -4,8 +4,11 @@ import PrivateRoute from 'containers/private-route.jsx'
 import Welcome from 'pages/welcome.jsx'
 import Quiz from 'pages/quiz.jsx'
 import Score from 'pages/score.jsx'
-import Contribute from 'pages/contribute.jsx'
 import SignIn from 'pages/auth.jsx'
+import ViewQuestions from 'pages/admin/questions/view.jsx'
+import EditQuestion from 'pages/admin/questions/edit.jsx'
+import CreateQuestion from 'pages/admin/questions/create.jsx'
+import AdminIndex from 'pages/admin/index.jsx'
 import firebase from 'services/firebase'
 import AuthContext from 'context/auth.js'
 
@@ -49,12 +52,11 @@ export default class App extends Component {
       <AuthContext.Provider value={{ login: this.loginHandler, logout: this.logoutHandler, isAuthenticated: this.state.authenticated }}>
         <Switch>
           <Route exact path={['/', '/welcome']} component={Welcome} />
-          <Route path="/welcome" component = {Welcome} />
           <Route path="/quiz" component = {Quiz} />
           <Route path="/score" component = {Score} />
           <Route path="/login" component = {SignIn} />
-          <PrivateRoute path="/contribute"
-            component = {Contribute}
+          <PrivateRoute path='/admin'
+            component = {AdminIndex}
             isAuthenticated={this.state.authenticated}
             redirectPath='/login' />
         </Switch>

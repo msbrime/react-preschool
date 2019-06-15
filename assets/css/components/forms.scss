@@ -2,18 +2,17 @@
     width: 100%;
     border-radius: 5px;
     display: block;
-    border: 1px solid $grey;
     padding: 10px;
     font-size: $base-font-size;
     color: $secondary-color-dark;
     outline: none;
     font-size: $regular-font-size;
+    border: 2px dashed;
 }
 
 textarea{
     resize: none;
     height: 150px;
-    border: 1px dashed $grey;
 }
 
 .input-group{
@@ -28,7 +27,7 @@ textarea{
     &__input{
         border: none;
         border-radius: 0px $radius $radius 0px;
-        border:1px solid $grey;
+        border:2px dashed;
         border-left: none;
 
         #{$input-group}--multi &{
@@ -44,7 +43,7 @@ textarea{
         vertical-align: middle;
         padding: 0 10px;
         background-color: $primary-color;
-        border: 1px solid $grey;
+        border: 2px solid $primary-color;
         border-right: none;
         border-radius: $radius 0 0 $radius;
         line-height: 2;

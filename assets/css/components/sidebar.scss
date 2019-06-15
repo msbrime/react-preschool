@@ -1,0 +1,56 @@
+.sidebar{
+  color: $white;
+  background-color: $primary-color;
+  position: relative;
+  font-family:'Kodchasan';
+
+  &__title{
+    text-align: center;
+    padding: 20px 10px;
+  }
+
+  .button{
+    color: $secondary-color-dark;
+    background: $white;
+  }
+
+  &__menu{
+    background-color: darken($primary-color,10%);
+    padding: 20px;
+    list-style: none;
+    
+    &-item{  
+      text-align: center;
+      padding: 10px 0;
+
+      a{
+        color: $white;
+        text-decoration: none;
+        display: block;
+        width: 100%;
+        height: 100%;;
+      }
+
+      &:hover{
+        background-color: $white;
+        border-radius: 5px;
+
+        a{
+          color: $secondary-color-dark !important;
+        }
+      }
+
+    }
+  }
+
+  &__footer{
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    padding: 20px;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+  }
+
+}

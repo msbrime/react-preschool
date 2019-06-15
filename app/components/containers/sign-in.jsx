@@ -27,10 +27,6 @@ export default class SignIn extends Component {
     )
   }
 
-  logout () {
-    this.context.logout()
-  }
-
   updateEmail(email){
     this.setState({email})
   }
@@ -47,16 +43,23 @@ export default class SignIn extends Component {
     this.updatePassword(event.target.value)
   }
 
+  handleFormSubmission(event){
+    event.preventDefault();
+    this.setState({isAuthenticating:true})
+    this.login();
+  }
+
   render () {
-    // if(this.context.isAuthenticated) {
-    //   const redirectPath = this.props.location.referrer || '/'
-    //   return <Redirect to={redirectPath} />
-    // }
+    if(this.context.isAuthenticated) {
+      const redirectPath = this.props.location.referrer || '/admin'
+      return <Redirect to={redirectPath} />
+    }
     return (
-      <div className="card form">
+      <div className="card form signin">
         <div className="card__body">
-          <p>Login Biaaatch</p>
-          <form action="#">
+          <form action="#" 
+            onSubmit={this.handleFormSubmission.bind(this)} 
+            method='POST'>
             <div className="form-segment">
               <label htmlFor="">email</label>
               <DebounceInput onChange={this.handleEmailChanged}>
@@ -79,8 +82,14 @@ export default class SignIn extends Component {
                   autoComplete="off" />
               </DebounceInput>
             </div>
-            <button className='button' type='button' onClick={this.login.bind(this)}>Login biaatch</button>
-            <button className='button' type='button' onClick={this.logout.bind(this)}>Logout biaatch</button>
+            <div className="form-segment">
+              <button className='button' 
+                type='submit' 
+                onClick={this.login.bind(this)}>
+                  Login
+              </button>
+            </div>
+
           </form>
         </div>
       </div>

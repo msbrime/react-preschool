@@ -116,77 +116,75 @@ class AddQuestion extends React.Component {
 
   render () {
     return (
-      <section className="card form">
-        <div className="card__body">
-          <form action="#" onSubmit={this.submitForm.bind(this)}>
-            <div className="form-segment">
-              <label>question wording</label>
-              <DebounceInput onChange={this.handleWordingChanged}>
-                <textarea placeholder="question wording" defaultValue={this.state.wording} />
+      <section className="form">
+        <form action="#" onSubmit={this.submitForm.bind(this)}>
+          <div className="form-segment">
+            <label>question wording</label>
+            <DebounceInput onChange={this.handleWordingChanged}>
+              <textarea placeholder="question wording" defaultValue={this.state.wording} />
+            </DebounceInput>
+          </div>
+          <div className="form-segment">
+            <label>explanation</label>
+            <DebounceInput onChange={this.handleExplanationChanged} >
+              <textarea placeholder="explanation" defaultValue={this.state.explanation}/>
+            </DebounceInput>
+          </div>
+          <div className="form-segment form-segment--full">
+            <ul className="option-list option-list--input">
+              {
+                this.state.options.map((option, index) => {
+                  let action = index > 1
+                    ? <span className="option-list__item-action"
+                      onClick={this.handleOptionRemoved.bind(this, option.id)}>x</span>
+                    : null
+                  return (
+                    <li key={option.id}>
+                      <label>option <span>{(index + 1)}</span></label>
+                      <div className="input-group">
+                        <span className="input-group__addon">
+                          <input type="radio" name="answer"
+                            value={option}
+                            onChange={this.handleAnswerChanged.bind(this, index)}/>
+                        </span>
+                        <DebounceInput onChange={this.handleOptionChanged.bind(this, option.id)}>
+                          <input name="option[]"
+                            placeholder={`option ${(index + 1)}`}
+                            className="input input-group__input"
+                            defaultValue={option.value}
+                            type="text"
+                            autoComplete="off" />
+                        </DebounceInput>
+                        {action}
+                      </div>
+                    </li>
+                  )
+                })
+              }
+            </ul>
+            <button className="button add-option" type="button" onClick={this.handleOptionAdded.bind(this)}>add</button>
+          </div>
+          <div className={`form-segment form-segment--full resource-segment ${this.resourcePreviewVisibilityClass()}`}>
+            <label>resource url</label>
+            <div className="input-group input-group--multi">
+              <DebounceInput onChange={this.handleResourceUrlChanged}>
+                <input name="resource_url"
+                  placeholder="resource url"
+                  className="input input-group__input"
+                  type="text" />
               </DebounceInput>
+              <span className="input-group__addon">www</span>
+              <span className="input-group__addon input-group__addon--right"
+                onClick={this.toggleResourceVisibility}>preview</span>
             </div>
-            <div className="form-segment">
-              <label>explanation</label>
-              <DebounceInput onChange={this.handleExplanationChanged} >
-                <textarea placeholder="explanation" defaultValue={this.state.explanation}/>
-              </DebounceInput>
+            <div className="preview" style={{ backgroundImage: `url(${this.state.resource.url})` }}>
+              <img src={this.state.resource.url}/>
             </div>
-            <div className="form-segment form-segment--full">
-              <ul className="option-list option-list--input">
-                {
-                  this.state.options.map((option, index) => {
-                    let action = index > 1
-                      ? <span className="option-list__item-action"
-                        onClick={this.handleOptionRemoved.bind(this, option.id)}>x</span>
-                      : null
-                    return (
-                      <li key={option.id}>
-                        <label>option <span>{(index + 1)}</span></label>
-                        <div className="input-group">
-                          <span className="input-group__addon">
-                            <input type="radio" name="answer"
-                              value={option}
-                              onChange={this.handleAnswerChanged.bind(this, index)}/>
-                          </span>
-                          <DebounceInput onChange={this.handleOptionChanged.bind(this, option.id)}>
-                            <input name="option[]"
-                              placeholder={`option ${(index + 1)}`}
-                              className="input input-group__input"
-                              defaultValue={option.value}
-                              type="text"
-                              autoComplete="off" />
-                          </DebounceInput>
-                          {action}
-                        </div>
-                      </li>
-                    )
-                  })
-                }
-              </ul>
-              <button className="button add-option" type="button" onClick={this.handleOptionAdded.bind(this)}>add</button>
-            </div>
-            <div className={`form-segment form-segment--full resource-segment ${this.resourcePreviewVisibilityClass()}`}>
-              <label>resource url</label>
-              <div className="input-group input-group--multi">
-                <DebounceInput onChange={this.handleResourceUrlChanged}>
-                  <input name="resource_url"
-                    placeholder="resource url"
-                    className="input input-group__input"
-                    type="text" />
-                </DebounceInput>
-                <span className="input-group__addon">www</span>
-                <span className="input-group__addon input-group__addon--right"
-                  onClick={this.toggleResourceVisibility}>preview</span>
-              </div>
-              <div className="preview" style={{ backgroundImage: `url(${this.state.resource.url})` }}>
-                <img src={this.state.resource.url}/>
-              </div>
-            </div>
-            <div className="form-segment form-segment--full">
-              <button className="button">Save</button>
-            </div>
-          </form>
-        </div>
+          </div>
+          <div className="form-segment form-segment--full">
+            <button className="button">Save</button>
+          </div>
+        </form>
       </section>
     )
   }

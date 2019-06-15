@@ -13,6 +13,11 @@
         perspective: 1500px;
         overflow: visible;
         box-shadow: none;
+
+        #{$card}__body{
+          border: none;
+          border-radius:0px;
+        }
     }
 
     &__face{
@@ -23,6 +28,7 @@
         backface-visibility: hidden;
         box-shadow: $shadow;
         width: 100%;
+        border: 2px solid;
         
         &--front{
             transform: rotateY(0deg);
@@ -34,6 +40,10 @@
             left: 0;
             transform: rotateY(180deg);
             height: 100%;
+
+            #{$card}__body{
+              border-radius:5px;
+            }
         }
     }
 
@@ -43,6 +53,7 @@
         border-radius: inherit;
         background-color: $white;
         width: 100%;
+        border: 2px solid;
     }
 
     &__media{

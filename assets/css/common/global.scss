@@ -16,7 +16,7 @@ body{
     font-family: $font-family-declaration;
     min-height: inherit;
     font-size: $base-font-size;
-    color:$primary-text;
+    color:$primary-color;
 }
 
 .star{
@@ -62,6 +62,18 @@ body{
 .score .inline-list{
     padding-bottom: 25px;
     justify-content: center;
+}
+
+.signin.form{
+  max-width: 500px;
+
+  .form-segment{
+    flex-basis:100%;
+
+    &:last-of-type{
+      padding-top: 5px;
+    }
+  }
 }
 
 .form{
@@ -110,7 +122,6 @@ body{
         margin-bottom: 20px;
 
         &__input{
-            border: 1px dashed #ccc;
             border-left: none;
         }
     }

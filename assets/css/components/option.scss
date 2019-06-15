@@ -18,6 +18,7 @@
         position: relative;
         padding: 15px;
         border-radius: 5px;
+        border: 2px solid;
         box-shadow: 0 0 50px rgba(0,0,0,.15);
         margin-top: 20px;
         background-color: $white;
@@ -40,7 +41,7 @@
 
         &--incorrect{
             text-decoration: line-through;
-            background-color: rgba(red,.5);
+            background-color: #FFC7C7;
             color:#751f1f;
         }
 
@@ -60,7 +61,7 @@
       position: absolute;
       background-color: $primary-color;  
       right: 0px;
-      width: 15px;
+      width: 30px;
       height: 15px;
       border-radius: 0 5px 0px 5px;
       font-size: .85rem;

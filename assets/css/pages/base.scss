@@ -1,0 +1,31 @@
+.page{
+  display: flex;
+  min-height: inherit;
+
+  &>.content{    
+    flex-grow: 1;
+    background-color: $white;
+
+    .form{
+      width: 100%;
+      max-width: unset;
+
+      form{
+        width: 100%;
+      }
+    }
+  }
+
+  &--with-sidebar{
+    &>.sidebar{
+      flex-basis: 30%;
+      max-width: 300px;
+      min-width: 300px;
+      min-height: inherit;
+    }
+
+    &>.content{
+
+    }
+  }
+}
