@@ -76,6 +76,10 @@
         li{
             text-align: left;
             flex-basis: calc(50% - 10px);
+
+            @media #{$small-screen}{
+              flex-basis: 100%;
+            }
         }
 
         .input{

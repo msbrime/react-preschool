@@ -3,8 +3,8 @@
   min-height: inherit;
 
   &>.content{    
-    flex-grow: 1;
     background-color: $white;
+    min-height: inherit;
 
     .form{
       width: 100%;
@@ -18,14 +18,24 @@
 
   &--with-sidebar{
     &>.sidebar{
-      flex-basis: 30%;
       max-width: 300px;
       min-width: 300px;
       min-height: inherit;
+
+      @media #{$medium-screen}{
+        max-width: 50px;
+        min-width: 50px;
+      }
     }
 
     &>.content{
-
+      width: calc(100% - 300px);
+      position: relative;
+      left: 300px;
+      @media #{$medium-screen}{
+        left: 50px;
+        width: calc(100% - 50px);
+      }
     }
   }
 }

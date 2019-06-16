@@ -60,7 +60,7 @@ export default class SignIn extends Component {
           <form action="#" 
             onSubmit={this.handleFormSubmission.bind(this)} 
             method='POST'>
-            <div className="form-segment">
+            <div className="form-segment form-segment--full">
               <label htmlFor="">email</label>
               <DebounceInput onChange={this.handleEmailChanged}>
                 <input name='email'
@@ -71,7 +71,7 @@ export default class SignIn extends Component {
                   autoComplete="off" />
               </DebounceInput>
             </div>
-            <div className="form-segment">
+            <div className="form-segment form-segment--full">
               <label htmlFor="">password</label>
               <DebounceInput onChange={this.handlePasswordChanged}>
                 <input name="password"
@@ -82,7 +82,7 @@ export default class SignIn extends Component {
                   autoComplete="off" />
               </DebounceInput>
             </div>
-            <div className="form-segment">
+            <div className="form-segment form-segment--full">
               <button className='button' 
                 type='submit' 
                 onClick={this.login.bind(this)}>
