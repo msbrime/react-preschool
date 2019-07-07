@@ -10,22 +10,9 @@ export function incrementScore (increment) {
   }
 }
 
-export function markAsAnswered () {
-  return {
-    type: ACTIONS.MARK_AS_ANSWERED
-  }
-}
-
 export function nextQuestion () {
   return {
     type: ACTIONS.NEXT_QUESTION
-  }
-}
-
-export function reduceTries (optionId) {
-  return {
-    type: ACTIONS.REDUCE_TRIES,
-    payload: { attempt: optionId }
   }
 }
 

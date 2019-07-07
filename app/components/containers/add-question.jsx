@@ -2,25 +2,20 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { createQuestion } from 'actions/creators'
 import DebounceInput from 'presenters/form/debounce.jsx'
-
-function randomId () {
-  return parseInt(Math.random() * 1000000)
-}
+import InputOptionList from 'presenters/form/input-option-list.jsx'
+import InputOptionListItemAction from 'presenters/form/input-option-list-item-action.jsx'
+import { randomId } from 'util.js'
 
 class AddQuestion extends React.Component {
   constructor (props) {
     super(props)
     this.minOptionCount = 2
     this.maxOptionCount = 4
-    this.handleWordingChanged = this.handleWordingChanged.bind(this)
-    this.handleResourceUrlChanged = this.handleResourceUrlChanged.bind(this)
-    this.handleExplanationChanged = this.handleExplanationChanged.bind(this)
     this.toggleResourceVisibility = this.toggleResourceVisibility.bind(this)
+    this.handleFieldChanged = this.handleFieldChanged.bind(this)
     this.state = {
-      resource: {
-        type: 'image',
-        url: ''
-      },
+      resourceUrl: '',
+      resourceType: 'image',
       options: [{ id: randomId(), value: '' }, { id: randomId(), value: '' }],
       question: '',
       answerId: null,
@@ -29,54 +24,39 @@ class AddQuestion extends React.Component {
     }
   }
 
-  updateWording (wording) {
-    this.setState({ question: wording })
+  handleFieldChanged (event) {
+    const { name, value } = event.target
+    this.updateField(name, value)
   }
 
-  updateOption (index, value) {
-    let options = this.state.options.map(option => {
-      if (option.id !== index) { return option }
-
-      option.value = value
-      return option
+  updateField (name, updatedValue) {
+    this.setState({
+      [name]: updatedValue
     })
-    this.setState({ options })
-  }
-
-  updateResourceUrl (resourceUrl) {
-    let resource = { ...this.state.resource }
-    resource.url = resourceUrl
-    this.setState({ resource })
-  }
-
-  updateExplanation (explanation) {
-    this.setState({ explanation })
-  }
-
-  updateAnswer (answerIndex) {
-    this.setState({ answerId: answerIndex })
-  }
-
-  handleResourceUrlChanged (event) {
-    this.updateResourceUrl(event.target.value)
-  }
-
-  handleWordingChanged (event) {
-    this.updateWording(event.target.value)
-  }
-
-  handleOptionChanged (index, event) {
-    this.updateOption(index, event.target.value)
-  }
-
-  handleExplanationChanged (event) {
-    this.updateExplanation(event.target.value)
   }
 
   handleAnswerChanged (index, event) {
     if (event.target.checked) {
       this.updateAnswer(index)
     }
+  }
+
+  updateAnswer (answerIndex) {
+    this.setState({ answerId: answerIndex })
+  }
+
+  handleOptionChanged (id, event) {
+    this.updateOption(id, event.target.value)
+  }
+
+  updateOption (id, value) {
+    let options = this.state.options.map(option => {
+      if (option.id !== id) { return option }
+
+      option.value = value
+      return option
+    })
+    this.setState({ options })
   }
 
   handleOptionAdded () {
@@ -87,6 +67,13 @@ class AddQuestion extends React.Component {
     this.setState({ options })
   }
 
+  optionRemovedAction () {
+    return (<InputOptionListItemAction
+      text="x"
+      handler={this.handleOptionRemoved.bind(this)}
+    />)
+  }
+
   handleOptionRemoved (index, event) {
     let options = this.state.options.filter(option => {
       return option.id !== index
@@ -95,12 +82,19 @@ class AddQuestion extends React.Component {
   }
 
   toggleResourceVisibility () {
-    this.setState({ previewIsVisible: !this.state.previewIsVisible })
+    this.setState((prevState, props) => {
+      return { previewIsVisible: !prevState.previewIsVisible }
+    })
   }
 
   transformStateToQuestion () {
-    let { answerId, ...question } = this.state
-    question.answer = this.state.options[answerId]
+    const { answerId, resourceType, resourceUrl, options, ...question } = this.state
+    question.answer = this.state.answerId
+    question.resource = {
+      url: resourceUrl,
+      type: resourceType
+    }
+    question.options = options.map(option => option.value)
     return question
   }
 
@@ -120,55 +114,34 @@ class AddQuestion extends React.Component {
         <form action="#" onSubmit={this.submitForm.bind(this)}>
           <div className="form-segment">
             <label>question wording</label>
-            <DebounceInput onChange={this.handleWordingChanged}>
-              <textarea placeholder="question wording" defaultValue={this.state.wording} />
+            <DebounceInput onChange={this.handleFieldChanged}>
+              <textarea placeholder="question wording" name="question" defaultValue={this.state.wording} />
             </DebounceInput>
           </div>
           <div className="form-segment">
             <label>explanation</label>
-            <DebounceInput onChange={this.handleExplanationChanged} >
-              <textarea placeholder="explanation" defaultValue={this.state.explanation}/>
+            <DebounceInput onChange={this.handleFieldChanged} >
+              <textarea placeholder="explanation" name="explanation" defaultValue={this.state.explanation}/>
             </DebounceInput>
           </div>
           <div className="form-segment form-segment--full">
-            <ul className="option-list option-list--input">
-              {
-                this.state.options.map((option, index) => {
-                  let action = index > 1
-                    ? <span className="option-list__item-action"
-                      onClick={this.handleOptionRemoved.bind(this, option.id)}>x</span>
-                    : null
-                  return (
-                    <li key={option.id}>
-                      <label>option <span>{(index + 1)}</span></label>
-                      <div className="input-group">
-                        <span className="input-group__addon">
-                          <input type="radio" name="answer"
-                            value={option}
-                            onChange={this.handleAnswerChanged.bind(this, index)}/>
-                        </span>
-                        <DebounceInput onChange={this.handleOptionChanged.bind(this, option.id)}>
-                          <input name="option[]"
-                            placeholder={`option ${(index + 1)}`}
-                            className="input input-group__input"
-                            defaultValue={option.value}
-                            type="text"
-                            autoComplete="off" />
-                        </DebounceInput>
-                        {action}
-                      </div>
-                    </li>
-                  )
-                })
-              }
-            </ul>
-            <button className="button add-option" type="button" onClick={this.handleOptionAdded.bind(this)}>add</button>
+            <InputOptionList
+              minimumOptionCount={this.minOptionCount}
+              changeHandler={this.handleOptionChanged.bind(this)}
+              selectHandler={this.handleAnswerChanged.bind(this)}
+              action={this.optionRemovedAction()}
+              options={this.state.options}
+            />
+            <button className="button add-option" type="button"
+              onClick={this.handleOptionAdded.bind(this)}>
+              add
+            </button>
           </div>
           <div className={`form-segment form-segment--full resource-segment ${this.resourcePreviewVisibilityClass()}`}>
             <label>resource url</label>
             <div className="input-group input-group--multi">
-              <DebounceInput onChange={this.handleResourceUrlChanged}>
-                <input name="resource_url"
+              <DebounceInput onChange={this.handleFieldChanged}>
+                <input name="resourceUrl"
                   placeholder="resource url"
                   className="input input-group__input"
                   type="text" />
@@ -177,8 +150,8 @@ class AddQuestion extends React.Component {
               <span className="input-group__addon input-group__addon--right"
                 onClick={this.toggleResourceVisibility}>preview</span>
             </div>
-            <div className="preview" style={{ backgroundImage: `url(${this.state.resource.url})` }}>
-              <img src={this.state.resource.url}/>
+            <div className="preview" style={{ backgroundImage: `url(${this.state.resourceUrl})` }}>
+              <img src={this.state.resourceUrl}/>
             </div>
           </div>
           <div className="form-segment form-segment--full">

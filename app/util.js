@@ -9,12 +9,12 @@ const narrations = {
   right: "That's Right!"
 }
 
-export function getRandomIndex (elementArray) {
-  return Math.floor(Math.random() * elementArray.length)
-}
-
 export function contains (array, element) {
   return (array.indexOf(element) >= 0)
+}
+
+export function randomId () {
+  return parseInt(Math.random() * 1000000)
 }
 
 export function debounce (func, wait, immediate) {
