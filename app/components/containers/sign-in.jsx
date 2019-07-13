@@ -14,11 +14,8 @@ export default class SignIn extends Component {
       isAuthenticating: false,
       isDeauthenticating: false
     }
-    this.handleEmailChanged = 
-      this.handleEmailChanged.bind(this);
-    this.handlePasswordChanged = 
-      this.handlePasswordChanged.bind(this);
-  }
+    this.handleFieldChanged = 
+      this.handleFieldChanged.bind(this);  }
 
   login () {
     this.context.login(
@@ -27,20 +24,13 @@ export default class SignIn extends Component {
     )
   }
 
-  updateEmail(email){
-    this.setState({email})
+  handleFieldChanged(event){
+    const {name, value} = event.target;
+    this.updateField(name,value);
   }
 
-  updatePassword(password){
-    this.setState({password})
-  }
-
-  handleEmailChanged(event){
-    this.updateEmail(event.target.value)
-  }
-
-  handlePasswordChanged(event){
-    this.updatePassword(event.target.value)
+  updateField(name, updatedValue){
+    this.setState({[name]: updatedValue})
   }
 
   handleFormSubmission(event){
@@ -62,7 +52,7 @@ export default class SignIn extends Component {
             method='POST'>
             <div className="form-segment form-segment--full">
               <label htmlFor="">email</label>
-              <DebounceInput onChange={this.handleEmailChanged}>
+              <DebounceInput onChange={this.handleFieldChanged}>
                 <input name='email'
                   placeholder='email@address.com'
                   className="input"
@@ -73,7 +63,7 @@ export default class SignIn extends Component {
             </div>
             <div className="form-segment form-segment--full">
               <label htmlFor="">password</label>
-              <DebounceInput onChange={this.handlePasswordChanged}>
+              <DebounceInput onChange={this.handleFieldChanged}>
                 <input name="password"
                   placeholder='password'
                   className="input"
