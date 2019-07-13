@@ -94,6 +94,7 @@ body{
 
 .form{
     max-width: 800px;
+    align-items: flex-start;
 
     form{
         display: flex;
@@ -224,4 +225,16 @@ body{
     list-style: none;
     display: flex;
     flex-flow: row wrap;
+}
+
+
+
+.question-summary-list{
+  width: inherit;
+  display: flex;
+  flex-flow: row wrap;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  padding: 10px;
 }

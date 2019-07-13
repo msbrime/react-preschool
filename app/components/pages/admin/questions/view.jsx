@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import Sidebar from 'containers/sidebar.jsx'
+import ViewQuestions from 'containers/view-questions.jsx'
 
 export default class ViewQuestionsPage extends Component {
   render () {
     return (
-      <p>viewing questions</p>
+      <ViewQuestions />
     )
   }
 }

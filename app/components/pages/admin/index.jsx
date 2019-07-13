@@ -14,7 +14,7 @@ export default class AdminIndex extends Component {
           <Route exact path='/admin/questions/new' component = {CreateQuestion} />
           <Route exact path='/admin/questions/edit' component = {EditQuestion} />
           <Route exact path={['/admin/questions/view', '/admin/questions', '/admin']} component = {ViewQuestions} />
-        </div>
+        </div>]
       </div>
     )
   }

@@ -6,3 +6,10 @@ build/
 vendor/
 nbproject/
 .env
+admin.html
+app/components/presenters/form/input.jsx
+app/components/presenters/form/textarea.jsx
+assets/images/add.svg
+assets/images/circled.svg
+assets/images/menu.svg
+assets/images/start.svg
