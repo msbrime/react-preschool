@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders a badge with the appropriate classes 1`] = `
+<li
+  className="star star--filled spin-in"
+  style={
+    Object {
+      "animationDelay": "0.5s",
+    }
+  }
+>
+  <i>
+    <svg
+      vectorEffect="non-scaling-stroke"
+      viewBox="0 0 51 48"
+    >
+      <use
+        x="0"
+        xlinkHref="#star"
+        y="1"
+      />
+    </svg>
+  </i>
+</li>
+`;
