@@ -22,3 +22,13 @@ jobs:
       - run:
         name: 'Build Project'
         command: gulp build
+workflows:
+  version: 2
+  build-and-deploy:
+    triggers:
+      - schedule:
+        filters:
+          branches:
+            only:
+              - master
+              - develop
