@@ -1,4 +1,5 @@
-let config = {
+const config = {
+  appId: FIREBASE_APP_ID,
   apiKey: FIREBASE_API_KEY,
   authDomain: FIREBASE_AUTH_DOMAIN,
   databaseURL: FIREBASE_DATABASE_URL,

@@ -13,6 +13,7 @@ const uglifyOptions = {
 
 const definePluginValues = {
   FIREBASE_API_KEY: JSON.stringify(process.env.FIREBASE_API_KEY),
+  FIREBASE_APP_ID: JSON.stringify(process.env.FIREBASE_APP_ID),
   FIREBASE_AUTH_DOMAIN: JSON.stringify(process.env.FIREBASE_AUTH_DOMAIN),
   FIREBASE_DATABASE_URL: JSON.stringify(process.env.FIREBASE_DATABASE_URL),
   FIREBASE_PROJECT_ID: JSON.stringify(process.env.FIREBASE_PROJECT_ID),
