@@ -6,43 +6,42 @@ import Quiz from 'pages/quiz.jsx'
 import Score from 'pages/score.jsx'
 import SignIn from 'pages/auth.jsx'
 import AdminIndex from 'pages/admin/index.jsx'
-import firebase from 'services/firebase'
 import AuthContext from 'context/auth.js'
 
 export default class App extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      authenticated: !!firebase().auth().currentUser
+      authenticated: true
     }
   }
 
   componentDidMount () {
     // firebase().auth().signOut()
-    firebase().auth().onAuthStateChanged(
-      this.handleAuthStateChange.bind(this)
-    )
+    // firebase().auth().onAuthStateChanged(
+    //   this.handleAuthStateChange.bind(this)
+    // )
   }
 
-  loginHandler (email, password) {
-    firebase().auth().signInWithEmailAndPassword(email, password)
-  }
+  // loginHandler (email, password) {
+  //   firebase().auth().signInWithEmailAndPassword(email, password)
+  // }
 
-  logoutHandler () {
-    firebase().auth().signOut()
-  }
+  // logoutHandler () {
+  //   firebase().auth().signOut()
+  // }
 
-  handleAuthStateChange (user) {
-    if (user) {
-      return this.setState({
-        authenticated: true
-      })
-    }
+  // handleAuthStateChange (user) {
+  //   if (user) {
+  //     return this.setState({
+  //       authenticated: true
+  //     })
+  //   }
 
-    this.setState({
-      authenticated: false
-    })
-  }
+  //   this.setState({
+  //     authenticated: false
+  //   })
+  // }
 
   render () {
     return (

@@ -7,6 +7,8 @@ import { HashRouter } from 'react-router-dom'
 
 // let history = syncHistoryWithStore(hashHistory, store)
 
+//  la vie en rose
+
 const Root = () => (
   <Provider store = {store}>
     <HashRouter ><App /></HashRouter>

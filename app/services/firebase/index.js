@@ -1,13 +1,12 @@
-import firebase from 'firebase/app'
-import 'firebase/firebase-database'
-import 'firebase/firebase-auth'
-import config from './config'
+let fbInstance = {
+  read(){
 
-let fbInstance
+  },
+  auth(){
 
-function initializeFb () {
-  return firebase.initializeApp(config)
+  }
 }
+
 
 export default function firebaseInstance () {
   if (!fbInstance) {

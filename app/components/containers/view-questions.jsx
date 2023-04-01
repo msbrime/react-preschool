@@ -1,5 +1,5 @@
 import React from 'react'
-import { load } from 'services/questions'
+// import { load } from 'services/questions'
 import QuestionSummary from 'presenters/questions/summary.jsx'
 
 export default class ViewQuestions extends React.Component {
@@ -12,12 +12,12 @@ export default class ViewQuestions extends React.Component {
   }
 
   componentDidMount () {
-    load(({ questions }) =>
-      this.setState({
-        questions,
-        questionLoadStatus: 'loaded'
-      })
-    )
+    // load(({ questions }) =>
+    //   this.setState({
+    //     questions,
+    //     questionLoadStatus: 'loaded'
+    //   })
+    // )
   }
 
   renderStatusMessage () {

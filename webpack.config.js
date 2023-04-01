@@ -2,6 +2,8 @@
 const path = require('path')
 const webpack = require('webpack')
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
+const IgnoreEmitPlugin = require('ignore-emit-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const uglifyOptions = {
   mangle: true,
@@ -35,6 +37,7 @@ const config = {
       context: path.resolve(__dirname, 'app/context')
     }
   },
+  cache: false,
   optimization: {
     splitChunks: {
       cacheGroups: {
@@ -46,14 +49,18 @@ const config = {
       }
     }
   },
+  entry: {
+    main_js: { import: "./app/index.jsx", filename: 'main.js' },
+    main_css: { import: "./assets/css/main.scss", filename: "main_css.js" }
+  },
   output: {
-    filename: '[name].js'
+    path: path.resolve(__dirname, "dist")
   },
   module: {
     rules: [
       {
         test: /\.jsx?/,
-        include: path.resolve(__dirname + '/app/'),
+        include: path.resolve(__dirname, 'app'),
         use: {
           loader: 'babel-loader',
           options: {
@@ -61,12 +68,23 @@ const config = {
             'plugins': ['@babel/plugin-proposal-class-properties']
           }
         }
+      },
+      {
+        test: /\.scss?/,
+        include: path.resolve(__dirname, 'assets/css'),
+        use: [
+          MiniCssExtractPlugin.loader, "css-loader", "postcss-loader", "sass-loader"
+        ]
       }
     ]
   },
   plugins: [
+    new IgnoreEmitPlugin(/_css\.js$/),
+    new MiniCssExtractPlugin({
+      filename: "style/main.css"
+    }),
     new webpack.DefinePlugin(definePluginValues),
-    new UglifyJSPlugin({ uglifyOptions: uglifyOptions })
+    new UglifyJSPlugin({ uglifyOptions })
   ]
 }
 

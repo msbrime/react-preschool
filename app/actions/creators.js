@@ -23,6 +23,7 @@ export function reset () {
 }
 
 export function seedQuestions (questions, ids) {
+  console.log("la vie en rose");
   return {
     type: ACTIONS.SEED_QUESTIONS,
     payload: {
