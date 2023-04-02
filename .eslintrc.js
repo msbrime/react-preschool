@@ -40,5 +40,5 @@ module.exports = {
   'rules': {
     'standard/no-callback-literal': false,
     'react/prop-types': 0
-  },
+  }, 
 }

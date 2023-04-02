@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:10.15.3
+      - image: circleci/node:16
     working_directory: ~/react-preschool
     steps:
       - checkout
@@ -10,11 +10,10 @@ jobs:
           name: 'Install Dependencies'
           command: |
             echo Installing Dependencies
-            sudo npm install -g gulp
-            npm --production=false install
+            yarn install
       - run:
           name: 'Build Project'
-          command: gulp build
+          command: yarn build
       - save_cache:
           paths: 
             - build
@@ -22,7 +21,7 @@ jobs:
   
   deploy:
     docker:
-      - image: circleci/node:10.15.3
+      - image: circleci/node:16
     working_directory: ~/react-preschool
     steps:
       - checkout
