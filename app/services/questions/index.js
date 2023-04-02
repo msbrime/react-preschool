@@ -1,30 +1,23 @@
-import firebase from 'services/firebase'
-
-const nodeReference = 'questions'
+import { read } from 'services/firebase';
 
 export function load (callback) {
-  let questionsRef = firebase().database().ref(nodeReference)
-  questionsRef.once('value', snapshot => {
-    let
-      normalizedData = snapshot.val()
-    let maxScore = computeMaxScore(snapshot.val())
-
+  read("questions", questions => {
     callback({
-      questions: normalizedData,
-      ids: Object.keys(normalizedData),
-      maxScore
+      questions,
+      ids: Object.keys(questions),
+      maxScore: computeMaxScore(questions)
     })
   })
 }
 
-export function create (question) {
-  let
-    questionsRef = firebase().database().ref(nodeReference)
-  let newQuestionRef = questionsRef.push()
+// export function create (question) {
+//   let
+//     questionsRef = firebase().database().ref(nodeReference)
+//   let newQuestionRef = questionsRef.push()
 
-  question.id = newQuestionRef.key
-  return newQuestionRef.set(question)
-}
+//   question.id = newQuestionRef.key
+//   return newQuestionRef.set(question)
+// }
 
 function computeMaxScore (questions) {
   let score = 0

@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { createQuestion } from 'actions/creators'
+// import { createQuestion } from 'actions/creators'
 import DebounceInput from 'presenters/form/debounce.jsx'
 import InputOptionList from 'presenters/form/input-option-list.jsx'
 import InputOptionListItemAction from 'presenters/form/input-option-list-item-action.jsx'
@@ -165,7 +165,7 @@ class AddQuestion extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    createQuestion: question => { dispatch(createQuestion(question)) }
+    // createQuestion: question => { dispatch(createQuestion(question)) }
   }
 }
 

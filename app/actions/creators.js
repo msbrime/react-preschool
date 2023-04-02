@@ -1,5 +1,5 @@
 import * as ACTIONS from 'actions/actions'
-import { load as loadQuestions, create } from 'services/questions'
+import { load as loadQuestions } from 'services/questions'
 
 export function incrementScore (increment) {
   return {
@@ -23,7 +23,6 @@ export function reset () {
 }
 
 export function seedQuestions (questions, ids) {
-  console.log("la vie en rose");
   return {
     type: ACTIONS.SEED_QUESTIONS,
     payload: {
@@ -52,8 +51,8 @@ export function fetchQuestions () {
   }
 }
 
-export function createQuestion (question) {
-  return dispatch => {
-    create(question)
-  }
-}
+// // export function createQuestion (question) {
+// //   return dispatch => {
+// //     create(question)
+// //   }
+// }

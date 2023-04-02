@@ -14,10 +14,10 @@
     "react-router-dom": "^5.0.0",
     "react-router-redux": "^4.0.8",
     "redux": "^3.7.2",
-    "redux-thunk": "^2.2.0",
-    "sass-loader": "^13.2.2"
+    "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
+    "sass-loader": "^13.2.2",
     "@babel/core": "^7.4.0",
     "@babel/plugin-proposal-class-properties": "^7.4.4",
     "@babel/preset-env": "^7.5.4",
@@ -26,6 +26,7 @@
     "babel-loader": "^8.0.0-beta.0",
     "browser-sync": "^2.26.7",
     "css-loader": "^6.7.3",
+    "dotenv-webpack": "^8.0.1",
     "env-cmd": "^8.0.2",
     "enzyme": "^3.10.0",
     "eslint": "^5.16.0",
@@ -59,14 +60,14 @@
     "url": "https://github.com/msbrime/react-preschool.git"
   },
   "keywords": [
-    "education", 
+    "education",
     "react",
     "redux",
     "react-router"
   ],
   "author": "Salis Braimah",
   "license": "ISC",
-  "bugs": { 
+  "bugs": {
     "url": "https://github.com/msbrime/react-preschool"
   },
   "homepage": "https://github.com/msbrime/react-preschool#README"

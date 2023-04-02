@@ -4,9 +4,7 @@ dist/
 .DS_Store
 .vscode/
 vendor/
-nbproject/
 .env
-admin.html
 app/components/presenters/form/input.jsx
 app/components/presenters/form/textarea.jsx
 assets/images/add.svg
