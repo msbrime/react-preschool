@@ -13,6 +13,5 @@ const Root = () => (
   </Provider>
 )
 
-
 const root = createRoot(document.getElementById('app'));
 root.render(<Root />);

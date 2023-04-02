@@ -7,11 +7,9 @@ A react practice application that uses firebase, redux and react router. See it 
 To run the project locally
 - Clone the repository
 - Execute the following commands from the project directory
-  - `npm install -g gulp`
-  - `npm install`
-  - `npm run dev-sever`
-- Visit http://localhost:3000 
-
+  - `yarn`
+  - `yarn start`
+  
 ## Admin Panel
 To access the admin panel you can use the credentials `email: guest@pmvc.com` and `password: password`.  
 Access is limited to data reads only
