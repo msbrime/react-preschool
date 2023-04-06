@@ -10,7 +10,8 @@ module.exports = merge(common, {
   },
   plugins: [
     new Dotenv({
-      path: './.env'
+      path: './.env',
+      prefix: ''
     })
   ]
 });
