@@ -33,7 +33,7 @@ const feedback = props => {
           { renderBadges(props.score) }
         </ul>
         <button className = 'button'
-          onClick = { props.action }>
+          onClick = { props.onAcknowledged }>
                     next
         </button>
       </div>

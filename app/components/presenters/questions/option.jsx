@@ -1,13 +1,13 @@
 import React from 'react'
 
-const option = ({ value, clickHandler, disabled }) => {
+const option = ({ value, onAttempt, disabled }) => {
   const [disabledClass, handler] = (disabled)
     ? ['option-list__item--incorrect', () => {}]
-    : ['', clickHandler, null]
+    : ['', onAttempt]
 
   return (
     <li className = {['option-list__item', disabledClass].join(' ')}
-      onClick ={handler}>
+      onClick ={() => handler(value)}>
       {value}
     </li>
   )
