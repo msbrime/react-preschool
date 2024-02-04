@@ -5,6 +5,7 @@ dist/
 .vscode/
 vendor/
 .env
+.yarn
 app/components/presenters/form/input.jsx
 app/components/presenters/form/textarea.jsx
 assets/images/add.svg
