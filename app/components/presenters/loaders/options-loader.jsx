@@ -6,7 +6,7 @@ const renderOptions = () => {
   return [1, 2, 3, 4].map(option)
 }
 
-const optionsLoader = () => {
+const OptionsLoader = () => {
   return (
     <ul className="option-list">
       {renderOptions()}
@@ -14,4 +14,4 @@ const optionsLoader = () => {
   )
 }
 
-export default optionsLoader
+export default OptionsLoader

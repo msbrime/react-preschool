@@ -11,15 +11,6 @@ export default class ViewQuestions extends React.Component {
     }
   }
 
-  componentDidMount () {
-    // load(({ questions }) =>
-    //   this.setState({
-    //     questions,
-    //     questionLoadStatus: 'loaded'
-    //   })
-    // )
-  }
-
   renderStatusMessage () {
     return <p>Not Done Loading</p>
   }

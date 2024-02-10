@@ -7,7 +7,7 @@ export function load (callback) {
       ids: Object.keys(questions),
       maxScore: computeMaxScore(questions)
     })
-  })
+  })  
 }
 
 // export function create (question) {

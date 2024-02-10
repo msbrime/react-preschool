@@ -1,9 +1,11 @@
 import React from 'react'
 
-const questionLoader = () => {
+const QuestionLoader = ({src, onLoad}) => {
   return (
         <>
-        <div className="card__media loader"/>
+        <div className="card__media loader">
+          <img src={src} onLoad={onLoad} style={{ display: "none" }} />
+        </div>
         <div className="card__body loader">
           <svg width="100%" height={50} preserveAspectRatio="none" viewBox="0 0 1000 100">
             <path d="M0,0 h1000 v100 h-1000 v-100
@@ -20,4 +22,4 @@ const questionLoader = () => {
   )
 }
 
-export default questionLoader
+export default QuestionLoader
