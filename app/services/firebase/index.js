@@ -5,41 +5,53 @@ import config from './config'
 
 initializeApp(config);
 let database = getDatabase();
-let questions = {};
-let listeners = [];
+const store = new Map();
+const listeners = new Map();
 
-export function useQuestionStore() {
-  return useSyncExternalStore(subscribe,getSnapshot)
+export function useFirebaseSnapshot(reference) {
+  loadSnapshot(reference);
+  return useSyncExternalStore(
+    subscribeToReference(reference),
+    getSnapshotForReference(reference)
+  )
 }
 
-function subscribe (listener) {
-  listeners = [...listeners, listener];
-  return () => {
-    listeners = listeners.filter(l => l !== listener);
-  };
+function subscribeToReference(reference) {
+  return (listener) => {
+    listeners.set(reference, [...listeners.get(reference) || [], listener]);
+    return () => {
+      const listenersForReference = listeners.get(reference) || [];
+      listeners.set(reference, listenersForReference.filter(l => l !== listener))
+    };
+  }
 }
 
-function getSnapshot(){
-  return questions;
+function getSnapshotForReference(reference) {
+  return () => store.get(reference)
 }
 
-function emitChange() {
-  for (let listener of listeners) {
+function emitChange(reference) {
+  for (let listener of listeners.get(reference) || []) {
     listener();
   }
 }
 
-onValue(ref(database, "questions"), snapshot => {
-  questions = {...questions,...snapshot.val()}
-  console.log(questions)
-  emitChange();
+function loadSnapshot(reference) {
+  if(store.get(reference)) return;
+  store.set(reference,{})
+  onValue(ref(database, reference), snapshot => {
+    const data = store.get(reference);
+    store.set(reference, { ...data, ...snapshot.val() });
+    emitChange(reference);
 
-  onChildAdded(ref(database, "questions"), snapshot => {
-    const child = snapshot.val()
-    if(!questions[child.id]){
-      questions[child.id] = child;
-      emitChange();
-    }
-
-  })
-});
+    onChildAdded(ref(database, reference), snapshot => {
+      const child = snapshot.val()
+      const data = store.get(reference);
+      if (!data[child.id]) {
+        data[child.id] = child;
+        store.set(reference,data)
+        emitChange(reference);
+      }
+    })
+  });
+}
