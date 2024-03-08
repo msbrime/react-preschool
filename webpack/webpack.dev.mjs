@@ -1,8 +1,8 @@
-const { merge } = require("webpack-merge");
-const common = require("./webpack.common");
-const Dotenv = require('dotenv-webpack');
+import { merge } from "webpack-merge";
+import common from "./webpack.common.mjs";
+import Dotenv from 'dotenv-webpack';
 
-module.exports = merge(common, {
+export default merge(common, {
   mode: "development",
   entry: {
     main_js: { import: "./app/index.jsx", filename: 'main.js' },

@@ -1,10 +1,12 @@
 /* eslint-disable no-path-concat */
-const path = require('path')
-const IgnoreEmitPlugin = require('ignore-emit-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+import path from "path";
+import IgnoreEmitPlugin from 'ignore-emit-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin'
 
-module.exports = {
+const __dirname = import.meta.dirname;
+
+export default {
   resolve: {
     modules: ['../app', 'node_modules'],
     alias: {
@@ -15,11 +17,12 @@ module.exports = {
       loaders: path.resolve(__dirname, '../app/components/loaders'),
       services: path.resolve(__dirname, '../app/services'),
       context: path.resolve(__dirname, '../app/context')
-    }
+    },
+    extensions: ["", ".js", ".mjs", ".jsx"]
   },
   cache: false,
   output: {
-    path: path.resolve(__dirname, "../dist")
+    path: path.resolve(__dirname, "../dist"),
   },
   module: {
     rules: [

@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A practice react application",
   "main": "index.html",
+  "type": "module",
   "dependencies": {
     "animate.css": "^3.5.2",
     "firebase": "^9.19.1",
@@ -52,8 +53,8 @@
     "webpack-stream": "^5.2.1"
   },
   "scripts": {
-    "build": "webpack --config=webpack/webpack.prod.js",
-    "start": "webpack-dev-server --config=webpack/webpack.dev.js --open"
+    "build": "webpack --config=webpack/webpack.prod.mjs",
+    "start": "webpack-dev-server --config=webpack/webpack.dev.mjs --open"
   },
   "repository": {
     "type": "git",

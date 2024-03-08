@@ -1,5 +1,5 @@
 import React from 'react'
-import Option from 'presenters/questions/option.jsx'
+import Option from 'presenters/questions/option'
 
 export default function Options({ options, attempted, onOptionAttempted }){
   return (

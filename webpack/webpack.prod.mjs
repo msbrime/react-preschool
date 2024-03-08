@@ -1,8 +1,8 @@
 /* eslint-disable no-path-concat */
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
-const { merge } = require("webpack-merge");
-const common = require("./webpack.common");
-const webpack = require('webpack');
+import UglifyJSPlugin from 'uglifyjs-webpack-plugin'
+import  { merge } from "webpack-merge"
+import common from "./webpack.common.mjs"
+import webpack from 'webpack'
 
 const definePluginValues = {
   FIREBASE_API_KEY: JSON.stringify(process.env.FIREBASE_API_KEY),

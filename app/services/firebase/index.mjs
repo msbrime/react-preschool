@@ -1,7 +1,7 @@
 import { initializeApp } from 'firebase/app'
 import { useSyncExternalStore } from 'react'
 import { getDatabase, ref, onValue, onChildAdded } from 'firebase/database'
-import config from './config'
+import config from './config.mjs'
 
 initializeApp(config);
 let database = getDatabase();
