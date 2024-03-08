@@ -48,9 +48,6 @@ export default {
   },
   plugins: [
     new IgnoreEmitPlugin(/_css.*\.js$/),
-    new MiniCssExtractPlugin({
-      filename: "style/[name].css"
-    }),
     new HtmlWebpackPlugin({
       template: "./assets/html/template.html"
     })

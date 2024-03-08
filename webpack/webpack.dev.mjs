@@ -1,4 +1,5 @@
 import { merge } from "webpack-merge";
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import common from "./webpack.common.mjs";
 import Dotenv from 'dotenv-webpack';
 
@@ -9,6 +10,9 @@ export default merge(common, {
     main_css: { import: "./assets/css/main.scss", filename: "main_css.js" }
   },
   plugins: [
+    new MiniCssExtractPlugin({
+      filename: "style/[name].css"
+    }),
     new Dotenv({
       path: './.env',
       prefix: ''

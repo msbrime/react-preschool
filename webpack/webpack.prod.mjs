@@ -1,5 +1,6 @@
 /* eslint-disable no-path-concat */
 import UglifyJSPlugin from 'uglifyjs-webpack-plugin'
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import  { merge } from "webpack-merge"
 import common from "./webpack.common.mjs"
 import webpack from 'webpack'
@@ -22,7 +23,7 @@ const uglifyOptions = {
   }
 }
 
-module.exports = merge(common, {
+export default merge(common, {
   mode: "production",
   optimization: {
     splitChunks: {
@@ -41,6 +42,9 @@ module.exports = merge(common, {
   },
   plugins: [
     new UglifyJSPlugin({ uglifyOptions }),
+    new MiniCssExtractPlugin({
+      filename: "style/[name]-[contenthash].css"
+    }),
     new webpack.DefinePlugin(definePluginValues)
   ]
 });

@@ -56,6 +56,9 @@
     "build": "webpack --config=webpack/webpack.prod.mjs",
     "start": "webpack-dev-server --config=webpack/webpack.dev.mjs --open"
   },
+  "engines": {
+    "node": ">=20.11.0"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/msbrime/react-preschool.git"
