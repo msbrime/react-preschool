@@ -1,11 +1,8 @@
 import React from 'react'
-import { createRoot } from 'react-dom/client'
+import { hydrateRoot } from 'react-dom/client'
 import App from 'components/app'
-import { HashRouter } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
+import { inflate as inflateStore } from 'services/firebase'
 
-const Root = () => (
-    <HashRouter ><App /></HashRouter>
-)
-
-const root = createRoot(document.getElementById('app'));
-root.render(<Root />);
+inflateStore();
+hydrateRoot(document.getElementById('app'), <BrowserRouter ><App /></BrowserRouter>);

@@ -2,15 +2,15 @@ import React, { useEffect, useState } from 'react'
 import QuestionLoader from 'presenters/loaders/question-loader.jsx'
 import OptionsLoader from 'presenters/loaders/options-loader.jsx'
 
-const Question = ({ question, feedback, options }) => {
-  const [loading, setLoading] = useState(true);
+const Question = ({ question, feedback, options, skipLoading }) => {
+  const [loading, setLoading] = useState(!skipLoading);
 
   useEffect(() => {
     setLoading(true)
   }, [question.resource.url]);
 
   const [body, answers] = loading ? [
-    <QuestionLoader src={question.resource.url} onLoad ={ () => setLoading(false)} /> , <OptionsLoader />] :
+    <QuestionLoader src={question.resource.url} onLoad ={() => setLoading(false)} /> , <OptionsLoader />] :
     [
       (
         <>

@@ -1,18 +1,43 @@
 import { initializeApp } from 'firebase/app'
 import { useSyncExternalStore } from 'react'
-import { getDatabase, ref, onValue, onChildAdded } from 'firebase/database'
+import { getDatabase, ref, onValue, onChildAdded, get } from 'firebase/database'
 import config from './config.mjs'
 
 initializeApp(config);
 let database = getDatabase();
-const store = new Map();
+const store = typeof window !== "undefined" ? inflate() : new Map();
 const listeners = new Map();
+
+export async function valueOf(reference){
+  if (store.has(reference)) return store.get(reference);
+  store.set(reference,{})
+  return new Promise((resolve) => {
+    get(ref(database, reference)).then(snapshot => {
+      if(snapshot.exists()){
+        store.set(reference,snapshot.val())
+        resolve(store.get(reference))
+      } else {
+        resolve(store.get(reference))
+      }
+    })
+  });
+}
+
+export function serialize(){
+  return encodeURIComponent(JSON.stringify(Array.from(store)))
+}
+
+export function inflate(){
+  const initialStoreData = JSON.parse(decodeURIComponent(window?.__SERIALIZED_STORE || "[]"));
+  return new Map(initialStoreData);
+}
 
 export function useFirebaseSnapshot(reference) {
   loadSnapshot(reference);
   return useSyncExternalStore(
     subscribeToReference(reference),
-    getSnapshotForReference(reference)
+    getSnapshotForReference(reference),
+    getServerSnapshot(reference)
   )
 }
 
@@ -37,7 +62,7 @@ function emitChange(reference) {
 }
 
 function loadSnapshot(reference) {
-  if(store.get(reference)) return;
+  if(store.has(reference)) return;
   store.set(reference,{})
   onValue(ref(database, reference), snapshot => {
     const data = store.get(reference);
@@ -54,4 +79,8 @@ function loadSnapshot(reference) {
       }
     })
   });
+}
+
+function getServerSnapshot(reference){
+  return () => store.get(reference)
 }

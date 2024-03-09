@@ -11,11 +11,11 @@ export default merge(common, {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: "style/[name].css"
+      filename: "[name].css"
     }),
     new Dotenv({
       path: './.env',
-      prefix: ''
+      prefix: 'process.env.'
     })
   ]
 });

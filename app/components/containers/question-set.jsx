@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import Feedback from 'presenters/feedback/feedback.jsx'
 import Question from 'presenters/questions/question.jsx'
 import Options from 'presenters/questions/options.jsx'
@@ -15,10 +15,15 @@ function randomSelect(items, exclude) {
 export default function QuestionSet({ questions, onComplete }) {
 
   const [attempts, updateAttempts] = useState([]);
+  const [skipLoading, updateSkipLoading] = useState(true);
   const [shouldExplain, setShouldExplain] = useState(false);
-  const [current, setCurrent] = useState(() => randomSelect(questions, []));
+  const [current, setCurrent] = useState(questions[0]);
   const answered = useRef([]);
   const score = useRef(0);
+
+  useEffect(() => {
+    updateSkipLoading(false);
+  }, []);
 
   const reset = () => {
     updateAttempts([]);
@@ -63,7 +68,7 @@ export default function QuestionSet({ questions, onComplete }) {
 
   return (
     <div className={`question ${shouldExplain ? 'answered' : ''}`}>
-      <Question question={current} feedback={feedback} options={options} />
+      <Question question={current} feedback={feedback} options={options} skipLoading={skipLoading} />
     </div>
   );
 }
