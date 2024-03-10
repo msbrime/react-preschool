@@ -1,9 +1,11 @@
 /* eslint-disable no-path-concat */
+import "dotenv/config";
 import path from "path";
 import nodeExternals from "webpack-node-externals"
 import webpack from "webpack";
 
 const __dirname = import.meta.dirname;
+console.log("deploy env", process.env.DEPLOY_ENV);
 
 export default {
   resolve: {
@@ -19,15 +21,15 @@ export default {
     },
     extensions: ["", ".js", ".mjs", ".jsx"]
   },
-  entry: "./server/index.mjs",
+  entry: process.env.DEPLOY_ENV === "local" ? "./server/index.mjs" : "./server/app.jsx",
   mode: "none",
   experiments: {
     outputModule: true,
   },
   target:"node20",
   output: {
-    path: path.resolve(__dirname, "../../dist"),
-    filename: "server.mjs",
+    path: path.resolve(__dirname, "../../api"),
+    filename: "index.js",
     chunkFormat: "module",
     module: true,
   },

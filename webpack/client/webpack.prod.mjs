@@ -1,4 +1,5 @@
 /* eslint-disable no-path-concat */
+import "dotenv/config";
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { merge } from "webpack-merge"
 import common from "./webpack.common.mjs"
@@ -24,7 +25,7 @@ const uglifyOptions = {
 }
 
 export default merge(common, {
-  mode: "development",
+  mode: "production",
   optimization: {
     splitChunks: {
       cacheGroups: {

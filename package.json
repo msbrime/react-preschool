@@ -60,11 +60,11 @@
     "webpack-stream": "^5.2.1"
   },
   "scripts": {
-    "deploy": "yarn build && yarn build-server",
-    "build": "webpack --config=webpack/client/webpack.prod.mjs",
+    "build": "yarn build-client && yarn build-server",
+    "build-client": "webpack --config=webpack/client/webpack.prod.mjs",
     "build-server": "webpack --config=webpack/server/index.mjs",
     "start": "webpack-dev-server --config=webpack/client/webpack.dev.mjs --open",
-    "start-server": "node dist/server.mjs"
+    "start-server": "node api"
   },
   "engines": {
     "node": ">=20.11.0"

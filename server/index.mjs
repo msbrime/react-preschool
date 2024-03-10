@@ -1,4 +1,8 @@
 import "dotenv/config";
-import start from "./app.jsx";
+import app from "./app.jsx";
 
-start();
+const port = process.env.PORT || 3000;
+
+app.listen(port, () => {
+  console.log(`Listening: http://localhost:${port}`);
+});
