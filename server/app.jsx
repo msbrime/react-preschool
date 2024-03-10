@@ -9,13 +9,20 @@ import { renderToString } from "react-dom/server";
 import { readFileSync } from "fs";
 import path from "path";
 
+function publicPath(file){
+  const filePath = file ? `/${file}` : "";
+  if(process.env.DEPLOY_ENV === "local"){
+    return path.resolve(__dirname,`./public${filePath}`)
+  }
+  return path.join(process.cwd(),`public${filePath}`);
+}
+
 const app = express();
 const router = express.Router();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use("/assets", express.static(path.join(process.cwd(),'public')));
-
-const manifest = JSON.parse(readFileSync(path.join(process.cwd(),'public/manifest.json'), 'utf8'));
+app.use("/assets", express.static(publicPath()));
+const manifest = JSON.parse(readFileSync(publicPath("manifest.json"), 'utf8'));
 
 router.get("/quiz", async (_request, response) => {
   await valueOf("questions");

@@ -2,7 +2,6 @@
 import path from "path";
 import IgnoreEmitPlugin from 'ignore-emit-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import HtmlWebpackPlugin from 'html-webpack-plugin'
 
 const __dirname = import.meta.dirname;
 
@@ -48,9 +47,6 @@ export default {
     ]
   },
   plugins: [
-    new IgnoreEmitPlugin(/_css.*\.js$/),
-    new HtmlWebpackPlugin({
-      template: "./assets/html/template.html"
-    })
+    new IgnoreEmitPlugin(/_css.*\.js$/)
   ]
 }
