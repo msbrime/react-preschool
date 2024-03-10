@@ -27,7 +27,7 @@ export default {
   },
   target:"node20",
   output: {
-    path: path.resolve(__dirname, "../../dist/api"),
+    path: path.resolve(__dirname, "../../api"),
     filename: "index.js",
     chunkFormat: "module",
     module: true,

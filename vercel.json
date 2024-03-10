@@ -9,7 +9,7 @@
   ],
   "functions": {
     "api/index.js": {
-      "includeFiles": "api/public/*.*"
+      "includeFiles": "public/*.*"
     }
   },
   "public": true

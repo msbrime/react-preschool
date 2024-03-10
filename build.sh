@@ -1,0 +1,1 @@
+yarn install && yarn build-client && yarn build-server && exit 1

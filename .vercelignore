@@ -1,0 +1,8 @@
+# Ignore everything (folders and files) on root only
+/*
+!api
+!public
+!vercel.json
+!package.json
+!yarn.lock
+!.yarnrc.yaml
