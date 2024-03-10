@@ -23,7 +23,7 @@ export default {
   target:"web",
   cache: false,
   output: {
-    path: path.resolve(__dirname, "../../public"),
+    path: path.resolve(__dirname, "../../api/public"),
   },
   module: {
     rules: [

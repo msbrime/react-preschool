@@ -6,12 +6,13 @@ import App from "../app/components/app.jsx";
 import React from "react"
 import { renderToString } from "react-dom/server";
 import { readFileSync } from "fs";
+import path from "path";
 
 const app = express();
 const router = express.Router();
-const manifest = JSON.parse(readFileSync('public/manifest.json'), 'utf8');
+app.use("/assets", express.static(path.resolve(__dirname,'./public')));
 
-app.use("/assets", express.static('public'));
+const manifest = JSON.parse(readFileSync(path.resolve(__dirname,'./public/manifest.json'), 'utf8'));
 
 router.get("/quiz", async (_request, response) => {
   await valueOf("questions");
