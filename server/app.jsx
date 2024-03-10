@@ -1,4 +1,5 @@
 import express from "express"
+import bodyParser from "body-parser";
 import { StaticRouter } from "react-router";
 import { valueOf, serialize } from "../app/services/firebase/index.mjs";
 import html from "./template/index.mjs"
@@ -6,12 +7,15 @@ import App from "../app/components/app.jsx";
 import React from "react"
 import { renderToString } from "react-dom/server";
 import { readFileSync } from "fs";
+import path from "path";
 
 const app = express();
 const router = express.Router();
-const manifest = JSON.parse(readFileSync('public/manifest.json'), 'utf8');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use("/assets", express.static(path.join(process.cwd(),'public')));
 
-app.use("/assets", express.static('public'));
+const manifest = JSON.parse(readFileSync(path.join(process.cwd(),'public/manifest.json'), 'utf8'));
 
 router.get("/quiz", async (_request, response) => {
   await valueOf("questions");

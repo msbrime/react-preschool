@@ -4292,7 +4292,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"body-parser@npm:1.20.2":
+"body-parser@npm:1.20.2, body-parser@npm:^1.20.2":
   version: 1.20.2
   resolution: "body-parser@npm:1.20.2"
   dependencies:
@@ -5876,6 +5876,7 @@ __metadata:
     animate.css: "npm:^3.5.2"
     babel-jest: "npm:^24.8.0"
     babel-loader: "npm:^8.0.0-beta.0"
+    body-parser: "npm:^1.20.2"
     browser-sync: "npm:^2.26.7"
     browserslist: "npm:^4.23.0"
     css-loader: "npm:^6.7.3"

@@ -5,7 +5,6 @@ import nodeExternals from "webpack-node-externals"
 import webpack from "webpack";
 
 const __dirname = import.meta.dirname;
-console.log("deploy env", process.env.DEPLOY_ENV);
 
 export default {
   resolve: {
@@ -21,14 +20,14 @@ export default {
     },
     extensions: ["", ".js", ".mjs", ".jsx"]
   },
-  entry: process.env.DEPLOY_ENV === "local" ? "./server/index.mjs" : "./server/app.jsx",
-  mode: "none",
+  entry: "./server/index.mjs",
+  mode: "production",
   experiments: {
     outputModule: true,
   },
   target:"node20",
   output: {
-    path: path.resolve(__dirname, "../../api"),
+    path: path.resolve(__dirname, "../../dist/api"),
     filename: "index.js",
     chunkFormat: "module",
     module: true,
