@@ -12,7 +12,7 @@ import path from "path";
 function publicPath(file){
   const filePath = file ? `/${file}` : "";
   if(process.env.DEPLOY_ENV === "local"){
-    return path.resolve(__dirname,`./public${filePath}`)
+    return path.resolve(__dirname,`../public${filePath}`)
   }
   return path.join(process.cwd(),`public${filePath}`);
 }
