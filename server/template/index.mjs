@@ -7,8 +7,9 @@ function generateTag(key, content){
   }
 }
 
-function head(store,manifest) {
+function head(store, randoms, manifest) {
   const embedStoreScript = store ? `<script id="server-serialized-store">window.__SERIALIZED_STORE="${store}"</script>` : "";
+  const embedRandomsScript = randoms ? `<script id="server-serialized-randoms">window.__SERIALIZED_RANDOMS="${randoms}"</script>` : "";
   const {"main_js.js": main_js, ...assets} = manifest
   let tags = ""
   for (let [key,value] of Object.entries(assets)) {
@@ -26,6 +27,7 @@ function head(store,manifest) {
     <link href="https://fonts.googleapis.com/css?family=Istok+Web|Kodchasan|Mali" rel="stylesheet">
     ${tags}
     ${embedStoreScript}
+    ${embedRandomsScript}
   </head>
   `
 }
